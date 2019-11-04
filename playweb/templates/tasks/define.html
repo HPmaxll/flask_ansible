@@ -1,0 +1,19 @@
+{% extends 'tasks/tasks.html' %}
+{% block center_block %}
+<input type="radio" name="add_task" value="define">
+<input type="radio" name="add_task" value="import">
+<div id="define">
+    <form>
+        <label for="module">Module:</label><br>
+        <input type="text" name="module" ><br>
+        <input type="submit" value="Define" >
+    </form>
+</div>
+<div id="import">
+    <form>
+        <label for="explore">Import File</label><br>
+        <input type="text" name="explore" ><br>
+        <input type="submit" value="Import"
+    </form>
+</div> 
+{% endblock %}

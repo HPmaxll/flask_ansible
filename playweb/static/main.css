@@ -1,0 +1,238 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+   
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+    background-color: #24252A;
+}
+
+header a,header button {
+    font-weight: 500;
+    font-size: 16px;
+    color: #edf0f1;
+    text-decoration: none;
+}
+
+.logo {
+    font-weight: 700px;
+    font-size: 20px;
+    color: #edf0f1;
+    cursor: pointer;
+}
+
+.nav_link {
+    list-style: none;
+}
+
+.nav_link li {
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.nav_link li a {
+    transition: all 0.3s ease 0%;
+}
+
+.nav_link li a:hover {
+    color: #0088a9;
+}
+
+header button {
+    padding: 9px 25px;
+    background-color: rgba(0, 136, 169, 1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0%;
+}
+
+header button:hover {
+    background-color: rgba(0, 136, 169, 0.8);
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 0 2%;
+    min-height: 720px;
+}
+
+.content a {
+    text-decoration: none;
+}
+
+.left_block, .center_block, .right_block {
+    border: 1px solid;
+    margin: 0 10px;
+}
+
+.left_block, .right_block {
+    text-align: center;
+}
+
+.center_block {
+    text-align: left;
+}
+
+.float_menu {
+    text-align: center;
+    position: fixed;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: white;
+    border: 1px solid lightseagreen;
+    box-shadow: 10px 10px 5px gray;
+}
+
+.float_menu p {
+    font-size: 20px;
+}
+
+.float_menu hr {
+    margin: 2px;
+}
+
+.float_menu a {
+    text-decoration: none;
+}
+
+.float_menu button {
+    color: #edf0f1;
+    margin: 8px 3px;
+    padding: 9px 25px;
+    background-color: rgba(25, 25, 112, 0.8);
+    border: none;
+    width: 90%;
+    cursor: pointer;
+    transition: all 0.3s ease 0%;
+}
+
+.float_menu button:hover {
+    background-color: rgba(25, 25, 112, 1);
+}
+
+.left_block .float_menu {
+    left: 5px;
+}
+
+.right_block .float_menu {
+    right: 15px;
+}
+
+.filter {
+    display: flex;
+}
+
+.filter p, .filter select {
+    margin: 5px;
+}
+.filter select {
+    padding: 0 5px 0 0;
+    border: 1px solid gray;
+}
+.itable {
+    border: 1px solid black;
+    margin: 5px 5px;
+}
+
+.itable table {
+    margin: auto;
+    border: none
+}
+
+.itable th {
+    background-color: #0088a9;
+    padding: 5px;
+    text-align: center;
+}
+
+.itable tr {
+    background-color: antiquewhite;
+}
+.itable td {
+    max-width: 160px;
+    padding: 5px;
+}
+.itable th, .itable td {
+    border-collapse: collapse;
+}
+#run {
+    padding: 5px;
+    margin: 0 auto;
+    background-color: aqua;
+}
+#define {
+    padding: 10px;
+}
+#import {
+    display: none;
+}
+.coverup {
+    position: fixed;
+    left: 0px; 
+    top: 0px;
+    background-color: rgba(0,0,0,0.6); 
+    width: 100%; 
+    height: 100%; 
+    display: none;
+} 
+
+.popup {
+    position: relative;
+    color: white;
+    background: rgba(25, 25, 112, 1);
+    width: 300px;
+    height: 400px;
+    border-radius: 10px;
+    margin: 110px auto;
+}
+
+.popup input[type="text"] {
+    position: relative;
+    font-size: 20px;
+    width: 80%;
+    margin: 5px 10%;
+}
+
+.popup label {
+    position: relative;
+    margin-left: 10%;
+}
+
+.popup input[type="submit"] {
+    position: absolute;
+    color: white;
+    background-color: rgba(25, 25, 112, 1);
+    border: 1px solid white;
+    right: 10%;
+}
+
+.popup .popup_header { 
+    position: relative;
+    margin: 3%;
+    text-align: center;
+    padding: 5%;
+}
+
+.popup .popup_cross {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    color: white; 
+    border: none;
+    right: 2px; 
+    top: 2px; 
+    background-color: rgba(25, 25, 112, 1);
+    cursor: pointer;
+}
+.popup .popup_cross:hover {
+    background-color: gray;
+}

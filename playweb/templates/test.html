@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>XMLHttpRequest</h1>
+<input type="text" name="module" id="module">
+<input type="button" value="submit" onclick="loadDoc(module.name,module.value)">
+
+<p id="demo">AJAX</p>
+<table>
+    <tr>
+        <th></th>
+    </tr>
+</table>
+
+
+<script>
+function loadDoc(name,value) {
+    var data = {
+        'request':name,
+        'arg':value
+    }
+    sendText(JSON.stringify(data), "/data/")
+}
+function sendText(value,url) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("demo").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("post", url, true);
+  xhttp.setRequestHeader("Content-type", "text/plain");
+  xhttp.send(value);
+}
+</script>
+
+</body>
+</html>

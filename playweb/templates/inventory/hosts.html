@@ -1,0 +1,49 @@
+{% extends 'inventory/inventory_base.html' %}
+
+        {% block center_block %}
+           <div class="filter">
+               <p>Inventory:</p>
+               <select>
+                   <option value="inventory_1">inventory_1</option>
+                   <option value="inventory_1">inventory_1</option>
+                   <option value="inventory_1">inventory_1</option>
+                   <option value="inventory_1">inventory_1</option>
+               </select>
+               <p>Group:</p>
+               <select>
+                   <option value="group_1" >Group_1</option>
+                   <option value="group_1" >Group_1</option>
+                   <option value="group_1" >Group_1</option>
+                   <option value="group_1" >Group_1</option>
+               </select>
+           </div>
+            <div class="itable">
+                <table frame="box" cellpadding="10">
+                    <tr>
+                        <th>Hostname</th>
+                        <th>IP Address</th>
+                        <th>Group</th>
+                        <th>Operating System</th>
+                        <th>Description</th>
+                        <th>Operation</th>
+                    </tr>
+                    <tr>
+                    {% for host in hostList %}
+                        <td><input name="Host" type="checkbox" > <a href="">{{host[0]}}</a></td>
+                        <td>{{host[1]}}</td>
+                        <td>{{host[2]}}</td>
+                        <td>{{host[3]}}</td>
+                        <td>{{host[4]}}</td>
+                        <td>
+                            <a href="#">Edit</a>
+                            <a href="#">Remove</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+           
+{% endblock %}
+{% block right_block %}
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'tasks/tasks.html' %}
+{% block center_block %}
+    <div id="run">
+        <form>
+            <label for="inventory">Inventory:</label><br>
+            <input type="text" name="inventory" class="input_text"><br>
+            <label for="group">Group:</label><br>
+            <input type="text" name="group" class="input_text"><br>
+            <label for="host">Host:</label><br>
+            <input type="text" name="Host" class="input_text"><br>
+            <label for="tasks">Tasks:</label><br>
+            <input type="text" name="tasks" class="input_text"><br>
+            <label for="options">Options:</label><br>
+            <input type="text" name="options" class="input_text"><br>
+            <label for="args">Arguments:</label><br>
+            <input type="text" name="args" class="input_text"><br>
+            <input type="submit" class="submit" value="Run" >
+        </form>
+    </div>           
+{% endblock %}

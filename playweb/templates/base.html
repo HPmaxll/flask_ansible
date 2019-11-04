@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PlayWebook</title>
+        <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='main.css') }} >
+        <script src="{{ url_for('static',filename='demo.js') }}" ></script>
+    </head>
+    <body>
+        <header>
+            <p class="logo">PlayWebook</p>
+            <nav>
+                <ul class="nav_link">
+                    <li><a href='/'>OVERVIEW</a></li>
+                    <li><a href={{ url_for('tasks.task_run') }} >TASKS</a></li>
+                    <li><a href={{ url_for('inventory.hosts') }} >INVENTORY</a></li>
+                </ul>
+            </nav>
+                <a href={{ url_for('auth.login')}}><button>Log In</button></a>
+        </header>
+        <div class="content">
+            <div class="left_block">
+                {% block left_block %}
+                {% endblock %}
+            </div>
+
+            <div class="center_block">
+                {% block center_block %}
+                {% endblock %}
+            </div>
+
+            <div class="right_block">
+                {% block right_block %}
+                {% endblock %}
+            </div>
+        </div>
+    </body>
+</html>

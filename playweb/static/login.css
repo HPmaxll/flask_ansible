@@ -1,0 +1,57 @@
+body {
+    font-weight: bold;
+    background: burlywood;
+}
+.banner {
+    color: darkslateblue;
+    text-align: center;
+}
+#login {
+    position: absolute;
+    width: 20%;
+    height: 25%;
+    left: 40%;
+    top: 23%;
+    background: darkslateblue;
+    border-radius: 15px;
+}
+#logo {
+    position: absolute;
+    width: 20%;
+    height: 7%;
+    top: 15%;
+    left: 40%;
+    text-align: center;
+    color: darkslateblue;
+}
+#logo p {
+    font-size: 35px;
+    margin-top: 2%;
+}
+#login_form {
+    color: white;
+    position: relative;
+    top: 15%;
+    left: 10%;
+    width: 80%;
+}
+label {
+    margin: 2%;
+}
+.login_text {
+    margin: 2%;
+    width: 92%;
+}
+#check {
+    top: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 4%;
+}
+#submit {
+    float: right;
+    margin: 3%;
+    color: white;
+    background: darkslateblue;
+    border: 2px solid white;
+}
