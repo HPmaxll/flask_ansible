@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+  <head>
+      <script src={{ url_for('static',filename='com.js') }} ></script>
+  </head>
 <body>
 
 <h1>XMLHttpRequest</h1>
@@ -13,28 +16,6 @@
     </tr>
 </table>
 
-
-<script>
-function loadModule(value) {
-    getText("/data/module/"+value);
-}
-function getText(url) {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      insertText(this.responseText);
-    }
-    else {
-      insertText('loading...');
-    }
-  };
-  xhttp.open("get", url, true);
-  xhttp.send();
-}
-function insertText(text) {
-  document.getElementById("demo").innerHTML = text;
-}
-</script>
 
 </body>
 </html>
