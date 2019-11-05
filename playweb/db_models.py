@@ -3,7 +3,7 @@ from playweb.db import db
 
 class ansible_module(db.Model):
     __tablename__ = 'modules'
-    __table_args__ = {'extend_existing': True}
+    __table_args__ = {'useexisting': True}
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     module = db.Column(db.String(100))
     description = db.Column(db.Text)
@@ -13,7 +13,7 @@ class ansible_module(db.Model):
 
 class ansible_module_parameter(db.Model):
     __tablename__ = 'module_parameter'
-    __table_args__ = {'extend_existing': True}
+    __table_args__ = {'useexisting': True}
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     parameter = db.Column(db.String(100))
     module = db.Column(db.String(100))
@@ -25,7 +25,7 @@ class ansible_module_parameter(db.Model):
 
 class ansible_host(db.Model):
     __tablename__ = 'ansible_host'
-    __table_args__ = {'extend_existing': True}
+    __table_args__ = {'useexisting': True}
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     hostname = db.Column(db.String(25))
     ip_addr = db.Column(db.String(15))

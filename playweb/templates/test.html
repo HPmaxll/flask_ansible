@@ -4,7 +4,7 @@
 
 <h1>XMLHttpRequest</h1>
 <input type="text" name="module" id="module">
-<input type="button" value="submit" onclick="loadDoc(module.name,module.value)">
+<input type="button" value="submit" onclick="loadModule(module.value)">
 
 <p id="demo">AJAX</p>
 <table>
@@ -15,23 +15,24 @@
 
 
 <script>
-function loadDoc(name,value) {
-    var data = {
-        'request':name,
-        'arg':value
-    }
-    sendText(JSON.stringify(data), "/data/")
+function loadModule(value) {
+    getText("/data/module/"+value);
 }
-function sendText(value,url) {
+function getText(url) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("demo").innerHTML = this.responseText;
+      insertText(this.responseText);
+    }
+    else {
+      insertText('loading...');
     }
   };
-  xhttp.open("post", url, true);
-  xhttp.setRequestHeader("Content-type", "text/plain");
-  xhttp.send(value);
+  xhttp.open("get", url, true);
+  xhttp.send();
+}
+function insertText(text) {
+  document.getElementById("demo").innerHTML = text;
 }
 </script>
 

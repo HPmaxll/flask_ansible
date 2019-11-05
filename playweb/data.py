@@ -1,11 +1,21 @@
-from flask import Blueprint, g, request, session
+from flask import Blueprint, request,abort, jsonify
 from playweb.db import db
-import json
+from playweb.db_models import ansible_module,ansible_module_parameter
 
 bp = Blueprint('data',__name__,url_prefix='/data')
 
-@bp.route('/', methods=('GET','POST'))
-def get_data():
-    if request.method == 'POST':
-        data = json.loads(request.data)
-        
+@bp.route('/module/<string:module_name>', methods=('GET',))
+def get_data(module_name):
+    m = ansible_module.query.filter_by(module=module_name).first()
+    if not m:
+        abort(404)
+    p = ansible_module_parameter.query.filter_by(module=module_name).all()
+    data = {}
+    data['module'] = m.module
+    data['description'] = m.description
+    data['parameter'] = []
+    for i in p:
+        tmp = {'parameter':i.parameter,'required':i.required,'description':i.description}
+        data['parameter'].append(tmp)
+    return jsonify(data)
+

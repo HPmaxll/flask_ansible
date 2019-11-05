@@ -1,24 +1,26 @@
-function loadDoc(name,value) {
-    var data = {
-        'request':name,
-        'arg':value
-    }
-    rdata = JSON.parse(sendText(JSON.stringify(data), "/data/"))
-    var mytable = document.createElement('table')
-    var table_head = document.createElement('tr')
-    var table_td = document.createElement('td')
-    for
-    table_td.innerHTML = "Name";
-    table_head.appendChild(table_td)
+function loadModule(value) {
+  var data = {
+      'arg':value
+  }
+  sendText(JSON.stringify(data), "/data/module")
 }
+
 function sendText(value,url) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      return this.responseText;
+      insertText(this.responseText);
     }
   };
-  xhttp.open("post", url, true);
-  xhttp.setRequestHeader("Content-type", "text/plain");
+  xhttp.open("POST", url, true);
+  xhttp.setRequestHeader("Content-type", "Application/JSON");
   xhttp.send(value);
+}
+
+function insertText(text) {
+  document.getElementById("demo").innerHTML = text;
+}
+
+function insertForm(text) {
+  
 }
