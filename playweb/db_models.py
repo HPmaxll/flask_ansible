@@ -36,12 +36,36 @@ class ansible_module_parameter(db.Model):
 class ansible_host(db.Model):
     __tablename__ = 'ansible_host'
     __table_args__ = {'useexisting': True}
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    hostname = db.Column(db.String(25))
-    ip_addr = db.Column(db.String(15))
-    grp = db.Column(db.String(50))
-    os = db.Column(db.String(20))
-    about = db.Column(db.String(150))
+    host_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    host_name = db.Column(db.String(50))
+    host_ip = db.Column(db.String(15))
+    host_os = db.Column(db.String(25))
+    host_desc = db.Column(db.String(200))
+    host_attr = db.Column(db.Text)
 
     def __repr__(self):
-        return f'host {self.ip_addr}'
+        return f'host {self.host_ip}'
+
+class ansible_inventory(db.Model):
+    __tablename__ = 'ansible_inventory'
+    __table_args__ = {'useexisting': True}
+    inv_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    inv_name = db.Column(db.String(50))
+    inv_creator = db.Column(db.String(50))
+    inv_desc = db.Column(db.String(200))
+    inv_attr = db.Column(db.Text)
+
+    def __repr__(self):
+        return f'Inventory {self.inv_name}'
+
+class ansible_group(db.Model):
+    __tablename__ = 'ansible_group'
+    __table_args__ = {'useexisting': True}
+    group_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    group_name = db.Column(db.String(50))
+    group_creator = db.Column(db.String(50))
+    group_desc = db.Column(db.String(200))
+    group_attr = db.Column(db.Text)
+
+    def __repr__(self):
+        return f'group {self.group_name}'

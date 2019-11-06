@@ -19,3 +19,12 @@ def get_data(module_name):
         data['parameter'].append(tmp)
     return jsonify(data)
 
+@bp.route('/module/like/<string:module_name>')
+def get_hint(module_name):
+    mlist = ansible_module.query.filter(
+        ansible_module.module.like(module_name + "%") if module_name is not None else ""
+        ).all()
+    data = []
+    for m in mlist:
+        data.append(m.module)
+    return jsonify(data)

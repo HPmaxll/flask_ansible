@@ -173,6 +173,7 @@ header button:hover {
     padding: 10px;
 }
 #import {
+    padding: 10px;
     display: none;
 }
 .coverup {

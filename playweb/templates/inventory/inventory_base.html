@@ -10,78 +10,7 @@
     <hr>
     <p>MANAGE</p>
     <hr>
-    <a onclick="popup('add_host')"><button>Add Host</button></a><br>
-    <a onclick="popup('add_group')"><button>Add Group</button></a><br>
-    <a onclick="popup('add_inventory')"><button>Add Inventory</button></a><br>
     <a onclick="popup('add_host')"><button>Import Inventory</button></a><br>
 </div>
-<div class="coverup" id='add_host'>
-    <div class="popup">
-        <div class="popup_header">
-            <span>Add new host</span>
-            <input type="button" class="popup_cross" value="X" onclick="hidder('add_host')">
-        </div>
-        <div id="form_host">
-            <form method="POST">
-                <label for="hostname">Hostname:</label><br>
-                <input type="text" name="hostname" id="hostname"><br>
-                <label for="ip_addr">IP Address:</label><br>
-                <input type="text" name="ip_addr" id="ip_addr"><br>
-                <label for="grp">Group:</label><br>
-                <input type="text" name="grp" id="grp"><br>
-                <label for="os">Operating System:</label><br>
-                <input type="text" name="os" id="os"><br>
-                <label for="description">Description:</label><br>
-                <input type="text" name="description" id="description"  ><br>
-                <input type="submit"  id="submit_host" value="confirm" ><br>
-            </form>
-        </div>
-    </div> 
-</div>
-<div class="coverup" id='add_inventory'>
-    <div class="popup">
-        <div class="popup_header">
-            <span>Add new inventory</span> 
-            <input type="button" class="popup_cross" value="X" onclick="hidder('add_inventory')"> 
-        </div> 
-        <div id="form_inventory">
-            <form method="POST">
-                <label for="name">Inventory Name:</label><br>
-                <input type="text" name="inv_name" id="inv_name"  ><br>
-                <label for="network">Network</label><br>
-                <input type="text" name="network" id="network"  ><br>
-                <label for="owner">Owner:</label><br>
-                <input type="text" name="owner" id="owner"  ><br>
-                <label for="os">Operating System:</label><br>
-                <input type="text" name="os" id="os"  ><br>
-                <label for="description">Description:</label><br>
-                <input type="text" name="description" id="description"  ><br>
-                <input type="submit"  id="submit_inventory" value="confirm" ><br>
-            </form>
-        </div>
-    </div> 
-</div>
-<div class="coverup" id='add_group'>
-    <div class="popup">
-        <div class="popup_header">
-            <span>Add new group</span> 
-            <input type="button" class="popup_cross" value="X" onclick="hidder('add_group')"> 
-        </div> 
-        <div id="form_inventory">
-            <form method="POST">
-                <label for="name">Inventory Name:</label><br>
-                <input type="text" name="inv_name" id="inv_name"  ><br>
-                <label for="network">Network</label><br>
-                <input type="text" name="network" id="network"  ><br>
-                <label for="owner">Owner:</label><br>
-                <input type="text" name="owner" id="owner"  ><br>
-                <label for="os">Operating System:</label><br>
-                <input type="text" name="os" id="os"  ><br>
-                <label for="description">Description:</label><br>
-                <input type="text" name="description" id="description"  ><br>
-                <input type="submit"  id="submit_inventory" value="confirm" ><br>
-            </form>
-        </div>
-    </div> 
-</div>
+
 {% endblock %}

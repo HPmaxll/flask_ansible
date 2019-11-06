@@ -6,6 +6,33 @@ function loadModule(value) {
 function insertText(text) {
   document.getElementById("demo").innerHTML = text;
 }
+
+function loadHint(event) {
+  var value = event.target.value;
+  var url = "/data/module/like/"+value;
+  getData(url, insertButton);
+}
+
+function insertButton(text) {
+  var objdiv = document.getElementById("query_info");
+  while(objdiv.firstChild) {
+    objdiv.removeChild(objdiv.firstChild);
+  }
+  var data = JSON.parse(text);
+  if (data) {
+    var i;
+    for (i in data) {
+      tmp_button = document.createElement('input');
+      tmp_button.type = 'button';
+      tmp_button.className = 'button_hint';
+      tmp_button.value = data[i];
+      tmp_br = document.createElement('br');
+      objdiv.appendChild(tmp_button);
+      objdiv.appendChild(tmp_br);
+    }
+  }
+}
+
 function insertForm(text) {
   var objdiv = document.getElementById("module_detail");
   while(objdiv.firstChild) {

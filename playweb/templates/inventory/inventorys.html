@@ -1,5 +1,49 @@
 {% extends 'inventory/inventory_base.html' %}
+        {% block center_block %}
+        <a onclick="popup('add_inventory')"><button>Add Inventory</button></a><br>
+            <div class="itable">
+                <table frame="box" cellpadding="10">
+                    <tr>
+                        <th>Inventory Name</th>
+                        <th>Creator</th>
+                        <th>Description</th>
+                        <th>Operation</th>
+                    </tr>
+                    <tr>
+                    {% for inv in invList %}
+                        <td><input name="inv" type="checkbox" > <a href="#">{{inv[0]}}</a></td>
+                        <td>{{inv[1]}}</td>
+                        <td>{{inv[2]}}</td>
+                        <td>
+                            <a href="#">Edit</a>
+                            <a href="#">Remove</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="coverup" id='add_inventory'>
+                        <div class="popup">
+                            <div class="popup_header">
+                                <span>Add new inventory</span> 
+                                <input type="button" class="popup_cross" value="X" onclick="hidder('add_inventory')"> 
+                            </div> 
+                            <div id="form_inventory">
+                                <form method="POST">
+                                    <label for="inv_name">Inventory Name:</label><br>
+                                    <input type="text" name="inv_name" id="inv_name"><br>
+                                    <label for="inv_creator">Creator:</label><br>
+                                    <input type="text" name="inv_creator" id="inv_creator"  ><br>
+                                    <label for="inv_desc">Description:</label><br>
+                                    <input type="text" name="inv_desc" id="inv_desc"><br>
+                                    <label for="inv_attr">Attributes:</label><br>
+                                    <input type="text" name="inv_attr" id="inv_attr"><br>
+                                    <input type="submit"  id="submit_inventory" value="confirm" ><br>
+                                </form>
+                            </div>
+                        </div> 
+                    </div>
+{% endblock %}
+{% block right_block %}
 
-        {% block content %}
-           
-        {% endblock %}
+{% endblock %}

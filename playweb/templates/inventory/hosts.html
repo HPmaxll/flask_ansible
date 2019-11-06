@@ -17,12 +17,12 @@
                    <option value="group_1" >Group_1</option>
                </select>
            </div>
+           <a onclick="popup('add_host')"><button>Add Host</button></a><br>
             <div class="itable">
                 <table frame="box" cellpadding="10">
                     <tr>
                         <th>Hostname</th>
                         <th>IP Address</th>
-                        <th>Group</th>
                         <th>Operating System</th>
                         <th>Description</th>
                         <th>Operation</th>
@@ -33,7 +33,6 @@
                         <td>{{host[1]}}</td>
                         <td>{{host[2]}}</td>
                         <td>{{host[3]}}</td>
-                        <td>{{host[4]}}</td>
                         <td>
                             <a href="#">Edit</a>
                             <a href="#">Remove</a>
@@ -41,6 +40,29 @@
                     </tr>
                     {% endfor %}
                 </table>
+            </div>
+            <div class="coverup" id='add_host'>
+                <div class="popup">
+                    <div class="popup_header">
+                        <span>Add new host</span>
+                        <input type="button" class="popup_cross" value="X" onclick="hidder('add_host')">
+                    </div>
+                    <div id="form_host">
+                        <form method="POST">
+                            <label for="host_name">Hostname:</label><br>
+                            <input type="text" name="host_name" id="host_name"><br>
+                            <label for="host_ip">IP Address:</label><br>
+                            <input type="text" name="host_ip" id="host_ip"><br>
+                            <label for="host_os">Operating System:</label><br>
+                            <input type="text" name="host_os" id="host_os"><br>
+                            <label for="host_desc">Description:</label><br>
+                            <input type="text" name="host_desc" id="host_desc"><br>
+                            <label for="host_attr">Attributes:</label><br>
+                            <input type="text" name="host_attr" id="host_attr"><br>
+                            <input type="submit"  id="submit_host" value="confirm" ><br>
+                        </form>
+                    </div>
+                </div> 
             </div>
            
 {% endblock %}
