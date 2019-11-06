@@ -6,7 +6,7 @@ class ansible_user(db.Model):
     __table_args__ = {'useexisting': True}
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(25))
-    password = db.Column(db.String(50))
+    password = db.Column(db.String(256))
 
     def __repr__(self):
         return f'<user> {self.username}'

@@ -11,9 +11,14 @@ function insertForm(text) {
   while(objdiv.firstChild) {
     objdiv.removeChild(objdiv.firstChild);
   }
-  var data = JSON.parse(text);
   var desc = document.createElement("p");
-  desc.innerText = data.description;
+  var data = JSON.parse(text);
+  if (data) {
+    desc.innerText = data.description;
+  }
+  else {
+    desc.innerText = "loading..."
+  }
   objdiv.appendChild(desc);
 }
 
