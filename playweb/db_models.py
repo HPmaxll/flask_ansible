@@ -1,6 +1,16 @@
 ## model.py
 from playweb.db import db
 
+class ansible_user(db.Model):
+    __tablename__ = 'user'
+    __table_args__ = {'useexisting': True}
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String(25))
+    password = db.Column(db.String(50))
+
+    def __repr__(self):
+        return f'<user> {self.username}'
+
 class ansible_module(db.Model):
     __tablename__ = 'modules'
     __table_args__ = {'useexisting': True}
