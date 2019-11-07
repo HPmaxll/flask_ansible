@@ -1,23 +1,27 @@
 {% extends 'tasks/tasks.html' %}
 {% block center_block %}
-<input type="radio" name="add_task" value="define" checked="checked" onclick="switchToDefine()">
-<input type="radio" name="add_task" value="import" onclick="switchToImport()">
+<input type="radio" name="add_task" checked="checked" onclick="switchToDefine()">
+<input type="radio" name="add_task" onclick="switchToImport()">
 <div id="define">
-    <form>
-        <label for="module">Module:</label><br>
-        <input type="text" name="module" oninput="loadHint(event)">
-        <input type="submit" value="submit" >
-    </form>
+    <p>Module:</p>
+    <input type="text" name="module" id="module" oninput="loadHint(event)">
+    <input type="button" value="submit" onclick="loadModule(module.value)">
+    <div id="module_detail"></div>
 </div>
 <div id="import">
     <form>
         <label for="explore">Import File</label><br>
         <input type="text" name="explore" >
-        <input type="submit" value="submit"
+        <input type="submit" value="submit">
     </form>
-</div> 
+</div>
+
 {% endblock %}
 
 {% block right_block %}
-<div id="query_info"></div>
+<div id="query_info">
+    <div id="module_list"></div>
+    <div id="module_para"></div>
+    <div id="desc"></div>
+</div>
 {% endblock %}

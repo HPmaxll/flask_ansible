@@ -170,9 +170,11 @@ header button:hover {
     background-color: aqua;
 }
 #define {
+    width: 300px;
     padding: 10px;
 }
 #import {
+    width: 300px;
     padding: 10px;
     display: none;
 }

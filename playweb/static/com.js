@@ -14,7 +14,7 @@ function loadHint(event) {
 }
 
 function insertButton(text) {
-  var objdiv = document.getElementById("query_info");
+  var objdiv = document.getElementById("module_list");
   while(objdiv.firstChild) {
     objdiv.removeChild(objdiv.firstChild);
   }
@@ -22,11 +22,60 @@ function insertButton(text) {
   if (data) {
     var i;
     for (i in data) {
-      tmp_button = document.createElement('input');
+      var tmp_button = document.createElement('input');
       tmp_button.type = 'button';
       tmp_button.className = 'button_hint';
       tmp_button.value = data[i];
-      tmp_br = document.createElement('br');
+      var tmp_br = document.createElement('br');
+      objdiv.appendChild(tmp_button);
+      objdiv.appendChild(tmp_br);
+      tmp_button.onclick = (function(param){
+          var childrenparam=param;
+          return function() {
+            objdiv.style.display = "none";
+            clearChlid('define');
+            updateText(childrenparam);
+            generate_para(childrenparam);
+          }
+      })(data[i]); 
+    }
+  }
+}
+
+function clearChlid(id) {
+  var objdiv = document.getElementById(id);
+  while(objdiv.firstChild) {
+    objdiv.removeChild(objdiv.firstChild);
+  }
+}
+
+function updateText(text) {
+  var objdiv = document.getElementById('define');
+  var define_module = document.createElement('p');
+  define_module.innerText = 'Module: ' + text;
+  objdiv.appendChild(define_module);
+}
+
+function generate_para(module) {
+  var url = "/data/module/" + module;
+  getData(url, insertPara);
+}
+
+function insertPara(text) {
+  var objdiv = document.getElementById('module_para');
+  objdiv.style.display = "block";
+  while(objdiv.firstChild) {
+    objdiv.removeChild(objdiv.firstChild);
+  }
+  var data = JSON.parse(text);
+  if (data) {
+    var para = data.parameter;
+    for (var i in para) {
+      var tmp_button = document.createElement('input');
+      tmp_button.type = 'button';
+      tmp_button.className = 'button_hint';
+      tmp_button.value = para[i].parameter;
+      var tmp_br = document.createElement('br');
       objdiv.appendChild(tmp_button);
       objdiv.appendChild(tmp_br);
     }

@@ -1,10 +1,33 @@
 #query_info {
-    float: right;
+    display: flex;
+}
+#module_list {
     width: 250px;
     height: 500px;
     overflow: auto;
     text-align: left;
 }
+
+#module_para {
+    width: 250px;
+    height: 500px;
+    overflow: auto;
+    text-align: left;
+    display: none;
+}
+
+#desc {
+    width: 250px;
+    height: 500px;
+    overflow: auto;
+    text-align: left;
+}
+
+#module_detail {
+    text-align: left;
+    text-indent: 10px;
+}
+
 .button_hint {
     border: none;
     display: inline;
