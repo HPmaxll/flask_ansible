@@ -74,7 +74,7 @@ class ansibleTask:
             self.variable_manager.extra_vars = extra_vars
 
     def run_task(self, taskList):
-        source = {'hosts': 'all', 'gather_facts': 'no', 'tasks': [{'action': {'module': 'shell', 'args': command}, 'register': 'shell_out'}]}
+        source = {'hosts': 'all', 'gather_facts': 'no', 'tasks': taskList }
         play = Play().load(source, variable_manager=self.variable_manager, loader=self.loader)
         results_callback = myCallback()
         tqm = None
@@ -96,6 +96,7 @@ class ansibleTask:
         finally:
             if tqm is not None:
                 tqm.cleanup()
+
     def run_playbook(self, playbookList):
         results_callback = myCallback()
         playbook = PlaybookExecutor(playbooks=playbookList, inventory=self.inventory,

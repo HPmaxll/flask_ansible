@@ -1,7 +1,7 @@
 {% extends 'tasks/tasks.html' %}
 {% block center_block %}
-<input type="radio" name="add_task" checked="checked" onclick="switchToDefine()">
-<input type="radio" name="add_task" onclick="switchToImport()">
+<input type="radio" name="add_task" checked="checked" onclick="switchToDefine()">Define
+<input type="radio" name="add_task" onclick="switchToImport()">Import
 <div id="define">
     <p>Module:</p>
     <input type="text" name="module" id="module" oninput="loadHint(event)">

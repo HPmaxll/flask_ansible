@@ -2,9 +2,9 @@
 from playweb.db import db
 
 class ansible_user(db.Model):
-    __tablename__ = 'user'
+    __tablename__ = 'ansible_user'
     __table_args__ = {'useexisting': True}
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(25))
     password = db.Column(db.String(256))
 

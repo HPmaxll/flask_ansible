@@ -73,7 +73,11 @@ class ansibleTask:
             self.variable_manager.extra_vars = extra_vars
 
     def run_task(self, taskList):
-        source = {'hosts': 'all', 'gather_facts': 'no', 'tasks': [{'action': {'module': 'shell', 'args': command}, 'register': 'shell_out'}]}
+        source = {
+            'hosts': 'all', 
+            'gather_facts': 'no', 
+            'tasks': [{'action': {'module': 'shell', 'args': command}, 'register': 'shell_out'}]
+        }
         play = Play().load(source, variable_manager=self.variable_manager, loader=self.loader)
         results_callback = myCallback()
         tqm = None
