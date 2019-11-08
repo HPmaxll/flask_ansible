@@ -1,3 +1,5 @@
+import os
+import json
 import tempfile
 from collections import namedtuple
 from ansible.parsing.dataloader import DataLoader
@@ -8,30 +10,24 @@ from ansible.executor.playbook_executor import PlaybookExecutor
 from ansible.executor.task_queue_manager import TaskQueueManager
 from ansible.plugins.callback import CallbackBase
 
-class myCallback(CallbackBase):
-    def __init__(self, display=None, option=None):
-        super().__init__(display, option)
-        self.result = None
-        self.error_msg = None
-    def v2_runner_on_ok(self, result):
-        res = getattr(result, '_result')
-        self.result = res
-        self.error_msg = res.get('stderr')
-    def v2_runner_on_failed(self, result, ignore_errors=None):
-        if ignore_errors:
-            return
-        res = getattr(result, '_result')
-        self.error_msg = res.get('stderr', '') + res.get('msg')
-    def runner_on_unreachable(self, host, result):
-        if result.get('unreachable'):
-            self.error_msg = host + ':' + result.get('msg', '')
-    def v2_runner_item_on_failed(self, result):
-        res = getattr(result, '_result')
-        self.error_msg = res.get('stderr', '') + res.get('msg')
+class ResultCallback(CallbackBase):
+    def __init__(self, *args, **kwargs):
+        self.results_raw = {}
+
+    def v2_runner_on_unreachable(self, result):
+        self.results_raw['unreachable'] = {}
+        self.results_raw['unreachable'][result._host.get_name()] = json.dumps(result._result)
+
+    def v2_runner_on_ok(self, result, *args, **kwargs):
+        self.results_raw['success'] = {}
+        self.results_raw['success'][result._host.get_name()] = json.dumps(result._result)
+
+    def v2_runner_on_failed(self, result, *args, **kwargs):
+        self.results_raw['failed'] = {}
+        self.results_raw['failed'][result._host.get_name()] = json.dumps(result._result)
 
 class ansibleTask:
-    def __init__(self, hosts, extra_vars=None):
-        self.hosts = hosts
+    def __init__(self):
         self.hosts_file = None
         Options = namedtuple(
                 'Options',
@@ -66,20 +62,28 @@ class ansibleTask:
                 syntax=None
                 )
         self.loader = DataLoader()
-        self.passwords = dict(vault_pass='secret')
-        self.inventory = InventoryManager(loader=self.loader, sources=[self.hosts_file])
+        self.passwords = {}
+        ## self.inventory = InventoryManager(loader=self.loader, sources=[self.hosts_file])
+        self.inventory = InventoryManager(loader=self.loader)
         self.variable_manager = VariableManager(loader=self.loader, inventory=self.inventory)
-        if extra_vars:
-            self.variable_manager.extra_vars = extra_vars
+    
+    def load_hosts(self, host_list):
+        for host in host_list:
+            self.inventory.add_host(host=host, port=22, group='all')
 
-    def run_task(self, taskList):
-        source = {
-            'hosts': 'all', 
-            'gather_facts': 'no', 
-            'tasks': [{'action': {'module': 'shell', 'args': command}, 'register': 'shell_out'}]
-        }
-        play = Play().load(source, variable_manager=self.variable_manager, loader=self.loader)
-        results_callback = myCallback()
+    def add_extra_vars(self, extra_vars):
+        self.variable_manager.extra_vars = extra_vars
+
+    def run_task(self, host_list, task_list):
+        play_source = dict(
+                name="Ansible Play",
+                hosts=host_list,
+                remote_user='root',
+                gather_facts='no',
+                tasks=task_list
+                )
+        play = Play().load(play_source, variable_manager=self.variable_manager, loader=self.loader)
+        results_callback = ResultCallback()
         tqm = None
         try:
             tqm = TaskQueueManager(
@@ -91,21 +95,29 @@ class ansibleTask:
                 stdout_callback=results_callback
             )
             tqm.run(play)
-            if results_callback.error_msg:
-                raise Exception(results_callback.error_msg)
-            return results_callback.result
+
         except:
             raise
         finally:
             if tqm is not None:
                 tqm.cleanup()
+        return results_callback.results_raw
+
     def run_playbook(self, playbookList):
-        results_callback = myCallback()
+        results_callback = ResultCallback()
         playbook = PlaybookExecutor(playbooks=playbookList, inventory=self.inventory,
                                     variable_manager=self.variable_manager,
                                     loader=self.loader, options=self.options, passwords=self.passwords)
         setattr(getattr(playbook, '_tqm'), '_stdout_callback', results_callback)
         playbook.run()
-        if results_callback.error_msg:
-            raise Exception(results_callback.error_msg)
-        return results_callback.result
+
+        return results_callback.results_raw
+
+if __name__ == '__main__':
+    taskHandler = ansibleTask()
+    inventory = ['139.159.195.229']
+    host_list = ['all']
+    taskHandler.load_hosts(inventory)
+    task_list = [{'action': {'module': 'ping', 'args': ''}, 'register': 'shell_out'}]
+    result = taskHandler.run_task(host_list, task_list)
+    print(result)
