@@ -6,7 +6,6 @@
     <p>Module:</p>
     <input type="text" name="module" id="module" oninput="loadHint(event)">
     <input type="button" value="submit" onclick="loadModule(module.value)">
-    <div id="module_detail"></div>
 </div>
 <div id="import">
     <form>
@@ -22,6 +21,10 @@
 <div id="query_info">
     <div id="module_list"></div>
     <div id="module_para"></div>
-    <div id="desc"></div>
+    <div id="desc">
+        <p id="desc_module"></p>
+        <hr>
+        <p id="desc_para"></p>
+    </div>
 </div>
 {% endblock %}

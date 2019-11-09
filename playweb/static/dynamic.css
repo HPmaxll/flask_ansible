@@ -6,6 +6,7 @@
     height: 500px;
     overflow: auto;
     text-align: left;
+    display: block;
 }
 
 #module_para {

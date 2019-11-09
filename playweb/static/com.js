@@ -1,10 +1,30 @@
-function loadModule(value) {
-  var url = "/data/module/"+value;
-  getData(url,insertForm);
+function loadModule(name, fn) {
+  if (!sessionStorage.getItem(name)) {
+      getModuleData("/data/module/", name, fn);
+  }
+  else {
+      var data = sessionStorage.getItem(name);
+      fn(data);
+  }
 }
 
-function insertText(text) {
-  document.getElementById("demo").innerHTML = text;
+function getModuleData(prefix, value, fn) {
+  var url = prefix + value;
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4) {
+          if (this.status == 200) {
+              sessionStorage.setItem(value, this.responseText);
+              fn(this.responseText);
+          }
+          else {
+              sessionStorage.setItem(value, this.statusText);
+              fn(this.statusText);
+          }
+      }
+  };
+  xhttp.open("get", url, true);
+  xhttp.send();
 }
 
 function loadHint(event) {
@@ -30,35 +50,43 @@ function insertButton(text) {
       objdiv.appendChild(tmp_button);
       objdiv.appendChild(tmp_br);
       tmp_button.onclick = (function(param){
-          var childrenparam=param;
+        return function() {
+          if (!sessionStorage.getItem(param)) {
+            var url = "/data/module/" + param;
+            getData(url,loadModuleDesc);
+          }
+          else {
+            var data = sessionStorage.getItem(param);
+            loadModuleDesc(data);
+          }
+          
+        }
+      })(data[i]);
+
+      tmp_button.ondblclick = (function(param){
           return function() {
-            objdiv.style.display = "none";
-            clearChlid('define');
-            updateText(childrenparam);
-            generate_para(childrenparam);
+            updateText(param);
+            loadModule(param, insertPara);
           }
       })(data[i]); 
     }
   }
 }
 
-function clearChlid(id) {
-  var objdiv = document.getElementById(id);
-  while(objdiv.firstChild) {
-    objdiv.removeChild(objdiv.firstChild);
-  }
+function loadModuleDesc(data) {
+  var module = JSON.parse(data);
+  document.getElementById('desc_module').innerText = module.module + "\n" + module.description;
 }
 
 function updateText(text) {
+  document.getElementById('module_list').style.display = "none";
   var objdiv = document.getElementById('define');
+  while(objdiv.firstChild) {
+    objdiv.removeChild(objdiv.firstChild);
+  }
   var define_module = document.createElement('p');
   define_module.innerText = 'Module: ' + text;
   objdiv.appendChild(define_module);
-}
-
-function generate_para(module) {
-  var url = "/data/module/" + module;
-  getData(url, insertPara);
 }
 
 function insertPara(text) {
@@ -76,28 +104,28 @@ function insertPara(text) {
       tmp_button.className = 'button_hint';
       tmp_button.value = para[i].parameter;
       var tmp_br = document.createElement('br');
+      tmp_button.onclick = para_click(para[i].description);
+      tmp_button.ondblclick = para_dbclick(para[i].parameter);
       objdiv.appendChild(tmp_button);
       objdiv.appendChild(tmp_br);
     }
   }
 }
 
-function insertForm(text) {
-  var objdiv = document.getElementById("module_detail");
-  while(objdiv.firstChild) {
-    objdiv.removeChild(objdiv.firstChild);
+function para_click(desc) {
+  return function() {
+    document.getElementById('desc_para').innerText = desc;
   }
-  var desc = document.createElement("p");
-  var data = JSON.parse(text);
-  if (data) {
-    desc.innerText = data.description;
-  }
-  else {
-    desc.innerText = "loading..."
-  }
-  objdiv.appendChild(desc);
 }
 
+function para_dbclick(parameter) {
+  return function() {
+    var objdiv = document.getElementById('define');
+    var para = document.createElement('p');
+    para.innerText = parameter;
+    objdiv.appendChild(para);
+  }
+}
 function getData(url,fn) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -111,6 +139,7 @@ function getData(url,fn) {
   xhttp.open("get", url, true);
   xhttp.send();
 }
+
 
 function postData(data,url,fn) {
   var xhttp = new XMLHttpRequest();

@@ -26,7 +26,7 @@ class ResultCallback(CallbackBase):
         self.results_raw['failed'] = {}
         self.results_raw['failed'][result._host.get_name()] = json.dumps(result._result)
 
-class ansibleTask:
+class ansibleTaskHandler:
     def __init__(self):
         self.hosts_file = None
         Options = namedtuple(
@@ -74,10 +74,9 @@ class ansibleTask:
     def add_extra_vars(self, extra_vars):
         self.variable_manager.extra_vars = extra_vars
 
-    def run_task(self, host_list, task_list):
+    def run_task(self, target_host, task_list):
         play_source = dict(
-                name="Ansible Play",
-                hosts=host_list,
+                hosts=target_host,
                 remote_user='root',
                 gather_facts='no',
                 tasks=task_list
@@ -114,7 +113,7 @@ class ansibleTask:
         return results_callback.results_raw
 
 if __name__ == '__main__':
-    taskHandler = ansibleTask()
+    taskHandler = ansibleTaskHandler()
     inventory = ['139.159.195.229']
     host_list = ['all']
     taskHandler.load_hosts(inventory)
