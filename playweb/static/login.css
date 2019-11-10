@@ -1,3 +1,6 @@
+body {
+    background-image: url('eight_horns.png');
+}
 #login_back {
     position: fixed;
     left: 0px; 

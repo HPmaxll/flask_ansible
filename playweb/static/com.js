@@ -46,36 +46,18 @@ function insertButton(text) {
       tmp_button.type = 'button';
       tmp_button.className = 'button_hint';
       tmp_button.value = data[i];
+      tmp_button.onclick = mod_click(data[i]);
+      tmp_button.ondblclick = mod_dbclick(data[i]); 
       var tmp_br = document.createElement('br');
       objdiv.appendChild(tmp_button);
-      objdiv.appendChild(tmp_br);
-      tmp_button.onclick = (function(param){
-        return function() {
-          if (!sessionStorage.getItem(param)) {
-            var url = "/data/module/" + param;
-            getData(url,loadModuleDesc);
-          }
-          else {
-            var data = sessionStorage.getItem(param);
-            loadModuleDesc(data);
-          }
-          
-        }
-      })(data[i]);
-
-      tmp_button.ondblclick = (function(param){
-          return function() {
-            updateText(param);
-            loadModule(param, insertPara);
-          }
-      })(data[i]); 
+      objdiv.appendChild(tmp_br); 
     }
   }
 }
 
 function loadModuleDesc(data) {
   var module = JSON.parse(data);
-  document.getElementById('desc_module').innerText = module.module + "\n" + module.description;
+  document.getElementById('desc_module').innerText = module.module + ":\n" + module.description;
 }
 
 function updateText(text) {
@@ -86,7 +68,13 @@ function updateText(text) {
   }
   var define_module = document.createElement('p');
   define_module.innerText = 'Module: ' + text;
+  var define_finish = document.createElement('input');
+  define_finish.value = 'OK';
+  define_finish.id = 'define_finish';
+  define_finish.type = 'button';
+  
   objdiv.appendChild(define_module);
+  objdiv.appendChild(define_finish);
 }
 
 function insertPara(text) {
@@ -103,29 +91,86 @@ function insertPara(text) {
       tmp_button.type = 'button';
       tmp_button.className = 'button_hint';
       tmp_button.value = para[i].parameter;
-      var tmp_br = document.createElement('br');
-      tmp_button.onclick = para_click(para[i].description);
+      tmp_button.id = para[i].parameter
+     // var tmp_br = document.createElement('br');
+      tmp_button.onclick = para_click(para[i].parameter, para[i].description);
       tmp_button.ondblclick = para_dbclick(para[i].parameter);
       objdiv.appendChild(tmp_button);
-      objdiv.appendChild(tmp_br);
+     // objdiv.appendChild(tmp_br);
     }
   }
 }
 
-function para_click(desc) {
+function mod_click(name) {
   return function() {
-    document.getElementById('desc_para').innerText = desc;
+    if (!sessionStorage.getItem(name)) {
+      var url = "/data/module/" + name;
+      getData(url,loadModuleDesc);
+    }
+    else {
+      var data = sessionStorage.getItem(name);
+      loadModuleDesc(data);
+    }
+  }
+}
+
+function mod_dbclick(name) {
+  return function() {
+    updateText(name);
+    loadModule(name, insertPara);
+  }
+}
+
+function mod_submit(name) {
+  if (!sessionStorage.getItem(name)) {
+    var url = "/data/module/" + name;
+    getData(url,loadModuleDesc);
+  }
+  else {
+    var data = sessionStorage.getItem(name);
+    loadModuleDesc(data);
+  }
+  updateText(name);
+  loadModule(name, insertPara);
+}
+
+function para_click(para, desc) {
+  return function() {
+    document.getElementById('desc_para').innerText = para + ':\n' + desc;
   }
 }
 
 function para_dbclick(parameter) {
   return function() {
-    var objdiv = document.getElementById('define');
-    var para = document.createElement('p');
-    para.innerText = parameter;
-    objdiv.appendChild(para);
+    var para = document.getElementById(parameter);
+    if (para.parentNode.id == 'module_para') {
+      var objdiv = document.getElementById('define');
+      var subdiv = document.createElement('div');
+      subdiv.id = parameter + '_div';
+      subdiv.className = 'parameter_div';
+      var box = document.createElement('input');
+      var br = document.createElement('br');
+      box.type = 'text';
+      box.id = parameter + '_value';
+      para.className = 'parameter_button';
+      subdiv.appendChild(para);
+      subdiv.appendChild(br);
+      subdiv.appendChild(box);
+      objdiv.insertBefore(subdiv, document.getElementById('define_finish'));
+    }
+    else {
+      para.className = 'button_hint';
+      document.getElementById('module_para').appendChild(para);
+      var subdiv = document.getElementById(parameter + '_div');
+      while (subdiv.firstChild) {
+        subdiv.removeChild(subdiv.firstChild)
+      }
+      subdiv.parentNode.removeChild(subdiv);
+    }
+    
   }
 }
+
 function getData(url,fn) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -139,7 +184,6 @@ function getData(url,fn) {
   xhttp.open("get", url, true);
   xhttp.send();
 }
-
 
 function postData(data,url,fn) {
   var xhttp = new XMLHttpRequest();

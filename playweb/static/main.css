@@ -4,7 +4,9 @@
     padding: 0;
    
 }
-
+body {
+    background-image: url('eight_horns.png');
+}
 header {
     display: flex;
     justify-content: space-between;
@@ -167,7 +169,6 @@ header button:hover {
 #run {
     padding: 5px;
     margin: 0 auto;
-    background-color: aqua;
 }
 #define {
     width: 300px;
