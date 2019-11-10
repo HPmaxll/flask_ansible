@@ -55,14 +55,9 @@ function insertButton(text) {
   }
 }
 
-function loadModuleDesc(data) {
-  var module = JSON.parse(data);
-  document.getElementById('desc_module').innerText = module.module + ":\n" + module.description;
-}
-
 function updateText(text) {
   document.getElementById('module_list').style.display = "none";
-  var objdiv = document.getElementById('define');
+  var objdiv = document.getElementById('selected_name');
   while(objdiv.firstChild) {
     objdiv.removeChild(objdiv.firstChild);
   }
@@ -134,6 +129,13 @@ function mod_submit(name) {
   loadModule(name, insertPara);
 }
 
+function loadModuleDesc(data) {
+  var module = JSON.parse(data);
+  if (module) {
+    document.getElementById('desc_module').innerText = module.module + ":\n" + module.description;
+  }
+}
+
 function para_click(para, desc) {
   return function() {
     document.getElementById('desc_para').innerText = para + ':\n' + desc;
@@ -144,7 +146,7 @@ function para_dbclick(parameter) {
   return function() {
     var para = document.getElementById(parameter);
     if (para.parentNode.id == 'module_para') {
-      var objdiv = document.getElementById('define');
+      var objdiv = document.getElementById('selected_name');
       var subdiv = document.createElement('div');
       subdiv.id = parameter + '_div';
       subdiv.className = 'parameter_div';
@@ -198,4 +200,8 @@ function postData(data,url,fn) {
   xhttp.open("post", url, true);
   xhttp.setRequestHeader("Content-type", "Application/JSON");
   xhttp.send(data);
+}
+
+function nothing() {
+  //pass;
 }

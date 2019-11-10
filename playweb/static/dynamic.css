@@ -1,38 +1,70 @@
+#mod_selected {
+    position: absolute;
+    width: 25%;
+}
+
+#selected_name {
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px gray;
+}
+#selected_name:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+#import {
+    width: 300px;
+    padding: 10px;
+    display: none;
+}
+
 #query_info {
     display: flex;
 }
-#module_list {
-    width: 300px;
-    height: 500px;
+
+#module_detail {
+    margin: 5px 0;
+    max-width: 350px;
+    max-height: 610px;
     overflow: auto;
+}
+#module_list, #module_para {
+    border: 1px solid gray;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px gray;
     text-align: left;
-    display: block;
+    overflow-x: auto;
+    margin: 5px;
     padding: 5px;
 }
 
 #module_para {
-    width: 300px;
-    height: 500px;
-    overflow: auto;
-    text-align: left;
     display: none;
-    padding: 5px;
 }
 
 #desc {
-    width: 250px;
-    height: 500px;
-    overflow: auto;
+    max-width: 400px;
+    max-height: 610px;
     text-align: left;
+    overflow: auto;
     margin: 5px;
 }
 
+#desc_module, #desc_para {
+    padding: 6px;
+    overflow-x: auto;
+    border: 1px solid gray;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px gray;
+}
 #desc_module {
     margin: 5px;
 }
 
 #desc_para {
-    margin: 5px;
+    margin:10px 5px 5px 5px;
 }
 #module_detail {
     text-align: left;

@@ -12,12 +12,29 @@
             <p class="logo">PlayWebook</p>
             <nav>
                 <ul class="nav_link">
-                    <li><a href='/'>OVERVIEW</a></li>
-                    <li><a href={{ url_for('tasks.task_run') }} >TASKS</a></li>
-                    <li><a href={{ url_for('inventory.hosts') }} >INVENTORY</a></li>
+                    <li><a href='/'>OVERVIEW</a>
+                        <ul>
+                            <li><a href={{ url_for('overview.stats') }}>Stats</a></li>
+                            <li><a href={{ url_for('overview.history') }}>History</a></li>
+                        </ul>
+                    </li>
+                    <li><a href={{ url_for('tasks.task_run') }} >TASKS</a>
+                        <ul>
+                            <li><a href={{ url_for('tasks.task_run') }}>Run</a></li>
+                            <li><a href={{ url_for('tasks.schedule') }}>Schedule</a></li>
+                            <li><a href={{ url_for('tasks.define') }}>Define</a></li>
+                        </ul>
+                    </li>
+                    <li><a href={{ url_for('inventory.hosts') }} >INVENTORY</a>
+                        <ul>
+                            <li><a href={{ url_for('inventory.hosts') }}>Hosts</a></li>
+                            <li><a href={{ url_for('inventory.inventorys') }}>Inventory</a></li>
+                            <li><a href={{ url_for('inventory.groups') }}>Groups</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
-                <a href={{ url_for('auth.login')}}><button>Log In</button></a>
+            <a href={{ url_for('auth.login')}}><button>Log In</button></a>
         </header>
         <div class="content">
             <div class="left_block">
