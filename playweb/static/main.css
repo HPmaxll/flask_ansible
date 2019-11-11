@@ -8,12 +8,14 @@ body {
     background-image: url('eight_horns.png');
 }
 header {
-   /*  display: flex;
+    position: relative;
+    display: flex;
     justify-content: space-between;
-    align-items: center; */
+    align-items: center;
     padding: 0 10%;
     height: 50px;
-    background-color: rgba(36,37,42,0.9);
+    background-color: rgb(51, 56, 51);
+    box-shadow: 3px 3px 3px gray;
 }
 
 header a,header button {
@@ -29,37 +31,52 @@ header a,header button {
     color: #edf0f1;
     cursor: pointer;
 }
-
+nav {
+    width: 450px;
+    /* background-color: rosybrown; */
+}
 .nav_link {
+    margin: 0;
     list-style: none;
+    display: flex;
+    height: 50px;
+    width: 150px;
+}
+.nav_link button {
+    width: 150px;
+    height: 50px;
+    border: none;
+    background-color: rgba(0,0,0,0);
 }
 
-.nav_link li {
-    position: relative;
-    /* display: inline-block; */
-    padding: 0 20px;
+.nav_link > div > li:hover button {
+    background-color: rgba(100,200,200,0.3);
+}
+.nav_link > div > li {
+    width: 150px;
+    text-align: center;
 }
 
-.nav_link li:hover {
-    background-color: rgba(229, 231, 240, 0.1);
-}
 .nav_link li a {
     transition: all 0.3s ease 0%;
 }
 
-.nav_link li a:hover {
-    color: #0088a9;
+.nav_link li ul {
+    margin-top: 5px;
 }
-
 .nav_link li ul li {
+    line-height: 50px;
+    margin-top: 5px;
+    /* border-bottom: 1px solid gray; */
     background-color: lightcoral;
-    /* position: absolute; */
-    /* display: none; */
+    box-shadow: 3px 3px 3px gray;
+    display: none;
 }
 .nav_link li:hover ul li {
     display: block;
 }
-header button {
+
+header > a > button {
     padding: 9px 25px;
     background-color: rgba(0, 136, 169, 1);
     border: none;
@@ -68,11 +85,12 @@ header button {
     transition: all 0.3s ease 0%;
 }
 
-header button:hover {
+header > a > button:hover {
     background-color: rgba(0, 136, 169, 0.8);
 }
 
 .content {
+    margin-top: 5px;
     display: flex;
     justify-content: space-between;
     align-items: stretch;
@@ -95,51 +113,6 @@ header button:hover {
 
 .center_block {
     text-align: left;
-}
-
-.float_menu {
-    text-align: center;
-    position: fixed;
-    padding: 10px;
-    margin-top: 20px;
-    background-color: white;
-    border: 1px solid lightseagreen;
-    box-shadow: 10px 10px 5px gray;
-}
-
-.float_menu p {
-    font-size: 20px;
-}
-
-.float_menu hr {
-    margin: 2px;
-}
-
-.float_menu a {
-    text-decoration: none;
-}
-
-.float_menu button {
-    color: #edf0f1;
-    margin: 8px 3px;
-    padding: 9px 25px;
-    background-color: rgba(25, 25, 112, 0.8);
-    border: none;
-    width: 90%;
-    cursor: pointer;
-    transition: all 0.3s ease 0%;
-}
-
-.float_menu button:hover {
-    background-color: rgba(25, 25, 112, 1);
-}
-
-.left_block .float_menu {
-    left: 5px;
-}
-
-.right_block .float_menu {
-    right: 15px;
 }
 
 .filter {

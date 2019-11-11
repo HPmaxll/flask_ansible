@@ -1,15 +1,5 @@
 {% extends 'base.html' %}
 
 {% block left_block %}
-<div class="float_menu" >
-    <p>Tasks</p>
-    <hr>
-    <nav>
-        <a href={{ url_for('tasks.task_run') }}><button>Run</button></a><br>
-        <a href={{ url_for('tasks.schedule') }}><button>Schedule</button></a><br>
-        <a href={{ url_for('tasks.define') }}><button>Define</button></a><br>
-    </nav>
-    <hr>
-    <p>Go Top</p>
-</div>
+
 {% endblock %}

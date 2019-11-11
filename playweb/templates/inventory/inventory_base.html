@@ -1,16 +1,5 @@
 {% extends 'base.html' %}
 
 {% block left_block %}
-<div class="float_menu">
-    <p>VIEW</p>
-    <hr>
-    <a href={{ url_for('inventory.hosts') }}><button>Hosts</button></a><br>
-    <a href={{ url_for('inventory.inventorys') }}><button>Inventory</button></a><br>
-    <a href={{ url_for('inventory.groups') }}><button>Groups</button></a><br>
-    <hr>
-    <p>MANAGE</p>
-    <hr>
-    <a onclick="popup('add_host')"><button>Import Inventory</button></a><br>
-</div>
 
 {% endblock %}
