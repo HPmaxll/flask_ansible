@@ -42,16 +42,22 @@ nav {
     height: 50px;
     width: 150px;
 }
+
 .nav_link button {
     width: 150px;
     height: 50px;
     border: none;
+    cursor: pointer;
+}
+.nav_link > div > li > a > button {
     background-color: rgba(0,0,0,0);
 }
 
-.nav_link > div > li:hover button {
-    background-color: rgba(100,200,200,0.3);
+.nav_link > div > li:hover > a > button {
+    /* color: silver; */
+    background-color: rgba(0, 136, 169, 1);
 }
+
 .nav_link > div > li {
     width: 150px;
     text-align: center;
@@ -65,15 +71,23 @@ nav {
     margin-top: 5px;
 }
 .nav_link li ul li {
-    line-height: 50px;
+    /* line-height: 50px; */
     margin-top: 5px;
     /* border-bottom: 1px solid gray; */
-    background-color: lightcoral;
+    /* background-color: rgba(139, 126, 102, 0.9); */
     box-shadow: 3px 3px 3px gray;
     display: none;
 }
+
 .nav_link li:hover ul li {
     display: block;
+}
+
+.nav_link li ul li button {
+    background-color: rgba(139, 126, 102, 0.9);
+}
+.nav_link li ul li button:hover {
+    background-color: rgba(0, 139, 139, 1);
 }
 
 header > a > button {
@@ -90,12 +104,12 @@ header > a > button:hover {
 }
 
 .content {
-    margin-top: 5px;
+    margin-top: 10px;
     display: flex;
     justify-content: space-between;
     align-items: stretch;
     padding: 0 2%;
-    min-height: 620px;
+    min-height: 650px;
 }
 
 .content a {

@@ -15,26 +15,26 @@
                     <div>
                         <li><a href='/'><button>OVERVIEW</button></a>
                             <ul>
-                                <li><a href={{ url_for('overview.stats') }}>Stats</a></li>
-                                <li><a href={{ url_for('overview.history') }}>History</a></li>
+                                <li><a href={{ url_for('overview.stats') }}><button>Stats</button></a></li>
+                                <li><a href={{ url_for('overview.history') }}><button>History</button></a></li>
                             </ul>
                         </li>
                     </div>
                     <div>
                         <li><a href={{ url_for('tasks.task_run') }} ><button>TASKS</button></a>
                             <ul>
-                                <li><a href={{ url_for('tasks.task_run') }}>Run</a></li>
-                                <li><a href={{ url_for('tasks.schedule') }}>Schedule</a></li>
-                                <li><a href={{ url_for('tasks.define') }}>Define</a></li>
+                                <li><a href={{ url_for('tasks.task_run') }}><button>Run</button></a></li>
+                                <li><a href={{ url_for('tasks.schedule') }}><button>Schedule</button></a></li>
+                                <li><a href={{ url_for('tasks.define') }}><button>Define</button></a></li>
                             </ul>
                         </li>
                     </div>
                     <div>
                         <li><a href={{ url_for('inventory.hosts') }} ><button>INVENTORY</button></a>
                             <ul>
-                                <li><a href={{ url_for('inventory.hosts') }}>Hosts</a></li>
-                                <li><a href={{ url_for('inventory.inventorys') }}>Inventory</a></li>
-                                <li><a href={{ url_for('inventory.groups') }}>Groups</a></li>
+                                <li><a href={{ url_for('inventory.hosts') }}><button>Hosts</button></a></li>
+                                <li><a href={{ url_for('inventory.inventorys') }}><button>Inventory</button></a></li>
+                                <li><a href={{ url_for('inventory.groups') }}><button>Groups</button></a></li>
                             </ul>
                         </li>
                     </div>
