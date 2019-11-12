@@ -16,5 +16,28 @@
             <input type="text" name="args" class="input_text"><br>
             <input type="submit" class="submit" value="Run" >
         </form>
-    </div>           
+    </div>
+    <div class="coverup">
+        <div id='selection'>
+            <input type="button" value="CLOSE">
+            <div id="select_before">
+                <div><img src= {{ url_for('static', filename='Ans.png') }} alt="ansible"/></div>
+                <div id="select_input">
+                    <input type="text" name="module_name" id="module_name" placeholder="Enter module name here." oninput="loadHint(event)">
+                </div>
+                <input id="select_submit" type="button" value="SUBMIT" onclick="mod_submit(module_name.value)">
+                <input id="select_finish" type="button" title="Finish adding the task." value="FINISH" onclick="mod_add(module_name.value)">
+            </div>
+            <div id="selected_opt"></div> 
+        </div>
+            <!-- <span><p>Select options for module, or click "ADD" to finish.</p></span> -->
+            <!-- <input type="button" value="ADD"> -->
+        </div>
+        <div id="module_detail">
+            <div id="module_list"></div>
+            <div id="module_para"></div>
+        </div>
+        <p id="desc_module"></p>
+        <p id="desc_para"></p>
+    </div>
 {% endblock %}

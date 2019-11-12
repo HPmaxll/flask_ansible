@@ -49,9 +49,9 @@ function insertButton(text) {
       tmp_button.id = data[i];
       tmp_button.onclick = mod_click(data[i]);
       tmp_button.ondblclick = mod_dbclick(data[i]); 
-      var tmp_br = document.createElement('br');
+      // var tmp_br = document.createElement('br');
       objdiv.appendChild(tmp_button);
-      objdiv.appendChild(tmp_br); 
+      // objdiv.appendChild(tmp_br); 
     }
   }
 }
@@ -60,11 +60,13 @@ function updateText(text) {
   document.getElementById('module_list').style.display = "none";
   document.getElementById('select_input').style.display = "none";
   document.getElementById('select_submit').style.display = "none";
-  document.getElementById('select_remove').style.display = "block";
+  document.getElementById('select_finish').style.display = "block";
+  document.getElementById('selected_opt').style.display = "block";
   var objdiv = document.getElementById('select_before');
   var mod = document.getElementById(text);
   mod.className = 'selected_module';
-  objdiv.insertBefore(mod, document.getElementById('select_remove'));
+  mod.title = "Double click to remove.";
+  objdiv.insertBefore(mod, document.getElementById('select_finish'));
   document.getElementById('select_before').id = 'select_after'
 }
 
@@ -152,6 +154,7 @@ function para_dbclick(parameter) {
       box.type = 'text';
       box.id = parameter + '_value';
       para.className = 'parameter_button';
+      para.title = "Double click to remove.";
       subdiv.appendChild(para);
       subdiv.appendChild(br);
       subdiv.appendChild(box);
@@ -159,6 +162,7 @@ function para_dbclick(parameter) {
     }
     else {
       para.className = 'button_hint';
+      para.removeAttribute('title');
       document.getElementById('module_para').appendChild(para);
       var subdiv = document.getElementById(parameter + '_div');
       while (subdiv.firstChild) {

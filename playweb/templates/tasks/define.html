@@ -3,6 +3,7 @@
 <!-- <input type="radio" name="add_task" checked="checked" onclick="switchToDefine()">Define
 <input type="radio" name="add_task" onclick="switchToImport()">Import -->
 <div id='selection'>
+    <input type="button" value="CLOSE">
     <div id="select_before">
         <div><img src= {{ url_for('static', filename='Ans.png') }} alt="ansible"/></div>
         <div id="select_input">
@@ -12,10 +13,7 @@
         <input id="select_remove" type="button" value="REMOVE" onclick="mod_remove(module_name.value)">
     </div>
     <div id="selected_opt"></div>
-    <div>
-        <input type="button" value="ADD">
-        <input type="button" value="CLOSE">
-    </div>
+    <input type="button" value="ADD">
 </div>
 <!-- <div id="import">
     <form>
