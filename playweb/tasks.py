@@ -12,6 +12,6 @@ def task_run():
 def schedule():
     return render_template('tasks/schedule.html')
 
-@bp.route('/define')
-def define():
-    return render_template('tasks/define.html')
+@bp.route('/tasklist')
+def tasklist():
+    return render_template('tasks/tasklist.html')

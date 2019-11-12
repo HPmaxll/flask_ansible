@@ -39,7 +39,8 @@ function insertButton(text) {
     objdiv.removeChild(objdiv.firstChild);
   }
   var data = JSON.parse(text);
-  if (data) {
+  if (data.length) {
+    objdiv.parentNode.style.display = "block";
     var i;
     for (i in data) {
       var tmp_button = document.createElement('input');
@@ -48,11 +49,12 @@ function insertButton(text) {
       tmp_button.value = data[i];
       tmp_button.id = data[i];
       tmp_button.onclick = mod_click(data[i]);
-      tmp_button.ondblclick = mod_dbclick(data[i]); 
-      // var tmp_br = document.createElement('br');
+      tmp_button.ondblclick = mod_dbclick(data[i]);
       objdiv.appendChild(tmp_button);
-      // objdiv.appendChild(tmp_br); 
     }
+  }
+  else {
+    objdiv.parentNode.style.display = "none";
   }
 }
 
@@ -61,7 +63,6 @@ function updateText(text) {
   document.getElementById('select_input').style.display = "none";
   document.getElementById('select_submit').style.display = "none";
   document.getElementById('select_finish').style.display = "block";
-  document.getElementById('selected_opt').style.display = "block";
   var objdiv = document.getElementById('select_before');
   var mod = document.getElementById(text);
   mod.className = 'selected_module';
@@ -109,43 +110,96 @@ function mod_click(name) {
 
 function mod_dbclick(name) {
   return function() {
+    if (document.getElementById(name).parentNode.id == "module_list") {
+      updateText(name);
+      loadModule(name, insertPara);
+    }
+    else {
+      var mod = document.getElementById(name);
+      mod.className = "button_hint";
+      mod.removeAttribute("title");
+      document.getElementById("module_list").appendChild(mod);
+      document.getElementById("select_after").id = "select_before";
+      clearChild("selected_opt");
+      clearChild("desc_module");
+      clearChild("desc_para");
+      popup('module_list');
+      popup('select_input');
+      popup('select_submit');
+      hidder('select_finish');
+      hidder("module_para");
+      hidder('selected_opt');
+      hidder("desc_module");
+      hidder("desc_para");
+    }
+  }
+}
+
+function mod_submit(name) {
+  if (name) {
+    if (!sessionStorage.getItem(name)) {
+      var url = "/data/module/" + name;
+      getData(url,loadModuleDesc);
+    }
+    else {
+      var data = sessionStorage.getItem(name);
+      loadModuleDesc(data);
+    }
     updateText(name);
     loadModule(name, insertPara);
   }
 }
 
-function mod_submit(name) {
-  if (!sessionStorage.getItem(name)) {
-    var url = "/data/module/" + name;
-    getData(url,loadModuleDesc);
+function mod_add() {
+  var objdiv = document.getElementById("selected_opt");
+  var divlist = objdiv.childNodes;
+  var opt, value;
+  var selected_module = document.getElementsByClassName("selected_module")[0].value;
+  var arglist = [];
+  var tasklist = {};
+  var i;
+  for (i=0;i<divlist.length;i++) {
+    var tmp = {};
+    opt = divlist[i].childNodes[0].id;
+    value = divlist[i].childNodes[2].value;
+    tmp[opt] = value;
+    arglist.push(tmp);
   }
-  else {
-    var data = sessionStorage.getItem(name);
-    loadModuleDesc(data);
-  }
-  updateText(name);
-  loadModule(name, insertPara);
+  tasklist['module'] = selected_module;
+  tasklist['args'] = arglist;
+  document.getElementById("desc_para").innerText = JSON.stringify(tasklist);
 }
 
 function loadModuleDesc(data) {
   var module = JSON.parse(data);
   if (module) {
+    var div = document.getElementById('desc_module');
+    if (!div.firstChild) {
+      div.style.display = "block";
+    }
     document.getElementById('module_name').value = module.module;
-    document.getElementById('desc_module').innerText = module.module + ":\n" + module.description;
+    div.innerText = module.module + ":\n" + module.description;
   }
 }
 
 function para_click(para, desc) {
   return function() {
-    document.getElementById('desc_para').innerText = para + ':\n' + desc;
+    var div = document.getElementById('desc_para');
+    if (!div.firstChild) {
+      div.style.display = "block";
+    }
+    div.innerText = para + ':\n' + desc;
   }
 }
 
 function para_dbclick(parameter) {
   return function() {
     var para = document.getElementById(parameter);
+    var objdiv = document.getElementById('selected_opt');
     if (para.parentNode.id == 'module_para') {
-      var objdiv = document.getElementById('selected_opt');
+      if (!objdiv.firstChild) {
+        objdiv.style.display = "block";
+      }
       var subdiv = document.createElement('div');
       subdiv.id = parameter + '_div';
       subdiv.className = 'parameter_div';
@@ -158,7 +212,7 @@ function para_dbclick(parameter) {
       subdiv.appendChild(para);
       subdiv.appendChild(br);
       subdiv.appendChild(box);
-      objdiv.insertBefore(subdiv, document.getElementById('define_finish'));
+      objdiv.appendChild(subdiv);
     }
     else {
       para.className = 'button_hint';
@@ -168,7 +222,10 @@ function para_dbclick(parameter) {
       while (subdiv.firstChild) {
         subdiv.removeChild(subdiv.firstChild)
       }
-      subdiv.parentNode.removeChild(subdiv);
+      objdiv.removeChild(subdiv);
+      if (!objdiv.firstChild) {
+        objdiv.style.display = "none";
+      }
     }
     
   }
@@ -205,4 +262,47 @@ function postData(data,url,fn) {
 
 function nothing() {
   //pass;
+}
+
+function popup(id){
+  document.getElementById(id).style.display="block";
+}
+function hidder(id){
+  document.getElementById(id).style.display="none";
+}
+function task_close() {
+  init_task();
+  hidder("popup_task");
+}
+
+function clearChild(div) {
+  var tmp = document.getElementById(div)
+  while(tmp.firstChild) {
+      tmp.removeChild(tmp.firstChild)
+  }
+}
+
+function init_task() {
+  clearChild("selected_opt");
+  clearChild("module_list");
+  clearChild("module_para")
+  clearChild("desc_module");
+  clearChild("desc_para");
+  var mod = document.getElementsByClassName("selected_module")[0];
+  if (mod) {
+      mod.parentNode.removeChild(mod);
+  }
+  if (document.getElementById("select_after")) {
+      document.getElementById("select_after").id = "select_before";
+  }
+  document.getElementById('module_name').value = null;
+  popup('module_list');
+  popup('select_input');
+  popup('select_submit');
+  hidder('select_finish');
+  hidder("module_para");
+  hidder('selected_opt');
+  hidder("module_detail");
+  hidder("desc_module");
+  hidder("desc_para");
 }

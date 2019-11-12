@@ -1,37 +1,44 @@
 {% extends 'tasks/tasks.html' %}
 {% block center_block %}
     <div id="run">
-        <form>
-            <label for="inventory">Inventory:</label><br>
-            <input type="text" name="inventory" class="input_text"><br>
-            <label for="group">Group:</label><br>
-            <input type="text" name="group" class="input_text"><br>
-            <label for="host">Host:</label><br>
-            <input type="text" name="Host" class="input_text"><br>
-            <label for="tasks">Tasks:</label><br>
-            <input type="text" name="tasks" class="input_text"><br>
-            <label for="options">Options:</label><br>
-            <input type="text" name="options" class="input_text"><br>
-            <label for="args">Arguments:</label><br>
-            <input type="text" name="args" class="input_text"><br>
-            <input type="submit" class="submit" value="Run" >
-        </form>
+        <div class="run_container">
+            <p>Select Target Host</p>
+            <div class="run_info"><p>test</p></div>
+            <div>
+                <button>Select Hosts</button>
+                <button>Select Groups</button>
+                <button>Select Inventory</button>
+            </div>
+        </div>
+        <div class="run_container">
+            <p>Select Tasks</p>
+            <div class="run_info"></div>
+            <div>
+                <button>Select Task</button>
+                <button onclick="popup('popup_task')">Add New Task</button>
+            </div>
+        </div>
+        <div class="run_container">
+            <p>Extra Variables</p>
+            <div class="run_info"></div>
+            <div>
+                <input type="text" id="extra_vars" >
+                <button>Add Extra Variables</button>
+            </div>
+        </div>
     </div>
-    <div class="coverup">
+    <div id="popup_task" class="coverup">
         <div id='selection'>
-            <input type="button" value="CLOSE">
+            <img class="close_button" onclick="task_close()" src= {{ url_for('static', filename='close-window.png') }} alt="CLOSE" />
             <div id="select_before">
                 <div><img src= {{ url_for('static', filename='Ans.png') }} alt="ansible"/></div>
                 <div id="select_input">
                     <input type="text" name="module_name" id="module_name" placeholder="Enter module name here." oninput="loadHint(event)">
                 </div>
                 <input id="select_submit" type="button" value="SUBMIT" onclick="mod_submit(module_name.value)">
-                <input id="select_finish" type="button" title="Finish adding the task." value="FINISH" onclick="mod_add(module_name.value)">
+                <input id="select_finish" type="button" title="Finish adding the task." value="FINISH" onclick="mod_add()">
             </div>
             <div id="selected_opt"></div> 
-        </div>
-            <!-- <span><p>Select options for module, or click "ADD" to finish.</p></span> -->
-            <!-- <input type="button" value="ADD"> -->
         </div>
         <div id="module_detail">
             <div id="module_list"></div>

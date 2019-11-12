@@ -165,8 +165,39 @@ header > a > button:hover {
 }
 
 #run {
+    text-align: center;
     padding: 5px;
     margin: 0 auto;
+}
+
+#run button {
+    border: none;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    width: 150px;
+    background-color: cornflowerblue;
+}
+#run input {
+    font-size: 15px;
+    width: 320px;
+}
+
+.run_container {
+    width: 500px;
+    min-height: 190px;
+    margin: 10px;
+    /* background-color: green; */
+}
+
+.run_info {
+    /* width: 350px; */
+    height: 140px;
+    background-color: brown;
+}
+#run p {
+    background-color: cornflowerblue;
+    font-size: 20px;
 }
 
 /* --------popup----area-------- */
@@ -174,10 +205,10 @@ header > a > button:hover {
     position: absolute;
     left: 0px; 
     top: 0px;
-    background-color: rgba(0, 0, 0, 0.3); 
+    background-color: rgba(0, 0, 0, 0.6); 
     width: 100%; 
     min-height: 100%; 
-    /* display: none; */
+    display: none;
 } 
 
 .popup {
