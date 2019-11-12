@@ -2,14 +2,20 @@
 {% block center_block %}
 <!-- <input type="radio" name="add_task" checked="checked" onclick="switchToDefine()">Define
 <input type="radio" name="add_task" onclick="switchToImport()">Import -->
-<div id='mod_selected'>
-    <div id="selected_name">
-        <p>Module:</p>
-        <div id="mod_tag"></div>
-        <input type="text" name="module" id="module" oninput="loadHint(event)">
-        <input type="button" value="submit" onclick="mod_submit(module.value)">
+<div id='selection'>
+    <div id="select_before">
+        <div><img src= {{ url_for('static', filename='Ans.png') }} alt="ansible"/></div>
+        <div id="select_input">
+            <input type="text" name="module_name" id="module_name" placeholder="Enter module name here." oninput="loadHint(event)">
+        </div>
+        <input id="select_submit" type="button" value="SUBMIT" onclick="mod_submit(module_name.value)">
+        <input id="select_remove" type="button" value="REMOVE" onclick="mod_remove(module_name.value)">
     </div>
     <div id="selected_opt"></div>
+    <div>
+        <input type="button" value="ADD">
+        <input type="button" value="CLOSE">
+    </div>
 </div>
 <!-- <div id="import">
     <form>

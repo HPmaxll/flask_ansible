@@ -7,6 +7,9 @@
 body {
     background-image: url('eight_horns.png');
 }
+
+/* --------header----area-------- */
+
 header {
     position: relative;
     display: flex;
@@ -14,7 +17,7 @@ header {
     align-items: center;
     padding: 0 10%;
     height: 50px;
-    background-color: rgb(51, 56, 51);
+    background-color: rgba(51, 56, 51, 0.9);
     box-shadow: 3px 3px 3px gray;
 }
 
@@ -33,7 +36,6 @@ header a,header button {
 }
 nav {
     width: 450px;
-    /* background-color: rosybrown; */
 }
 .nav_link {
     margin: 0;
@@ -54,7 +56,6 @@ nav {
 }
 
 .nav_link > div > li:hover > a > button {
-    /* color: silver; */
     background-color: rgba(0, 136, 169, 1);
 }
 
@@ -71,10 +72,7 @@ nav {
     margin-top: 5px;
 }
 .nav_link li ul li {
-    /* line-height: 50px; */
     margin-top: 5px;
-    /* border-bottom: 1px solid gray; */
-    /* background-color: rgba(139, 126, 102, 0.9); */
     box-shadow: 3px 3px 3px gray;
     display: none;
 }
@@ -103,10 +101,12 @@ header > a > button:hover {
     background-color: rgba(0, 136, 169, 0.8);
 }
 
+/* --------content----area--------*/
+
 .content {
     margin-top: 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: stretch;
     padding: 0 2%;
     min-height: 650px;
@@ -123,10 +123,7 @@ header > a > button:hover {
 
 .left_block, .right_block {
     text-align: center;
-}
-
-.center_block {
-    text-align: left;
+    /* display: none; */
 }
 
 .filter {
@@ -166,11 +163,13 @@ header > a > button:hover {
 .itable th, .itable td {
     border-collapse: collapse;
 }
+
 #run {
     padding: 5px;
     margin: 0 auto;
 }
 
+/* --------popup----area-------- */
 .coverup {
     position: fixed;
     left: 0px; 
@@ -184,7 +183,7 @@ header > a > button:hover {
 .popup {
     position: relative;
     color: white;
-    background: rgba(25, 25, 112, 1);
+    background: rgba(25, 25, 100, 1);
     width: 300px;
     height: 400px;
     border-radius: 10px;
@@ -206,7 +205,7 @@ header > a > button:hover {
 .popup input[type="submit"] {
     position: absolute;
     color: white;
-    background-color: rgba(25, 25, 112, 1);
+    background-color: rgba(25, 25, 100, 1);
     border: 1px solid white;
     right: 10%;
 }
@@ -226,7 +225,7 @@ header > a > button:hover {
     border: none;
     right: 2px; 
     top: 2px; 
-    background-color: rgba(25, 25, 112, 1);
+    background-color: rgba(25, 25, 100, 1);
     cursor: pointer;
 }
 .popup .popup_cross:hover {

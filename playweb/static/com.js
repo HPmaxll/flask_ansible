@@ -46,6 +46,7 @@ function insertButton(text) {
       tmp_button.type = 'button';
       tmp_button.className = 'button_hint';
       tmp_button.value = data[i];
+      tmp_button.id = data[i];
       tmp_button.onclick = mod_click(data[i]);
       tmp_button.ondblclick = mod_dbclick(data[i]); 
       var tmp_br = document.createElement('br');
@@ -57,19 +58,14 @@ function insertButton(text) {
 
 function updateText(text) {
   document.getElementById('module_list').style.display = "none";
-  var objdiv = document.getElementById('selected_name');
-  while(objdiv.firstChild) {
-    objdiv.removeChild(objdiv.firstChild);
-  }
-  var define_module = document.createElement('p');
-  define_module.innerText = 'Module: ' + text;
-  var define_finish = document.createElement('input');
-  define_finish.value = 'OK';
-  define_finish.id = 'define_finish';
-  define_finish.type = 'button';
-  
-  objdiv.appendChild(define_module);
-  objdiv.appendChild(define_finish);
+  document.getElementById('select_input').style.display = "none";
+  document.getElementById('select_submit').style.display = "none";
+  document.getElementById('select_remove').style.display = "block";
+  var objdiv = document.getElementById('select_before');
+  var mod = document.getElementById(text);
+  mod.className = 'selected_module';
+  objdiv.insertBefore(mod, document.getElementById('select_remove'));
+  document.getElementById('select_before').id = 'select_after'
 }
 
 function insertPara(text) {
@@ -132,6 +128,7 @@ function mod_submit(name) {
 function loadModuleDesc(data) {
   var module = JSON.parse(data);
   if (module) {
+    document.getElementById('module_name').value = module.module;
     document.getElementById('desc_module').innerText = module.module + ":\n" + module.description;
   }
 }
@@ -146,7 +143,7 @@ function para_dbclick(parameter) {
   return function() {
     var para = document.getElementById(parameter);
     if (para.parentNode.id == 'module_para') {
-      var objdiv = document.getElementById('selected_name');
+      var objdiv = document.getElementById('selected_opt');
       var subdiv = document.createElement('div');
       subdiv.id = parameter + '_div';
       subdiv.className = 'parameter_div';
