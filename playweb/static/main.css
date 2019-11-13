@@ -34,6 +34,7 @@ header a,header button {
     color: #edf0f1;
     cursor: pointer;
 }
+
 nav {
     width: 450px;
 }
@@ -126,6 +127,14 @@ header > a > button:hover {
     /* display: none; */
 }
 
+/* --------overview-------- */
+
+.back_logo img {
+    width: 100px;
+}
+
+/* --------inventory-------- */
+
 .filter {
     display: flex;
 }
@@ -163,6 +172,8 @@ header > a > button:hover {
 .itable th, .itable td {
     border-collapse: collapse;
 }
+
+/* --------task-------- */
 
 #run {
     text-align: center;

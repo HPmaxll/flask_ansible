@@ -17,10 +17,11 @@
 .close_button {
     float: right;
     width: 40px;
+    transition: all 0.3s;
 }
 
 .close_button:hover {
-    transform:rotate(10deg);
+    transform: rotate(10deg);
 }
 
 #select_before {
@@ -42,6 +43,10 @@
 
 #select_before div:nth-child(1):hover {
     background-color: rgba(0, 0, 0, 0.9);
+}
+
+#select_before div:nth-child(1):hover img {
+    transform: rotate(-5deg);
 }
 
 #select_before img {
@@ -104,9 +109,12 @@
     box-shadow: 3px 3px 3px gray;
 }
 
+.selected_module:focus {
+    outline: none;
+}
 .selected_module:hover {
     text-shadow: 1px 1px 1px gray;
-
+    
 }
 
 #select_after div:nth-child(1) {
@@ -120,6 +128,10 @@
 
 #select_after div:nth-child(1):hover {
     background-color: rgba(0, 0, 0, 0.9);
+}
+
+#select_after div:nth-child(1):hover img {
+    transform: rotate(-5deg);
 }
 
 #select_after img {
@@ -157,6 +169,10 @@
     background-color: rgba(0, 0, 0, 0.9);
 }
 
+#select_finish:focus {
+    outline: none;
+}
+
 #selected_opt {
     display: none;
     margin: 5px 15%;
@@ -164,7 +180,7 @@
     max-height: 80%;
     overflow: auto;
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(200, 200, 200, 0.9);
     box-shadow: 3px 3px 3px gray;
 }
 
@@ -216,14 +232,11 @@
     text-align: left;
     text-indent: 10px;
     z-index: 2;
-    background-color: rgba(240, 240, 240, 0.7);
+    background-color: rgba(240, 240, 240, 0.8);
     border: 1px solid gray;
     border-radius: 10px;
     box-shadow: 3px 3px 3px gray;
     display: none;
-}
-#module_detail:hover {
-    background-color: rgba(240, 240, 240, 0.8);
 }
 
 #module_list, #module_para {
@@ -257,7 +270,7 @@
 
 #desc_module, #desc_para {
     position: absolute;
-    padding: 6px;
+    padding: 10px;
     width: 400px;
     right: 4%;
     text-align: left;
@@ -265,7 +278,7 @@
     border: 1px solid gray;
     border-radius: 10px;
     box-shadow: 3px 3px 3px gray;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(240, 240, 240, 0.8);
     z-index: 1;
     display: none;
 }

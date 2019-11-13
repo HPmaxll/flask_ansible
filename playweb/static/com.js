@@ -49,7 +49,7 @@ function insertButton(text) {
       tmp_button.value = data[i];
       tmp_button.id = data[i];
       tmp_button.onclick = mod_click(data[i]);
-      tmp_button.ondblclick = mod_dbclick(data[i]);
+      tmp_button.ondblclick = mod_dbclick(data[i]); 
       objdiv.appendChild(tmp_button);
     }
   }
@@ -155,18 +155,17 @@ function mod_add() {
   var divlist = objdiv.childNodes;
   var opt, value;
   var selected_module = document.getElementsByClassName("selected_module")[0].value;
-  var arglist = [];
   var tasklist = {};
+  var args = {};
   var i;
   for (i=0;i<divlist.length;i++) {
-    var tmp = {};
+    
     opt = divlist[i].childNodes[0].id;
     value = divlist[i].childNodes[2].value;
-    tmp[opt] = value;
-    arglist.push(tmp);
+    args[opt] = value;
   }
   tasklist['module'] = selected_module;
-  tasklist['args'] = arglist;
+  tasklist['args'] = args;
   document.getElementById("desc_para").innerText = JSON.stringify(tasklist);
 }
 
