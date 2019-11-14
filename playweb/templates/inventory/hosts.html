@@ -1,6 +1,7 @@
-{% extends 'inventory/inventory_base.html' %}
+{% extends 'base.html' %}
 
-        {% block center_block %}
+        {% block content %}
+        <div class="table_area">
            <div class="filter">
                <p>Inventory:</p>
                <select>
@@ -27,8 +28,8 @@
                         <th>Description</th>
                         <th>Operation</th>
                     </tr>
-                    <tr>
                     {% for host in hostList %}
+                    <tr>
                         <td><input name="Host" type="checkbox" > <a href="#">{{host[0]}}</a></td>
                         <td>{{host[1]}}</td>
                         <td>{{host[2]}}</td>
@@ -41,6 +42,7 @@
                     {% endfor %}
                 </table>
             </div>
+        </div>
             <div class="coverup" id='add_host'>
                 <div class="popup">
                     <div class="popup_header">

@@ -67,7 +67,7 @@ class ansibleTaskHandler:
         self.inventory = InventoryManager(loader=self.loader)
         self.variable_manager = VariableManager(loader=self.loader, inventory=self.inventory)
     
-    def load_hosts(self, host_list):
+    def load_inv(self, host_list):
         for host in host_list:
             self.inventory.add_host(host=host, port=22, group='all')
 
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     taskHandler = ansibleTaskHandler()
     inventory = ['139.159.195.229']
     host_list = ['all']
-    taskHandler.load_hosts(inventory)
+    taskHandler.load_inv(inventory)
     task_list = [{'action': {'module': 'ping', 'args': ''}, 'register': 'shell_out'}]
     result = taskHandler.run_task(host_list, task_list)
     print(result)

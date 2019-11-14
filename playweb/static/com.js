@@ -166,7 +166,11 @@ function mod_add() {
   }
   tasklist['module'] = selected_module;
   tasklist['args'] = args;
-  document.getElementById("desc_para").innerText = JSON.stringify(tasklist);
+  postData(tasklist,'/data/task', display)
+}
+
+function display(data) {
+  document.getElementById("desc_para").innerText = data;
 }
 
 function loadModuleDesc(data) {
@@ -256,7 +260,7 @@ function postData(data,url,fn) {
   }
   xhttp.open("post", url, true);
   xhttp.setRequestHeader("Content-type", "Application/JSON");
-  xhttp.send(data);
+  xhttp.send(JSON.stringify(data));
 }
 
 function nothing() {

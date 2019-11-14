@@ -5,7 +5,8 @@
    
 }
 body {
-    background-image: url('eight_horns.png');
+    background-image: url('textflow.jpg');
+    background-attachment: cover;
 }
 
 /* --------header----area-------- */
@@ -18,7 +19,7 @@ header {
     padding: 0 10%;
     height: 50px;
     background-color: rgba(51, 56, 51, 0.9);
-    box-shadow: 3px 3px 3px gray;
+    box-shadow: 3px 3px 3px black;
 }
 
 header a,header button {
@@ -108,23 +109,13 @@ header > a > button:hover {
     margin-top: 10px;
     display: flex;
     justify-content: space-evenly;
-    align-items: stretch;
+    align-items: flex-start;
     padding: 0 2%;
     min-height: 650px;
 }
 
 .content a {
     text-decoration: none;
-}
-
-.left_block, .center_block, .right_block {
-    border: 1px solid;
-    margin: 0 10px;
-}
-
-.left_block, .right_block {
-    text-align: center;
-    /* display: none; */
 }
 
 /* --------overview-------- */
@@ -134,6 +125,9 @@ header > a > button:hover {
 }
 
 /* --------inventory-------- */
+.table_area {
+    background-color: white;
+}
 
 .filter {
     display: flex;

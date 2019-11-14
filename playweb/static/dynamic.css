@@ -3,11 +3,11 @@
     top: 10px;
     left: 34%;
     margin: 5px;
-    background-color: rgba(238, 222, 222, 0.9);
+    background-color: rgba(61, 66, 61, 0.9);
     width: 480px;
     height: 690px;
-    border: 1px solid black;
-    box-shadow: 3px 3px 3px gray;
+    /* border: 1px dashed black; */
+    box-shadow: 3px 3px 3px black;
     z-index: 1;
 }
 #selection:hover {
@@ -16,12 +16,17 @@
 
 .close_button {
     float: right;
-    width: 40px;
+    width: 35px;
+    margin: 5px;
+    background-color: rgb(170, 170, 170);
+    box-shadow: 2px 2px 2px rgb(160, 160, 160);
     transition: all 0.3s;
 }
 
 .close_button:hover {
-    transform: rotate(10deg);
+    background-color: rgb(240, 240, 240);
+    box-shadow: 2px 2px 2px rgb(240, 240, 240);
+    transform: rotate(5deg);
 }
 
 #select_before {
@@ -32,6 +37,7 @@
     /* background-color: springgreen; */
 }
 
+
 #select_before div:nth-child(1) {
     padding: 10px 10px 2px 15px;
     background-color: rgba(0, 0, 0, 0.7);
@@ -39,6 +45,11 @@
     /* margin-right: 3px; */
     border-radius: 20px 0 0 20px;
     box-shadow: 3px 3px 3px gray;
+    transition: all 0.3s;
+}
+
+#select_before:hover div:nth-child(1) {
+    box-shadow: 4px 4px 4px rgb(160, 160, 160);
 }
 
 #select_before div:nth-child(1):hover {
@@ -51,13 +62,19 @@
 
 #select_before img {
     width: 60px;
+    transition: all 0.3s;
 }
 
 #select_before #select_input {
     padding: 18px 10px;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 3px 3px 3px gray;
     border: 1px solid gray;
+    transition: all 0.3s;
+}
+
+#select_before:hover #select_input {
+    box-shadow: 4px 4px 4px rgb(160, 160, 160);
 }
 
 #select_before #select_input input {
@@ -78,6 +95,11 @@
     border: none;
     border-radius: 0 20px 20px 0;
     box-shadow: 3px 3px 3px gray;
+    transition: all 0.3s;
+}
+
+#select_before:hover #select_submit {
+    box-shadow: 4px 4px 4px rgb(160, 160, 160);
 }
 
 #select_submit:hover {
@@ -107,14 +129,19 @@
     min-width: 180px;
     text-overflow: ellipsis;
     box-shadow: 3px 3px 3px gray;
+    transition: all 0.3s;
 }
 
 .selected_module:focus {
     outline: none;
 }
+
+#select_after:hover .selected_module {
+    box-shadow: 4px 4px 4px rgb(160, 160, 160);
+}
+
 .selected_module:hover {
     text-shadow: 1px 1px 1px gray;
-    
 }
 
 #select_after div:nth-child(1) {
@@ -124,6 +151,11 @@
     /* margin-right: 3px; */
     border-radius: 20px 0 0 20px;
     box-shadow: 3px 3px 3px gray;
+    transition: all 0.3s;
+}
+
+#select_after:hover div:nth-child(1) {
+    box-shadow: 4px 4px 4px rgb(160, 160, 160);
 }
 
 #select_after div:nth-child(1):hover {
@@ -136,22 +168,7 @@
 
 #select_after img {
     width: 30px;
-}
-
-#select_after #select_input {
-    padding: 18px 10px;
-    background-color: rgba(255, 255, 255, 0.5);
-    box-shadow: 3px 3px 3px gray;
-    border: 1px solid gray;
-}
-
-#select_after #select_input input {
-    font-size: 20px;
-    width: 250px;
-    padding: 5px;
-    background-color: rgba(117, 134, 117, 0.5);
-    border: 1px solid gray;
-    border-radius: 5px;
+    transition: all 0.3s;
 }
 
 #select_finish {
@@ -163,6 +180,11 @@
     border: none;
     border-radius: 0 20px 20px 0;
     box-shadow: 3px 3px 3px gray;
+    transition: all 0.3s;
+}
+
+#select_after:hover #select_finish {
+    box-shadow: 4px 4px 4px rgb(160, 160, 160);
 }
 
 #select_finish:hover {
@@ -175,13 +197,13 @@
 
 #selected_opt {
     display: none;
-    margin: 5px 15%;
+    margin: 10px 15%;
     padding: 10px 0;
     max-height: 80%;
     overflow: auto;
     border-radius: 10px;
-    background-color: rgba(200, 200, 200, 0.9);
-    box-shadow: 3px 3px 3px gray;
+    background-color: rgba(255, 245, 238, 0.9);
+    box-shadow: 3px 3px 3px rgb(150, 150, 150);
 }
 
 /* #selected_opt p {
@@ -232,10 +254,9 @@
     text-align: left;
     text-indent: 10px;
     z-index: 2;
-    background-color: rgba(240, 240, 240, 0.8);
-    border: 1px solid gray;
+    background-color: rgba(61, 66, 61, 0.9);
     border-radius: 10px;
-    box-shadow: 3px 3px 3px gray;
+    box-shadow: 3px 3px 3px black;
     display: none;
 }
 
@@ -245,7 +266,6 @@
     overflow-x: auto;
     margin: 5px;
     padding: 5px;
-   
 }
 
 #module_para {
@@ -275,16 +295,17 @@
     right: 4%;
     text-align: left;
     overflow-x: auto;
-    border: 1px solid gray;
+    color: white;
     border-radius: 10px;
-    box-shadow: 3px 3px 3px gray;
-    background-color: rgba(240, 240, 240, 0.8);
+    box-shadow: 3px 3px 3px black;
+    background-color: rgba(61, 66, 61, 0.9);
     z-index: 1;
     display: none;
 }
 
 #desc_module:hover, #desc_para:hover {
     z-index: 3;
+    text-shadow: 1px 1px 1px rgb(160, 160, 160);
 }
 #desc_module {
     top: 10px;
@@ -304,16 +325,21 @@
     text-align: left;
     margin: 5px;
     padding: 5px;
-    background-color: blueviolet;
+    background-color: rgba(20, 20, 20, 0.7);
     color: white;
-    box-shadow: 3px 3px 3px black;
+    font-size: 14px;
+    box-shadow: 3px 3px 3px gray;
+    transition: all 0.3s;
 }
 
 .button_hint:focus {
     outline: none;
-    background-color: purple;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: rgba(20, 20, 20, 0.9);
+    box-shadow: 4px 4px 4px rgb(240, 240, 240);
 }
 
 .button_hint:hover {
-    background-color: navy;
+    /* font-size: 14px; */
+    box-shadow: 3px 3px 3px rgb(160, 160, 160);
 }

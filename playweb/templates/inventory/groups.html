@@ -1,55 +1,57 @@
-{% extends 'inventory/inventory_base.html' %}
-    {% block center_block %}
-    <div class="filter">
-      <p>Inventory:</p>
-        <select>
-          <option value="inventory_1">inventory_1</option>
-          <option value="inventory_1">inventory_1</option>
-          <option value="inventory_1">inventory_1</option>
-          <option value="inventory_1">inventory_1</option>
-        </select>
-    </div>
-    <a onclick="popup('add_group')"><button>Add Group</button></a><br>
-    <div class="itable">
-      <table frame="box" cellpadding="10">
-      <tr>
-        <th>Group Name</th>
-        <th>Creator</th>
-        <th>Description</th>
-        <th>Operation</th>
-      </tr>
-      <tr>
-      {% for group in groupList %}
-        <td><input name="Group" type="checkbox" > <a href="#">{{group[0]}}</a></td>
-        <td>{{group[1]}}</td>
-        <td>{{group[2]}}</td>
-        <td>
-          <a href="#">Edit</a>
-          <a href="#">Remove</a>
-        </td>
-      </tr>
-      {% endfor %}
-      </table>
+{% extends 'base.html' %}
+    {% block content %}
+    <div class="table_area">
+      <div class="filter">
+        <p>Inventory:</p>
+          <select>
+            <option value="inventory_1">inventory_1</option>
+            <option value="inventory_1">inventory_1</option>
+            <option value="inventory_1">inventory_1</option>
+            <option value="inventory_1">inventory_1</option>
+          </select>
+      </div>
+      <a onclick="popup('add_group')"><button>Add Group</button></a><br>
+      <div class="itable">
+        <table frame="box" cellpadding="10">
+          <tr>
+            <th>Group Name</th>
+            <th>Creator</th>
+            <th>Description</th>
+            <th>Operation</th>
+          </tr>
+          {% for group in groupList %}
+          <tr>
+            <td><input name="Group" type="checkbox" > <a href="#">{{group[0]}}</a></td>
+            <td>{{group[1]}}</td>
+            <td>{{group[2]}}</td>
+            <td>
+              <a href="#">Edit</a>
+              <a href="#">Remove</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
     </div>
     <div class="coverup" id='add_group'>
-                <div class="popup">
-                    <div class="popup_header">
-                        <span>Add new group</span> 
-                        <input type="button" class="popup_cross" value="X" onclick="hidder('add_group')"> 
-                    </div> 
-                    <div id="form_group">
-                        <form method="POST">
-                            <label for="group_name">Group Name:</label><br>
-                            <input type="text" name="group_name" id="group_name"  ><br>
-                            <label for="group_creator">Creator:</label><br>
-                            <input type="text" name="group_creator" id="group_creator"  ><br>
-                            <label for="group_desc">Description:</label><br>
-                            <input type="text" name="group_desc" id="group_desc"  ><br>
-                            <label for="group_attr">Attributes:</label><br>
-                            <input type="text" name="group_attr" id="group_attr"  ><br>
-                            <input type="submit"  id="submit_inventory" value="confirm" ><br>
-                        </form>
-                    </div>
-                </div> 
-            </div>
-    {% endblock %}
+      <div class="popup">
+        <div class="popup_header">
+          <span>Add new group</span> 
+          <input type="button" class="popup_cross" value="X" onclick="hidder('add_group')"> 
+        </div> 
+        <div id="form_group">
+          <form method="POST">
+            <label for="group_name">Group Name:</label><br>
+            <input type="text" name="group_name" id="group_name"  ><br>
+            <label for="group_creator">Creator:</label><br>
+            <input type="text" name="group_creator" id="group_creator"  ><br>
+            <label for="group_desc">Description:</label><br>
+            <input type="text" name="group_desc" id="group_desc"  ><br>
+            <label for="group_attr">Attributes:</label><br>
+            <input type="text" name="group_attr" id="group_attr"  ><br>
+            <input type="submit"  id="submit_inventory" value="confirm" ><br>
+          </form>
+        </div>
+      </div> 
+    </div>
+{% endblock %}

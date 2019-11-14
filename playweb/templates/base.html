@@ -42,20 +42,9 @@
             <a href={{ url_for('auth.login')}}><button>Log In</button></a>
         </header>
         <div class="content">
-            <div class="left_block">
-                {% block left_block %}
-                {% endblock %}
-            </div>
-
-            <div class="center_block">
-                {% block center_block %}
-                {% endblock %}
-            </div>
-
-            <div class="right_block">
-                {% block right_block %}
-                {% endblock %}
-            </div>
+        {% block content %}
+        
+        {% endblock %}
         </div>
         
     </body>
