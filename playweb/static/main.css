@@ -7,6 +7,7 @@
 body {
     background-image: url('textflow.jpg');
     background-attachment: cover;
+    min-width: 1280px;
 }
 
 /* --------header----area-------- */
@@ -107,9 +108,9 @@ header > a > button:hover {
 
 .content {
     margin-top: 10px;
-    display: flex;
+/*     display: flex;
     justify-content: space-evenly;
-    align-items: flex-start;
+    align-items: flex-start; */
     padding: 0 2%;
     min-height: 650px;
 }
@@ -140,6 +141,8 @@ header > a > button:hover {
     padding: 0 5px 0 0;
     border: 1px solid gray;
 }
+
+
 .itable {
     border: 1px solid black;
     margin: 5px 5px;
@@ -148,6 +151,10 @@ header > a > button:hover {
 .itable table {
     margin: auto;
     border: none
+}
+
+.itable a {
+    margin: 5px;
 }
 
 .itable th {
@@ -169,39 +176,51 @@ header > a > button:hover {
 
 /* --------task-------- */
 
-#run {
+.run {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    /* flex-direction: column; */
+    height: 80vh;
     padding: 5px;
     margin: 0 auto;
+    /* background-color: burlywood; */
 }
 
-#run button {
+.run_input {
+    background-color: rgba(240,240,240,0.9);
+}
+
+.run_input button {
     border: none;
     margin: 5px;
     padding: 5px;
     border-radius: 5px;
-    width: 150px;
-    background-color: cornflowerblue;
+    color: rgb(25, 25, 25);
+    /* width: 150px; */
+    background-color: rgb(200, 200, 200);
 }
-#run input {
+.run_input input {
     font-size: 15px;
-    width: 320px;
+    /* width: 320px; */
 }
 
 .run_container {
-    width: 500px;
-    min-height: 190px;
-    margin: 10px;
+    margin: 5px;
+    border: 1px solid black;
+    box-sizing: border-box;
     /* background-color: green; */
 }
 
 .run_info {
-    /* width: 350px; */
-    height: 140px;
-    background-color: brown;
+    width: 415px;
+    height: 240px;
+    background-color: rgba(240,240,240,0.9);
 }
-#run p {
-    background-color: cornflowerblue;
+.run p {
+    background-color: rgba(51, 56, 51, 0.9);
+    color: rgb(240,240,240);
     font-size: 20px;
 }
 

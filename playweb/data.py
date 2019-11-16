@@ -1,6 +1,6 @@
 from flask import Blueprint, request,abort, jsonify
 from playweb.db import db
-from playweb.db_models import ansible_module,ansible_module_parameter
+from playweb.db_models import ansible_module,ansible_module_parameter, ansible_host, ansible_group, ansible_inventory
 import json
 
 bp = Blueprint('data',__name__,url_prefix='/data')
@@ -47,4 +47,35 @@ def get_task():
             if count < len(arglist):
                 args += ' '
         task['action']['args'] = args
-        return json.dumps(task)
+        return jsonify(task)
+
+@bp.route('/all_inv', methods=("GET",))
+def get_inv():
+    invlist = ansible_inventory.query.all()
+    namelist = []
+    for inv in invlist:
+        namelist.append(inv.inv_name)
+    return jsonify(namelist)
+
+@bp.route('/grps_of_inv/<string:inventory>', methods=("GET",))
+def get_grp(inventory):
+    inv = ansible_inventory.query.filter_by(inv_name=inventory).first()
+    namelist = []
+    for grp in inv.groups:
+        namelist.append(grp.group_name)
+    return jsonify(namelist)
+
+@bp.route('/hosts_of_inv_grp/<string:inventory>/<string:group>', methods=("GET",))
+def get_host_by_grp(inventory, group):
+    namelist = []
+    inv = ansible_inventory.query.filter_by(inv_name=inventory).first()
+    if group == 'all':
+        for host in inv.hosts:
+            namelist.append([host.host_name, host.host_ip, host.host_os, host.host_desc])
+    else:
+        if group == "none":
+            group =inv.inv_name + '___nogroup'
+        grp = ansible_group.query.filter_by(group_name=group).first()
+        for host in grp.hosts:
+            namelist.append([host.host_name, host.host_ip, host.host_os, host.host_desc])
+    return jsonify(namelist)

@@ -3,24 +3,21 @@
     <div class="table_area">
       <div class="filter">
         <p>Inventory:</p>
-          <select>
-            <option value="inventory_1">inventory_1</option>
-            <option value="inventory_1">inventory_1</option>
-            <option value="inventory_1">inventory_1</option>
-            <option value="inventory_1">inventory_1</option>
-          </select>
+        <select class="inv_sel" name="inventory" onchange="inv_change_3()">
+          <option value="default">default</option>
+        </select>
       </div>
       <a onclick="popup('add_group')"><button>Add Group</button></a><br>
       <div class="itable">
         <table frame="box" cellpadding="10">
-          <tr>
+          <tr class="table_header">
             <th>Group Name</th>
             <th>Creator</th>
             <th>Description</th>
             <th>Operation</th>
           </tr>
           {% for group in groupList %}
-          <tr>
+          <tr class="table_content">
             <td><input name="Group" type="checkbox" > <a href="#">{{group[0]}}</a></td>
             <td>{{group[1]}}</td>
             <td>{{group[2]}}</td>
@@ -41,6 +38,10 @@
         </div> 
         <div id="form_group">
           <form method="POST">
+            <p>Inventory:</p>
+            <select class="inv_sel" name="inv">
+              <option value="default">default</option>
+            </select>
             <label for="group_name">Group Name:</label><br>
             <input type="text" name="group_name" id="group_name"  ><br>
             <label for="group_creator">Creator:</label><br>
@@ -49,9 +50,14 @@
             <input type="text" name="group_desc" id="group_desc"  ><br>
             <label for="group_attr">Attributes:</label><br>
             <input type="text" name="group_attr" id="group_attr"  ><br>
-            <input type="submit"  id="submit_inventory" value="confirm" ><br>
+            <input type="submit" value="confirm" ><br>
           </form>
         </div>
       </div> 
     </div>
+    <script type="text/javascript">
+      window.onload = function(){
+        getData('/data/all_inv', add_inv);
+      }
+  </script>  
 {% endblock %}

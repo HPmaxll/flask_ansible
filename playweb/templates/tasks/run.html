@@ -1,27 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div id="run">
+    <div class="run">
         <div class="run_container">
             <p>Select Target Host</p>
-            <div class="run_info"><p>test</p></div>
-            <div>
-                <button>Select Hosts</button>
-                <button>Select Groups</button>
-                <button>Select Inventory</button>
+            <div class="run_info"></div>
+            <div class="run_input">
+                <button>Add Hosts</button>
+                <button>Add Groups</button>
+                <button>Add Inventory</button>
             </div>
         </div>
         <div class="run_container">
             <p>Select Tasks</p>
             <div class="run_info"></div>
-            <div>
-                <button>Select Task</button>
-                <button onclick="popup('popup_task')">Add New Task</button>
+            <div class="run_input">
+                <button>Add Module</button>
+                <button>Add Playbook</button>
+                <button onclick="popup('popup_task')">New Module</button>
+                <button>New Playbook</button>
             </div>
         </div>
         <div class="run_container">
             <p>Extra Variables</p>
             <div class="run_info"></div>
-            <div>
+            <div class="run_input">
                 <input type="text" id="extra_vars" >
                 <button>Add Extra Variables</button>
             </div>

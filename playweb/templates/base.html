@@ -4,9 +4,9 @@
         <title>PlayWebook</title>
         <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='main.css') }} >
         <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='dynamic.css') }} >
-        <script src="{{ url_for('static',filename='com.js') }}" ></script>
+        <script src={{ url_for('static',filename='script.js') }} ></script>
     </head>
-    <body>
+    <body onload="get_inv()">
         <header>
             <p class="logo">PlayWebook</p>
             <nav>
@@ -39,7 +39,7 @@
                     </div>
                 </ul>
             </nav>
-            <a href={{ url_for('auth.login')}}><button>Log In</button></a>
+            <a href={{ url_for('auth.login')}}><button>ABOUT</button></a>
         </header>
         <div class="content">
         {% block content %}

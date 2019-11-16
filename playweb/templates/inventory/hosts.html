@@ -1,73 +1,76 @@
 {% extends 'base.html' %}
 
-        {% block content %}
-        <div class="table_area">
-           <div class="filter">
-               <p>Inventory:</p>
-               <select>
-                   <option value="inventory_1">inventory_1</option>
-                   <option value="inventory_1">inventory_1</option>
-                   <option value="inventory_1">inventory_1</option>
-                   <option value="inventory_1">inventory_1</option>
-               </select>
-               <p>Group:</p>
-               <select>
-                   <option value="group_1" >Group_1</option>
-                   <option value="group_1" >Group_1</option>
-                   <option value="group_1" >Group_1</option>
-                   <option value="group_1" >Group_1</option>
-               </select>
-           </div>
-           <a onclick="popup('add_host')"><button>Add Host</button></a><br>
-            <div class="itable">
-                <table frame="box" cellpadding="10">
-                    <tr>
-                        <th>Hostname</th>
-                        <th>IP Address</th>
-                        <th>Operating System</th>
-                        <th>Description</th>
-                        <th>Operation</th>
-                    </tr>
-                    {% for host in hostList %}
-                    <tr>
-                        <td><input name="Host" type="checkbox" > <a href="#">{{host[0]}}</a></td>
-                        <td>{{host[1]}}</td>
-                        <td>{{host[2]}}</td>
-                        <td>{{host[3]}}</td>
-                        <td>
-                            <a href="#">Edit</a>
-                            <a href="#">Remove</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
+{% block content %}
+<div class="table_area">
+    <div class="filter">
+        <p>Inventory:</p>
+        <select class="inv_sel" id="inv_01" name="inventory" onchange="inv_change_1(inv_01.value, 'grp_01', 4)">
+            <option value="default">default</option>
+        </select>
+        <p>Group:</p>
+        <select class="grp_sel" id="grp_01" name="group" onchange="grp_change(inv_01.value, grp_01.value)">
+            <option value="all" >ALL</option>
+            <option value="none" >NONE</option>
+       </select>
+    </div>
+    <a onclick="popup('add_host')"><button>Add Host</button></a><br>
+    <div class="itable">
+        <table frame="box" cellpadding="10">
+            <tr class="table_header">
+                <th>Hostname</th>
+                <th>IP Address</th>
+                <th>Operating System</th>
+                <th>Description</th>
+                <th>Operation</th>
+            </tr>
+            {% for host in hostList %}
+            <tr class="table_content">
+                <td><input name={{host[0]}} type="checkbox" ><a href="javascript:void(0)">{{host[0]}}</a></td>
+                <td>{{host[1]}}</td>
+                <td>{{host[2]}}</td>
+                <td>{{host[3]}}</td>
+                <td><a href="javascript:void(0)">Edit</a><a href="javascript:void(0)">Remove</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+<div class="coverup" id='add_host'>
+    <div class="popup">
+        <div class="popup_header">
+            <span>Add new host</span>
+            <input type="button" class="popup_cross" value="X" onclick="hidder('add_host')">
         </div>
-            <div class="coverup" id='add_host'>
-                <div class="popup">
-                    <div class="popup_header">
-                        <span>Add new host</span>
-                        <input type="button" class="popup_cross" value="X" onclick="hidder('add_host')">
-                    </div>
-                    <div id="form_host">
-                        <form method="POST">
-                            <label for="host_name">Hostname:</label><br>
-                            <input type="text" name="host_name" id="host_name"><br>
-                            <label for="host_ip">IP Address:</label><br>
-                            <input type="text" name="host_ip" id="host_ip"><br>
-                            <label for="host_os">Operating System:</label><br>
-                            <input type="text" name="host_os" id="host_os"><br>
-                            <label for="host_desc">Description:</label><br>
-                            <input type="text" name="host_desc" id="host_desc"><br>
-                            <label for="host_attr">Attributes:</label><br>
-                            <input type="text" name="host_attr" id="host_attr"><br>
-                            <input type="submit"  id="submit_host" value="confirm" ><br>
-                        </form>
-                    </div>
-                </div> 
-            </div>
-           
-{% endblock %}
-{% block right_block %}
-
+        <div id="form_host">
+            <form method="POST">
+                <p>Inventory:</p>
+                <select class="inv_sel" id="inv_02" name="inv" onchange="inv_change_2(inv_02.value, 'grp_02', 2)">
+                    <option value="default">default</option>
+                </select>
+                <p>Group</p>
+                <select class="grp_sel" id="grp_02" name="group">
+                    <option value="none">NONE</option>
+                </select>
+                <label for="host_name">Hostname:</label><br>
+                <input type="text" name="host_name" id="host_name"><br>
+                <label for="host_ip">IP Address:</label><br>
+                <input type="text" name="host_ip" id="host_ip"><br>
+                
+                <label for="host_os">Operating System:</label><br>
+                <input type="text" name="host_os" id="host_os"><br>
+                <label for="host_desc">Description:</label><br>
+                <input type="text" name="host_desc" id="host_desc"><br>
+                <label for="host_attr">Attributes:</label><br>
+                <input type="text" name="host_attr" id="host_attr"><br>
+                <input type="submit"  id="submit_host" value="confirm" ><br>
+            </form>
+        </div>
+    </div> 
+</div>
+<script type="text/javascript">
+    window.onload = function(){
+        getData('/data/all_inv', add_inv);
+        getData('/data/grps_of_inv/default', add_grp);
+    }
+</script>           
 {% endblock %}

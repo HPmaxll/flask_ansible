@@ -13,7 +13,14 @@ def inventorys():
             inv_desc = request.form['inv_desc'],
             inv_attr = request.form['inv_attr']
         )
+        grp = ansible_group(
+            group_name = request.form['inv_name'] + '___nogroup',
+            group_creator = request.form['inv_creator'],
+            group_desc = 'No Group',
+            ansible_inventory = inv
+        )
         db.session.add(inv)
+        db.session.add(grp)
         db.session.commit()
         return redirect(url_for('inventory.inventorys'))
 
@@ -23,17 +30,20 @@ def inventorys():
 @bp.route('/groups', methods=('GET', 'POST'))
 def groups():
     if request.method == 'POST':
+        inventory = request.form['inv']
+        inv = ansible_inventory.query.filter_by(inv_name=inventory).first()
         g = ansible_group(
             group_name = request.form['group_name'],
             group_creator = request.form['group_creator'],
             group_desc = request.form['group_desc'],
-            group_attr = request.form['group_attr']
+            group_attr = request.form['group_attr'],
+            ansible_inventory = inv
         )
         db.session.add(g)
         db.session.commit()
         return redirect(url_for('inventory.groups'))
 
-    groupList = get_glist()
+    groupList = get_glist('default')
     return render_template('inventory/groups.html', groupList = groupList)
 
 @bp.route('/hosts', methods=('GET', 'POST'))
@@ -46,17 +56,29 @@ def hosts():
             host_desc = request.form['host_desc'],
             host_attr = request.form['host_attr']
         )
+
+        inventory = request.form['inv']
+        group = request.form['group']
+
+        inv = ansible_inventory.query.filter_by(inv_name=inventory).first()
+        inv.hosts.append(h)
+
+        if group == 'NONE':
+            group = inventory + '___nogroup'
+        grp = ansible_group.query.with_parent(inv).filter_by(group_name=group).first()
+        grp.hosts.append(h)
+
         db.session.add(h)
         db.session.commit()
         return redirect(url_for('inventory.hosts'))
 
-    hostList = get_hlist()
+    hostList = get_hlist('default')
     return render_template('inventory/hosts.html', hostList = hostList)
         
-def get_hlist():
+def get_hlist(name):
     hlist = []
-    hosts = ansible_host.query.all()
-    for i in hosts:
+    inv = ansible_inventory.query.filter_by(inv_name=name).first()
+    for i in inv.hosts:
         hlist.append([i.host_name, i.host_ip, i.host_os, i.host_desc])
     return hlist
 
@@ -67,9 +89,11 @@ def get_ilist():
         ilist.append([i.inv_name, i.inv_creator, i.inv_desc])
     return ilist
 
-def get_glist():
+def get_glist(name):
     glist = []
-    groups = ansible_group.query.all()
-    for i in groups:
+    inv = ansible_inventory.query.filter_by(inv_name=name).first()
+    for i in inv.groups:
+        if i.group_name == inv.inv_name + '___nogroup':
+            continue
         glist.append([i.group_name, i.group_creator, i.group_desc])
     return glist
