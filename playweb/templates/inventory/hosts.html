@@ -1,38 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="table_area">
-    <div class="filter">
-        <p>Inventory:</p>
-        <select class="inv_sel" id="inv_01" name="inventory" onchange="inv_change_1(inv_01.value, 'grp_01', 4)">
-            <option value="default">default</option>
-        </select>
-        <p>Group:</p>
-        <select class="grp_sel" id="grp_01" name="group" onchange="grp_change(inv_01.value, grp_01.value)">
-            <option value="all" >ALL</option>
-            <option value="none" >NONE</option>
-       </select>
-    </div>
-    <a onclick="popup('add_host')"><button>Add Host</button></a><br>
-    <div class="itable">
-        <table frame="box" cellpadding="10">
-            <tr class="table_header">
-                <th>Hostname</th>
-                <th>IP Address</th>
-                <th>Operating System</th>
-                <th>Description</th>
-                <th>Operation</th>
-            </tr>
-            {% for host in hostList %}
-            <tr class="table_content">
-                <td><input name={{host[0]}} type="checkbox" ><a href="javascript:void(0)">{{host[0]}}</a></td>
-                <td>{{host[1]}}</td>
-                <td>{{host[2]}}</td>
-                <td>{{host[3]}}</td>
-                <td><a href="javascript:void(0)">Edit</a><a href="javascript:void(0)">Remove</a></td>
-            </tr>
-            {% endfor %}
-        </table>
+<div class="inv_area">
+    <div class="table_area">
+        <div class="table_opt">
+            <p>Inventory:</p>
+            <select class="inv_sel" id="inv_01" onchange="inv_change_1(inv_01.value, 'grp_01', 4)">
+                <option value="default">default</option>
+            </select>
+            <p>Group:</p>
+            <select class="grp_sel" id="grp_01" onchange="grp_change(inv_01.value, grp_01.value)">
+                <option value="all" >ALL</option>
+                <option value="none" >NONE</option>
+            </select>
+            <a onclick="popup('add_host')"><button>Add Host</button></a><br>
+        </div>
+        
+        <div class="itable">
+            <table frame="box" cellpadding="10">
+                <tr class="table_fields">
+                    <th>Hostname</th>
+                    <th>IP Address</th>
+                    <th>Operating System</th>
+                    <th class="table_desc">Description</th>
+                    <th>Operation</th>
+                </tr>
+                {% for host in hostList %}
+                <tr class="table_content" id={{ 'host_' + host[0] }}>
+                    <td><input type="checkbox" ><a href="javascript:void(0)">{{host[0]}}</a></td>
+                    <td>{{host[1]}}</td>
+                    <td>{{host[2]}}</td>
+                    <td>{{host[3]}}</td>
+                    <td><a href="javascript:void(0)">Edit</a><a href="javascript:void(0)">Remove</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
 </div>
 <div class="coverup" id='add_host'>
@@ -70,7 +73,7 @@
 <script type="text/javascript">
     window.onload = function(){
         getData('/data/all_inv', add_inv);
-        getData('/data/grps_of_inv/default', add_grp);
+        getData('/data/grps_of_inv/name/default', add_grp);
     }
 </script>           
 {% endblock %}

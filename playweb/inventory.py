@@ -74,7 +74,7 @@ def hosts():
 
     hostList = get_hlist('default')
     return render_template('inventory/hosts.html', hostList = hostList)
-        
+
 def get_hlist(name):
     hlist = []
     inv = ansible_inventory.query.filter_by(inv_name=name).first()
@@ -92,8 +92,6 @@ def get_ilist():
 def get_glist(name):
     glist = []
     inv = ansible_inventory.query.filter_by(inv_name=name).first()
-    for i in inv.groups:
-        if i.group_name == inv.inv_name + '___nogroup':
-            continue
+    for i in inv.groups[1:]:
         glist.append([i.group_name, i.group_creator, i.group_desc])
     return glist

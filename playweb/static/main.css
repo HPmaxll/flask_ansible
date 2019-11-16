@@ -126,24 +126,32 @@ header > a > button:hover {
 }
 
 /* --------inventory-------- */
-.table_area {
-    background-color: white;
+.inv_area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.filter {
+.table_area {
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 80em;
+}
+
+.table_opt {
     display: flex;
 }
 
-.filter p, .filter select {
+.table_opt p, .table_opt select {
     margin: 5px;
 }
-.filter select {
+.table_opt select {
     padding: 0 5px 0 0;
     border: 1px solid gray;
 }
 
 
 .itable {
+    width: 78em;
     border: 1px solid black;
     margin: 5px 5px;
 }
@@ -163,16 +171,122 @@ header > a > button:hover {
     text-align: center;
 }
 
+.table_desc {
+    min-width: 350px;
+}
+
 .itable tr {
     background-color: antiquewhite;
 }
 .itable td {
-    max-width: 160px;
+    min-width: 160px;
     padding: 5px;
 }
 .itable th, .itable td {
     border-collapse: collapse;
 }
+
+/* -------- Scroller -------- */
+
+#scroller {
+    /* position: absolute; */
+    margin-top: 20px;
+    width: 300%;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    /* background-color: azure; */
+}
+
+#scroll_controller {
+    background-color: blue;
+    display: flex;
+    justify-content: center;
+
+}
+
+.table_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 5px solid black; */
+}
+
+.float_table {
+    top: 10px;
+    margin: 5px;
+    background-color: rgba(255, 235, 205, 0.8);
+    width: 800px;
+    height: 600px;
+    box-shadow: 3px 3px 3px black;
+    z-index: 1;
+}
+
+.table_outer {
+    /* text-align: center; */
+    position: relative;
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.table_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    padding: 0 5px;
+    background-color: aquamarine;
+}
+
+.table_name {
+    padding: 5px;
+    width: 300px;
+    border: 1px solid black;
+    font-size: 45px;
+    text-align: center;
+}
+
+.filter {
+    padding: 5px;
+    /* background-color: brown; */
+}
+.filter select {
+    margin: 0 5px;
+}
+.table_inner {
+    width: 100%;
+}
+
+.table_inner table {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    border: none;
+}
+
+.table_inner th {
+    background-color: rgba(0, 0, 255, 0.8);
+    padding: 10px;
+    margin: 3px;
+}
+
+.table_inner td {
+    padding: 8px;
+    margin: 3px;
+    background-color: cadetblue;
+}
+
+.table_inner a {
+    margin: 0 5px;
+}
+
 
 /* --------task-------- */
 
@@ -230,10 +344,11 @@ header > a > button:hover {
     left: 0px; 
     top: 0px;
     background-color: rgba(0, 0, 0, 0.6); 
-    width: 100%; 
-    min-height: 100%; 
+    width: 100%;
+    min-height: 100%;
+    overflow: hidden;
     display: none;
-} 
+}
 
 .popup {
     position: relative;

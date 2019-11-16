@@ -1,27 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="table_area">
-    <a onclick="popup('add_inventory')"><button>Add Inventory</button></a><br>
-    <div class="itable">
-        <table frame="box" cellpadding="10">
-            <tr>
-                <th>Inventory Name</th>
-                <th>Creator</th>
-                <th>Description</th>
-                <th>Operation</th>
-            </tr>
-            {% for inv in invList %}
-            <tr>               
-                <td><input name="inv" type="checkbox" > <a href="#">{{inv[0]}}</a></td>
-                <td>{{inv[1]}}</td>
-                <td>{{inv[2]}}</td>
-                <td>
-                    <a href="#">Edit</a>
-                    <a href="#">Remove</a>
-                </td>        
-            </tr>
-            {% endfor %}
-        </table>
+<div class="inv_area">
+    <div class="table_area">
+        <a onclick="popup('add_inventory')"><button>Add Inventory</button></a><br>
+        <div class="itable">
+            <table frame="box" cellpadding="10">
+                <tr class="table_fields">
+                    <th>Inventory Name</th>
+                    <th>Creator</th>
+                    <th class="table_desc">Description</th>
+                    <th>Operation</th>
+                </tr>
+                {% for inv in invList %}
+                <tr class="table_content" id={{ 'inv_' + inv[0] }}>            
+                    <td><input name="inv" type="checkbox" > <a href="#">{{inv[0]}}</a></td>
+                    <td>{{inv[1]}}</td>
+                    <td>{{inv[2]}}</td>
+                    <td>
+                        <a href="#">Edit</a>
+                        <a href="#">Remove</a>
+                    </td>        
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
 </div>
 <div class="coverup" id='add_inventory'>

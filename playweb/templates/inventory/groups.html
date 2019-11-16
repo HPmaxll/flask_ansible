@@ -1,33 +1,36 @@
 {% extends 'base.html' %}
     {% block content %}
-    <div class="table_area">
-      <div class="filter">
-        <p>Inventory:</p>
-        <select class="inv_sel" name="inventory" onchange="inv_change_3()">
-          <option value="default">default</option>
-        </select>
-      </div>
-      <a onclick="popup('add_group')"><button>Add Group</button></a><br>
-      <div class="itable">
-        <table frame="box" cellpadding="10">
-          <tr class="table_header">
-            <th>Group Name</th>
-            <th>Creator</th>
-            <th>Description</th>
-            <th>Operation</th>
-          </tr>
-          {% for group in groupList %}
-          <tr class="table_content">
-            <td><input name="Group" type="checkbox" > <a href="#">{{group[0]}}</a></td>
-            <td>{{group[1]}}</td>
-            <td>{{group[2]}}</td>
-            <td>
-              <a href="#">Edit</a>
-              <a href="#">Remove</a>
-            </td>
-          </tr>
-          {% endfor %}
-        </table>
+    <div class="inv_area">
+      <div class="table_area">
+        <div class="table_opt">
+          <p>Inventory:</p>
+          <select class="inv_sel" id="inv_03" onchange="inv_change_3(inv_03.value)">
+            <option value="default">default</option>
+          </select>
+          <a onclick="popup('add_group')"><button>Add Group</button></a><br>
+        </div>
+        
+        <div class="itable">
+          <table frame="box" cellpadding="10">
+            <tr class="table_header">
+              <th>Group Name</th>
+              <th>Creator</th>
+              <th class="table_desc">Description</th>
+              <th>Operation</th>
+            </tr>
+            {% for group in groupList %}
+            <tr class="table_content" id={{ 'group_' + group[0] }}>
+              <td><input name="Group" type="checkbox" > <a href="#">{{group[0]}}</a></td>
+              <td>{{group[1]}}</td>
+              <td>{{group[2]}}</td>
+              <td>
+                <a href="#">Edit</a>
+                <a href="#">Remove</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
       </div>
     </div>
     <div class="coverup" id='add_group'>

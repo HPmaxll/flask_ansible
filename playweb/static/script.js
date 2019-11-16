@@ -368,7 +368,7 @@ function add_grp(data) {
 }
   
 function inv_change_1(inv, id, keep_count) {
-    var url = '/data/grps_of_inv/' + inv;
+    var url = '/data/grps_of_inv/name/' + inv;
     getData(url, update_grp, id, keep_count);
     var url_2 = '/data/hosts_of_inv_grp/' + inv + '/all';
     document.getElementById(id).childNodes[1].selected = true;
@@ -378,6 +378,12 @@ function inv_change_1(inv, id, keep_count) {
 function grp_change(inv, grp) {
     var url = '/data/hosts_of_inv_grp/' + inv + '/' + grp;
     getData(url, update_table)
+}
+
+function inv_change_3(inv) {
+    var url = '/data/grps_of_inv/' + inv;
+    getData(url, update_table)
+
 }
 
 function update_table(data) {
@@ -446,6 +452,37 @@ function update_grp(data, arglist) {
 }
   
 function inv_change_2(inv, id, keep_count) {
-    var url = '/data/grps_of_inv/' + inv;
+    var url = '/data/grps_of_inv/name/' + inv;
     getData(url, update_grp, id, keep_count);
+}
+
+function add_hosts() {
+    var area = document.getElementById('popup_host');
+    area.style.display = 'block';
+}
+
+function host_close() {
+    hidder('popup_host');
+}
+let pos = 0;
+function scroll_left() {
+    var scroller = document.getElementById('scroller')
+    pos -=100/3;
+    if (pos < 0) {
+        pos = 0;
+        return;
+    }
+    console.log(pos);
+    scroller.style.transform = 'translateX(-' + pos + '%)'
+}
+
+function scroll_right() {
+    var scroller = document.getElementById('scroller')
+    pos +=100/3;
+    if (pos > 100/3*2) {
+        pos = 100/3*2;
+        return;
+    }
+    console.log(pos);
+    scroller.style.transform = 'translateX(-' + pos + '%)'
 }

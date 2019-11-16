@@ -61,6 +61,14 @@ def get_inv():
 def get_grp(inventory):
     inv = ansible_inventory.query.filter_by(inv_name=inventory).first()
     namelist = []
+    for grp in inv.groups[1:]:
+        namelist.append([grp.group_name, grp.group_creator, grp.group_desc])
+    return jsonify(namelist)
+
+@bp.route('/grps_of_inv/name/<string:inventory>', methods=("GET",))
+def get_grp_name(inventory):
+    inv = ansible_inventory.query.filter_by(inv_name=inventory).first()
+    namelist = []
     for grp in inv.groups:
         namelist.append(grp.group_name)
     return jsonify(namelist)

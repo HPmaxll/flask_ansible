@@ -3,11 +3,9 @@
     <div class="run">
         <div class="run_container">
             <p>Select Target Host</p>
-            <div class="run_info"></div>
+            <div class="run_info" id="run_host"></div>
             <div class="run_input">
-                <button>Add Hosts</button>
-                <button>Add Groups</button>
-                <button>Add Inventory</button>
+                <button onclick="add_hosts()">Add Hosts</button>
             </div>
         </div>
         <div class="run_container">
@@ -29,8 +27,114 @@
             </div>
         </div>
     </div>
+    <div id="popup_host" class="coverup">
+        <div id="scroller">
+            <div class="table_container">
+                <div class="float_table">
+                    <img class="close_button" onclick="host_close()" src= {{ url_for('static', filename='close-window.png') }} alt="CLOSE" />
+                    <div class="table_outer">
+                        <div class="table_header">
+                            <p class="table_name">Hosts</p>
+                            <div class="filter">
+                                <span>Inventory: </span>
+                                <select id="inv_04">
+                                    <option value="default">default</option>
+                                </select>
+                                <span>Group: </span>
+                                <select id="grp_04">
+                                    <option value="all">ALL</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table_inner">
+                            <table frame="box">
+                                <tr class="table_fields">
+                                    <th>Hostname</th>
+                                    <th>IP Address</th>
+                                    <th>Operating System</th>
+                                    <th class="table_desc">Description</th>
+                                </tr>
+                                {% for host in hostList %}
+                                <tr class="table_content" id={{ 'host_' + host[0] }}>
+                                    <td><input type="checkbox" ><a href="javascript:void(0)">{{host[0]}}</a></td>
+                                    <td>{{host[1]}}</td>
+                                    <td>{{host[2]}}</td>
+                                    <td>{{host[3]}}</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table_container">
+                <div class="float_table">
+                    <img class="close_button" onclick="host_close()" src= {{ url_for('static', filename='close-window.png') }} alt="CLOSE" />
+                    <div class="table_outer">
+                        <div class="table_header">
+                            <p class="table_name">Groups</p>
+                            <div class="filter">
+                                <span>Groups: </span>
+                                <select id="inv_05">
+                                    <option value="default">default</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table_inner">
+                            <table frame="box">
+                                <tr class="table_fields">
+                                    <th>Group Name</th>
+                                    <th>Creator</th>
+                                    <th class="table_desc">Description</th>
+                                </tr>
+                                {% for group in groupList %}
+                                <tr class="table_content" id={{ 'group_' + group[0] }}>
+                                    <td><input name="Group" type="checkbox" > <a href="#">{{group[0]}}</a></td>
+                                    <td>{{group[1]}}</td>
+                                    <td>{{group[2]}}</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table_container">
+                <div class="float_table">
+                    <img class="close_button" onclick="host_close()" src= {{ url_for('static', filename='close-window.png') }} alt="CLOSE" />
+                    <div class="table_outer">
+                        <div class="table_header">
+                            <p class="table_name">Inventorys</p>
+                            <div class="filter"></div>
+                        </div>
+                        <div class="table_inner">
+                            <table frame="box">
+                                <tr class="table_fields">
+                                    <th>Inventory Name</th>
+                                    <th>Creator</th>
+                                    <th class="table_desc">Description</th>
+                                </tr>
+                                {% for inv in invList %}
+                                <tr class="table_content" id={{ 'inv_' + inv[0] }}>            
+                                    <td><input name="inv" type="checkbox" > <a href="#">{{inv[0]}}</a></td>
+                                    <td>{{inv[1]}}</td>
+                                    <td>{{inv[2]}}</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="scroll_controller">
+            <button onclick="scroll_left()">left</button>
+            <button>CONFIRM</button>
+            <button onclick="scroll_right()">right</button>
+        </div>
+    </div>
     <div id="popup_task" class="coverup">
-        <div id='selection'>
+        <div class='selection'>
             <img class="close_button" onclick="task_close()" src= {{ url_for('static', filename='close-window.png') }} alt="CLOSE" />
             <div id="select_before">
                 <div><img src= {{ url_for('static', filename='Ans.png') }} alt="ansible"/></div>
