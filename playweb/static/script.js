@@ -464,25 +464,3 @@ function add_hosts() {
 function host_close() {
     hidder('popup_host');
 }
-let pos = 0;
-function scroll_left() {
-    var scroller = document.getElementById('scroller')
-    pos -=100/3;
-    if (pos < 0) {
-        pos = 0;
-        return;
-    }
-    // console.log(pos);
-    scroller.style.transform = 'translateX(-' + pos + '%)'
-}
-
-function scroll_right() {
-    var scroller = document.getElementById('scroller')
-    pos +=100/3;
-    if (pos > 100/3*2) {
-        pos = 100/3*2;
-        return;
-    }
-    // console.log(pos);
-    scroller.style.transform = 'translateX(-' + pos + '%)'
-}

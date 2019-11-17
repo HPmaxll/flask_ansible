@@ -3,7 +3,11 @@
     <div class="run">
         <div class="run_container">
             <p>Select Target Host</p>
-            <div class="run_info" id="run_host"></div>
+            <div class="run_info">
+                <p id="target_host"></p>
+                <p id="target_grp"></p>
+                <p id="target_inv"></p>
+            </div>
             <div class="run_input">
                 <button onclick="add_hosts()">Add Hosts</button>
             </div>
@@ -37,27 +41,28 @@
                             <p class="table_name">Hosts</p>
                             <div class="filter">
                                 <span>Inventory: </span>
-                                <select id="inv_04">
+                                <select id="inv_04" onchange="inv_change_1(inv_04.value, 'grp_04', 4)">
                                     <option value="default">default</option>
                                 </select>
                                 <span>Group: </span>
-                                <select id="grp_04">
+                                <select id="grp_04" onchange="grp_change_4()">
                                     <option value="all">ALL</option>
+                                    <option value="none">NONE</option>
                                 </select>
                             </div>
                         </div>
-                        <button>up</button>
+                        <button class="scroll_up">up</button>
                         <div class="table_inner">
-                            <table frame="box">
+                            <table frame="box" id="table_host">
                                 <tr class="table_fields">
-                                    <th><input type="checkbox"> Hostname</th>
+                                    <th><input type="checkbox" onchange="select_all('table_host')"> Hostname</th>
                                     <th>IP Address</th>
                                     <th>Operating System</th>
                                     <th class="table_desc">Description</th>
                                 </tr>
                                 {% for host in hostList %}
-                                <tr class="table_content" id={{ 'host_' + host[0] }}>
-                                    <td><input type="checkbox" > {{host[0]}}</td>
+                                <tr class="table_content">
+                                    <td><input type="checkbox" id={{ 'h___' + host[0] }} onchange="row_check( '{{ 'h___' + host[0] }}' )"> {{host[0]}}</td>
                                     <td>{{host[1]}}</td>
                                     <td>{{host[2]}}</td>
                                     <td>{{host[3]}}</td>
@@ -65,7 +70,7 @@
                                 {% endfor %}
                             </table>
                         </div>
-                        <button>down</button>
+                        <button class="scroll_down"><img src={{ url_for('static', filename='down.png') }} alt="down" /></button>
                     </div>
                 </div>
             </div>
@@ -76,30 +81,30 @@
                         <div class="table_header">
                             <p class="table_name">Groups</p>
                             <div class="filter">
-                                <span>Groups: </span>
+                                <span>Inventory: </span>
                                 <select id="inv_05">
                                     <option value="default">default</option>
                                 </select>
                             </div>
                         </div>
-                        <button>up</button>
+                        <button class="scroll_up">up</button>
                         <div class="table_inner">
-                            <table frame="box">
+                            <table frame="box" id="table_grp">
                                 <tr class="table_fields">
-                                    <th><input type="checkbox"> Group Name</th>
+                                    <th><input type="checkbox" onchange="select_all('table_grp')"> Group Name</th>
                                     <th>Creator</th>
                                     <th class="table_desc">Description</th>
                                 </tr>
                                 {% for group in groupList %}
-                                <tr class="table_content" id={{ 'group_' + group[0] }}>
-                                    <td><input name="Group" type="checkbox" > {{group[0]}}</td>
+                                <tr class="table_content" >
+                                    <td><input type="checkbox" id={{ 'g___' + group[0] }} onchange="row_check('{{ 'g___' + group[0] }}' )"> {{group[0]}}</td>
                                     <td>{{group[1]}}</td>
                                     <td>{{group[2]}}</td>
                                 </tr>
                                 {% endfor %}
                             </table>
                         </div>
-                        <button>down</button>
+                        <button class="scroll_down">down</button>
                     </div>
                 </div>
             </div>
@@ -111,33 +116,34 @@
                             <p class="table_name">Inventorys</p>
                             <div class="filter"></div>
                         </div>
-                        <button>up</button>
+                        <button class="scroll_up">up</button>
                         <div class="table_inner">
-                            <table frame="box">
+                            <table frame="box" id="table_inv" >
                                 <tr class="table_fields">
-                                    <th><input type="checkbox"> Inventory Name</th>
+                                    <th><input type="checkbox" onchange="select_all('table_inv')"> Inventory Name</th>
                                     <th>Creator</th>
                                     <th class="table_desc">Description</th>
                                 </tr>
                                 {% for inv in invList %}
-                                <tr class="table_content" id={{ 'inv_' + inv[0] }}>            
-                                    <td><input name="inv" type="checkbox" > {{inv[0]}}</td>
+                                <tr class="table_content">            
+                                    <td><input type="checkbox" id={{ 'i___' + inv[0] }} onchange="row_check('{{ 'i___' + inv[0] }}' )"> {{inv[0]}}</td>
                                     <td>{{inv[1]}}</td>
                                     <td>{{inv[2]}}</td>
                                 </tr>
                                 {% endfor %}
                             </table>
                         </div>
-                        <button>down</button>
+                        <button class="scroll_down">down</button>
                     </div>
                 </div>
             </div>
         </div>
         <div id="scroll_controller">
-            <button>CONFIRM</button>
+            <button onclick="reset_sel()">RESET</button>
+            <button onclick="gen_list()">CONFIRM</button>
         </div>
-        <button id="nav_left" onclick="scroll_left()">left</button>
-        <button id="nav_right" onclick="scroll_right()">right</button>
+        <img class="nav_button" id="nav_left" onclick="scroll_left()" src={{ url_for('static', filename='left.png') }} alt="left"/> 
+        <img class="nav_button" id="nav_right" onclick="scroll_right()" src={{ url_for('static', filename='right.png') }} alt="right"/>
     </div>
     <div id="popup_task" class="coverup">
         <div class='selection'>
@@ -159,4 +165,119 @@
         <p id="desc_module"></p>
         <p id="desc_para"></p>
     </div>
+    <script type="text/javascript">
+        let pos = 2;
+        function scroll_right() {
+            var scroller = document.getElementById('scroller')
+            pos -= 1;
+            if (pos < 0) {
+                pos = 0;
+                return;
+            }
+            scroller.style.transform = 'translateX(-' + pos*100/3 + '%)'
+        }
+
+        function scroll_left() {
+            var scroller = document.getElementById('scroller')
+            pos += 1;
+            if (pos > 2) {
+                pos = 2;
+                return;
+            }
+            scroller.style.transform = 'translateX(-' + pos*100/3 + '%)'
+        }
+
+        function row_check(id) {
+            var checkbox = document.getElementById(id);
+            var row = checkbox.parentNode.parentNode;
+
+            var cellist = row.getElementsByTagName('td');
+            var i;
+            if (checkbox.checked) {
+                for (i=0; i<cellist.length; i++) {
+                    cellist[i].style.backgroundColor = 'rgb(220, 220, 220)';
+                    cellist[i].style.boxShadow = '3px 3px 3px rgb(210, 210, 210)';
+                }
+            }
+            else {
+                for (i=0; i<cellist.length; i++) {
+                    cellist[i].style.backgroundColor = 'rgb(180, 180, 180)';
+                    cellist[i].style.boxShadow = '3px 3px 3px rgb(180, 180, 180)';
+                }
+            }
+        }
+
+        function select_all(id) {
+            var table = document.getElementById(id);
+            var table_check = table.getElementsByTagName('input')[0];
+            var rows = table.getElementsByClassName('table_content');
+            var table_headers = table.getElementsByTagName('th')
+            var table_cell = table.getElementsByTagName('td')
+            var i;
+            if (table_check.checked) {
+                for (i=0; i < rows.length; i++) {
+                    rows[i].getElementsByTagName('input')[0].checked = true;
+                }
+                for (i=0; i < table_headers.length; i++) {
+                    table_headers[i].style.color = 'rgb(220, 220, 220)';
+                    table_headers[i].style.boxShadow = '3px 3px 3px rgb(210, 210, 210)';
+                }
+                for (i=0; i < table_cell.length; i++) {
+                    table_cell[i].style.backgroundColor = 'rgb(220, 220, 220)';
+                    table_cell[i].style.boxShadow = '3px 3px 3px rgb(210, 210, 210)';
+                }
+            }
+            else {
+                for (i=0; i < rows.length; i++) {
+                    rows[i].getElementsByTagName('input')[0].checked = false;
+                }
+                for (i=0; i < table_headers.length; i++) {
+                    table_headers[i].style.color = 'rgb(180, 180, 180)';
+                    table_headers[i].style.boxShadow = '3px 3px 3px rgb(180, 180, 180)';
+                }
+                for (i=0; i < table_cell.length; i++) {
+                    table_cell[i].style.backgroundColor = 'rgb(180, 180, 180)';
+                    table_cell[i].style.boxShadow = '3px 3px 3px rgb(180, 180, 180)';
+                }
+            }
+        }
+        
+        function reset_sel() {
+            var table = document.getElementsByClassName('table_inner');
+            var i,j;
+            for (i=0; i < table.length; i++) {
+                var table_checks = table[i].getElementsByTagName('input');
+                var table_headers = table[i].getElementsByTagName('th');
+                var table_cell = table[i].getElementsByTagName('td');
+                for (j=0; j < table_checks.length; j++) {
+                    table_checks[j].checked = false;
+                }
+                for (j=0; j < table_headers.length; j++) {
+                    table_headers[j].style.color = 'rgb(180, 180, 180)';
+                    table_headers[j].style.boxShadow = '3px 3px 3px rgb(180, 180, 180)';
+                }
+                for (j=0; j < table_cell.length; j++) {
+                    table_cell[j].style.backgroundColor = 'rgb(180, 180, 180)';
+                    table_cell[j].style.boxShadow = '3px 3px 3px rgb(180, 180, 180)';
+                }
+            }
+        }
+
+        function gen_list() {
+            var collection = {};
+            collection['hosts'] = [];
+            collection['groups'] = [];
+            collection['invs'] = [];
+            var table_host = document.getElementById('table_host');
+            var host_content = table_host.getElementsByClassName('table_content');
+            var i;
+            for (i=0; i < table_content.length; i++) {
+                var checkbox = table_content[i].getElementsByTagName('input')[0];
+                if (checkbox.checked) {
+                    collection.push(checkbox.id);
+                }
+            }
+            console.log(collection);
+        }
+    </script>
 {% endblock %}

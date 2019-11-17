@@ -10,6 +10,11 @@ body {
     min-width: 1280px;
 }
 
+select {
+    width: 100px;
+    text-overflow: ellipsis;
+    background-color: rgba(110, 110, 240, 0.6);
+}
 /* --------header----area-------- */
 
 header {
@@ -196,27 +201,98 @@ header > a > button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-direction: row-reverse;
+    transform: translateX(-66.66666666666667%);
     transition: all 0.3s ease;
     /* background-color: azure; */
 }
 
 #scroll_controller {
-    background-color: blue;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
 }
 
-#nav_left {
+#scroll_controller button {
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0 30px;
+    font-size: 20px;
+    font-weight: 700;
+    width: 300px;
+    background-color: rgba(61, 66, 61, 0.9);
+    color: rgb(200, 200, 200);
+    box-shadow: 3px 3px 3px rgba(180, 180, 180, 0.6);
+    transition: all 0.3s ease;
+}
+
+#scroll_controller button:focus {
+    outline: none;
+}
+
+#scroll_controller button:hover {
+    color: rgb(230, 230, 230);
+    box-shadow: 4px 4px 4px rgba(210, 210, 210, 0.7);
+}
+
+#scroll_controller button:active {
+    color: rgb(120, 120, 250);
+    box-shadow: 4px 4px 4px rgba(110, 110, 240, 0.7);
+}
+
+.nav_button {
     position: fixed;
-    top: 45%;
+    top: 40%;
+    width: 35px;
+    border: none;
+    border-radius: 3px;
+    background-color: rgba(200, 200, 200, 0.9);
+    box-shadow: 3px 3px 3px rgba(180, 180, 180, 0.6);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.nav_button:hover {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 4px 4px 4px rgba(240, 240, 240, 0.6);
+}
+
+.nav_button:active {
+    background-color: rgb(120, 120, 250);
+    box-shadow: 4px 4px 4px rgba(110, 110, 240, 0.6);
+}
+
+#nav_left {
     right: 90%;
 }
 
 #nav_right {
-    position: fixed;
-    top: 45%;
     left: 90%;
 }
+
+.scroll_up {
+    background-color: rgba(200,200,200,0.9);
+    border: none;
+    width: 99%;
+    display: none;
+}
+.scroll_up img {
+    width: 40px;
+    padding-top: 1px;
+}
+
+.scroll_down {
+    background-color: rgba(200,200,200,0.9);
+    border: none;
+    width: 99%;
+    display: none;
+}
+.scroll_down img {
+    width: 40px;
+    padding-top: 1px;
+}
+
 .table_container {
     width: 100%;
     display: flex;
@@ -228,7 +304,7 @@ header > a > button:hover {
 .float_table {
     top: 10px;
     margin: 5px;
-    background-color: rgba(255, 235, 205, 0.8);
+    background-color: rgba(61, 66, 61, 0.9);
     width: 800px;
     height: 600px;
     box-shadow: 3px 3px 3px black;
@@ -252,19 +328,21 @@ header > a > button:hover {
     align-items: flex-end;
     width: 100%;
     padding: 0 5px;
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
 }
 
 .table_name {
+    color: white;
     padding: 5px;
     width: 300px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     font-size: 45px;
     text-align: center;
 }
 
 .filter {
     padding: 5px;
+    color: white;
     /* background-color: brown; */
 }
 .filter select {
@@ -273,25 +351,31 @@ header > a > button:hover {
 .table_inner {
     width: 100%;
     height: 435px;
+    /* background-color: rgba(255, 235, 205, 0.8); */
 }
 
 .table_inner table {
     padding: 0;
     margin: 0;
     width: 100%;
+    border-spacing: 5px;
+    /* border-collapse: collapse; */
     border: none;
 }
 
 .table_inner th {
     text-align: left;
-    background-color: rgba(0, 0, 255, 0.8);
+    background-color: rgb(0, 0, 0);
+    color: rgb(180, 180, 180);
     padding: 10px 8px;
+    box-shadow: 3px 3px 3px rgb(180, 180, 180);
     /* margin: 3px; */
 }
 
 .table_inner td {
     padding: 8px;
-    background-color: cadetblue;
+    background-color: rgb(180, 180, 180);
+    box-shadow: 3px 3px 3px rgb(180, 180, 180);
 }
 
 .table_inner input {
