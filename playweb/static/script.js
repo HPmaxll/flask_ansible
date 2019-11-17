@@ -472,7 +472,7 @@ function scroll_left() {
         pos = 0;
         return;
     }
-    console.log(pos);
+    // console.log(pos);
     scroller.style.transform = 'translateX(-' + pos + '%)'
 }
 
@@ -483,6 +483,6 @@ function scroll_right() {
         pos = 100/3*2;
         return;
     }
-    console.log(pos);
+    // console.log(pos);
     scroller.style.transform = 'translateX(-' + pos + '%)'
 }

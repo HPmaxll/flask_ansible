@@ -46,17 +46,18 @@
                                 </select>
                             </div>
                         </div>
+                        <button>up</button>
                         <div class="table_inner">
                             <table frame="box">
                                 <tr class="table_fields">
-                                    <th>Hostname</th>
+                                    <th><input type="checkbox"> Hostname</th>
                                     <th>IP Address</th>
                                     <th>Operating System</th>
                                     <th class="table_desc">Description</th>
                                 </tr>
                                 {% for host in hostList %}
                                 <tr class="table_content" id={{ 'host_' + host[0] }}>
-                                    <td><input type="checkbox" ><a href="javascript:void(0)">{{host[0]}}</a></td>
+                                    <td><input type="checkbox" > {{host[0]}}</td>
                                     <td>{{host[1]}}</td>
                                     <td>{{host[2]}}</td>
                                     <td>{{host[3]}}</td>
@@ -64,6 +65,7 @@
                                 {% endfor %}
                             </table>
                         </div>
+                        <button>down</button>
                     </div>
                 </div>
             </div>
@@ -80,22 +82,24 @@
                                 </select>
                             </div>
                         </div>
+                        <button>up</button>
                         <div class="table_inner">
                             <table frame="box">
                                 <tr class="table_fields">
-                                    <th>Group Name</th>
+                                    <th><input type="checkbox"> Group Name</th>
                                     <th>Creator</th>
                                     <th class="table_desc">Description</th>
                                 </tr>
                                 {% for group in groupList %}
                                 <tr class="table_content" id={{ 'group_' + group[0] }}>
-                                    <td><input name="Group" type="checkbox" > <a href="#">{{group[0]}}</a></td>
+                                    <td><input name="Group" type="checkbox" > {{group[0]}}</td>
                                     <td>{{group[1]}}</td>
                                     <td>{{group[2]}}</td>
                                 </tr>
                                 {% endfor %}
                             </table>
                         </div>
+                        <button>down</button>
                     </div>
                 </div>
             </div>
@@ -107,31 +111,33 @@
                             <p class="table_name">Inventorys</p>
                             <div class="filter"></div>
                         </div>
+                        <button>up</button>
                         <div class="table_inner">
                             <table frame="box">
                                 <tr class="table_fields">
-                                    <th>Inventory Name</th>
+                                    <th><input type="checkbox"> Inventory Name</th>
                                     <th>Creator</th>
                                     <th class="table_desc">Description</th>
                                 </tr>
                                 {% for inv in invList %}
                                 <tr class="table_content" id={{ 'inv_' + inv[0] }}>            
-                                    <td><input name="inv" type="checkbox" > <a href="#">{{inv[0]}}</a></td>
+                                    <td><input name="inv" type="checkbox" > {{inv[0]}}</td>
                                     <td>{{inv[1]}}</td>
                                     <td>{{inv[2]}}</td>
                                 </tr>
                                 {% endfor %}
                             </table>
                         </div>
+                        <button>down</button>
                     </div>
                 </div>
             </div>
         </div>
         <div id="scroll_controller">
-            <button onclick="scroll_left()">left</button>
             <button>CONFIRM</button>
-            <button onclick="scroll_right()">right</button>
         </div>
+        <button id="nav_left" onclick="scroll_left()">left</button>
+        <button id="nav_right" onclick="scroll_right()">right</button>
     </div>
     <div id="popup_task" class="coverup">
         <div class='selection'>
