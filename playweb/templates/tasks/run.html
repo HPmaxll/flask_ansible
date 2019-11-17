@@ -41,11 +41,11 @@
                             <p class="table_name">Hosts</p>
                             <div class="filter">
                                 <span>Inventory: </span>
-                                <select id="inv_04" onchange="inv_change_1(inv_04.value, 'grp_04', 4)">
+                                <select id="inv_04" class="inv_sel" onchange="inv_change_4(inv_04.value, 'grp_04', 'table_host', 4)">
                                     <option value="default">default</option>
                                 </select>
                                 <span>Group: </span>
-                                <select id="grp_04" onchange="grp_change_4()">
+                                <select id="grp_04" class="grp_sel" onchange="grp_change_2(inv_04.value, grp_04.value, 'table_host')">
                                     <option value="all">ALL</option>
                                     <option value="none">NONE</option>
                                 </select>
@@ -55,14 +55,14 @@
                         <div class="table_inner">
                             <table frame="box" id="table_host">
                                 <tr class="table_fields">
-                                    <th><input type="checkbox" onchange="select_all('table_host')"> Hostname</th>
+                                    <th><input type="checkbox" onchange="select_all('table_host')">Hostname</th>
                                     <th>IP Address</th>
                                     <th>Operating System</th>
                                     <th class="table_desc">Description</th>
                                 </tr>
                                 {% for host in hostList %}
                                 <tr class="table_content">
-                                    <td><input type="checkbox" id={{ 'h___' + host[0] }} onchange="row_check( '{{ 'h___' + host[0] }}' )"> {{host[0]}}</td>
+                                    <td><input type="checkbox" id={{ 'h___' + host[0] }} onchange="row_check( '{{ 'h___' + host[0] }}' )">{{host[0]}}</td>
                                     <td>{{host[1]}}</td>
                                     <td>{{host[2]}}</td>
                                     <td>{{host[3]}}</td>
@@ -82,7 +82,7 @@
                             <p class="table_name">Groups</p>
                             <div class="filter">
                                 <span>Inventory: </span>
-                                <select id="inv_05">
+                                <select id="inv_05" class="inv_sel" onchange="inv_change_5(inv_05.value, 'table_grp')">
                                     <option value="default">default</option>
                                 </select>
                             </div>
@@ -91,13 +91,13 @@
                         <div class="table_inner">
                             <table frame="box" id="table_grp">
                                 <tr class="table_fields">
-                                    <th><input type="checkbox" onchange="select_all('table_grp')"> Group Name</th>
+                                    <th><input type="checkbox" onchange="select_all('table_grp')">Group Name</th>
                                     <th>Creator</th>
                                     <th class="table_desc">Description</th>
                                 </tr>
                                 {% for group in groupList %}
                                 <tr class="table_content" >
-                                    <td><input type="checkbox" id={{ 'g___' + group[0] }} onchange="row_check('{{ 'g___' + group[0] }}' )"> {{group[0]}}</td>
+                                    <td><input type="checkbox" id={{ 'g___' + group[0] }} onchange="row_check('{{ 'g___' + group[0] }}' )">{{group[0]}}</td>
                                     <td>{{group[1]}}</td>
                                     <td>{{group[2]}}</td>
                                 </tr>
@@ -120,13 +120,13 @@
                         <div class="table_inner">
                             <table frame="box" id="table_inv" >
                                 <tr class="table_fields">
-                                    <th><input type="checkbox" onchange="select_all('table_inv')"> Inventory Name</th>
+                                    <th><input type="checkbox" onchange="select_all('table_inv')">Inventory Name</th>
                                     <th>Creator</th>
                                     <th class="table_desc">Description</th>
                                 </tr>
                                 {% for inv in invList %}
                                 <tr class="table_content">            
-                                    <td><input type="checkbox" id={{ 'i___' + inv[0] }} onchange="row_check('{{ 'i___' + inv[0] }}' )"> {{inv[0]}}</td>
+                                    <td><input type="checkbox" id={{ 'i___' + inv[0] }} onchange="row_check('{{ 'i___' + inv[0] }}' )">{{inv[0]}}</td>
                                     <td>{{inv[1]}}</td>
                                     <td>{{inv[2]}}</td>
                                 </tr>
@@ -166,6 +166,10 @@
         <p id="desc_para"></p>
     </div>
     <script type="text/javascript">
+        window.onload = function() {
+            getData('/data/all_inv', add_inv);
+            getData('/data/grps_of_inv/name/default', add_grp);
+        }
         let pos = 2;
         function scroll_right() {
             var scroller = document.getElementById('scroller')
@@ -264,19 +268,44 @@
         }
 
         function gen_list() {
+            
+            var inv_host = document.getElementById('inv_04').value;
+            var grp_host = document.getElementById('grp_04').value;
+            var inv_grp = document.getElementById('inv_05').value;
             var collection = {};
-            collection['hosts'] = [];
-            collection['groups'] = [];
-            collection['invs'] = [];
-            var table_host = document.getElementById('table_host');
-            var host_content = table_host.getElementsByClassName('table_content');
+            collection[inv_host] = {};
+            collection[inv_host][grp_host] = [];
+            collection[inv_grp] = {};
             var i;
-            for (i=0; i < table_content.length; i++) {
-                var checkbox = table_content[i].getElementsByTagName('input')[0];
+            var table_host = document.getElementById('table_host');
+            var table_grp = document.getElementById('table_grp');
+            var table_inv = document.getElementById('table_inv');
+            var host_content = table_host.getElementsByClassName('table_content');
+            var grp_content = table_grp.getElementsByClassName('table_content');
+            var inv_content = table_inv.getElementsByClassName('table_content');
+            for (i=0; i < host_content.length; i++) {
+                var checkbox = host_content[i].getElementsByTagName('input')[0];
                 if (checkbox.checked) {
-                    collection.push(checkbox.id);
+                    collection['hosts'].push(checkbox.id.slice(4));
                 }
             }
+            for (i=0; i < grp_content.length; i++) {
+                
+                var checkbox = grp_content[i].getElementsByTagName('input')[0];
+                if (checkbox.checked) {
+                    if (!collection[inv]) {
+                        collection[inv] = {};
+                    }
+                    collection[inv][checkbox.id.slice(4)] = 'all';
+                }
+            }
+            for (i=0; i < inv_content.length; i++) {
+                var checkbox = inv_content[i].getElementsByTagName('input')[0];
+                if (checkbox.checked) {
+                    collection[checkbox.id.slice(4)] = 'all';
+                }
+            }
+            
             console.log(collection);
         }
     </script>

@@ -107,49 +107,49 @@ function mod_click(name) {
     }
 }
   
-  function mod_dbclick(name) {
+function mod_dbclick(name) {
     return function() {
-      if (document.getElementById(name).parentNode.id == "module_list") {
+        if (document.getElementById(name).parentNode.id == "module_list") {
+            updateText(name);
+            loadModule(name, insertPara);
+        }
+        else {
+            var mod = document.getElementById(name);
+            mod.className = "button_hint";
+            mod.removeAttribute("title");
+            document.getElementById("module_list").appendChild(mod);
+            document.getElementById("select_after").id = "select_before";
+            clearChild("selected_opt");
+            clearChild("desc_module");
+            clearChild("desc_para");
+            popup('module_list');
+            popup('select_input');
+            popup('select_submit');
+            hidder('select_finish');
+            hidder("module_para");
+            hidder('selected_opt');
+            hidder("desc_module");
+            hidder("desc_para");
+        }
+    }
+}
+  
+function mod_submit(name) {
+    if (name) {
+        if (!sessionStorage.getItem(name)) {
+            var url = "/data/module/" + name;
+            getData(url,loadModuleDesc);
+        }
+        else {
+            var data = sessionStorage.getItem(name);
+            loadModuleDesc(data);
+        }
         updateText(name);
         loadModule(name, insertPara);
-      }
-      else {
-        var mod = document.getElementById(name);
-        mod.className = "button_hint";
-        mod.removeAttribute("title");
-        document.getElementById("module_list").appendChild(mod);
-        document.getElementById("select_after").id = "select_before";
-        clearChild("selected_opt");
-        clearChild("desc_module");
-        clearChild("desc_para");
-        popup('module_list');
-        popup('select_input');
-        popup('select_submit');
-        hidder('select_finish');
-        hidder("module_para");
-        hidder('selected_opt');
-        hidder("desc_module");
-        hidder("desc_para");
-      }
     }
-  }
+}
   
-  function mod_submit(name) {
-    if (name) {
-      if (!sessionStorage.getItem(name)) {
-        var url = "/data/module/" + name;
-        getData(url,loadModuleDesc);
-      }
-      else {
-        var data = sessionStorage.getItem(name);
-        loadModuleDesc(data);
-      }
-      updateText(name);
-      loadModule(name, insertPara);
-    }
-  }
-  
-  function mod_add() {
+function mod_add() {
     var objdiv = document.getElementById("selected_opt");
     var divlist = objdiv.childNodes;
     var opt, value;
@@ -157,81 +157,79 @@ function mod_click(name) {
     var tasklist = {};
     var args = {};
     var i;
-    for (i=0;i<divlist.length;i++) {
-      
-      opt = divlist[i].childNodes[0].id;
-      value = divlist[i].childNodes[2].value;
-      args[opt] = value;
+    for (i=0;i<divlist.length;i++) {   
+        opt = divlist[i].childNodes[0].id;
+        value = divlist[i].childNodes[2].value;
+        args[opt] = value;
     }
     tasklist['module'] = selected_module;
     tasklist['args'] = args;
     postData(tasklist,'/data/task', display)
-  }
+}
   
-  function display(data) {
+function display(data) {
     document.getElementById("desc_para").innerText = data;
-  }
+}
   
-  function loadModuleDesc(data) {
+function loadModuleDesc(data) {
     var module = JSON.parse(data);
     if (module) {
-      var div = document.getElementById('desc_module');
-      if (!div.firstChild) {
-        div.style.display = "block";
-      }
-      document.getElementById('module_name').value = module.module;
-      div.innerText = module.module + ":\n" + module.description;
+        var div = document.getElementById('desc_module');
+        if (!div.firstChild) {
+            div.style.display = "block";
+        }
+        document.getElementById('module_name').value = module.module;
+        div.innerText = module.module + ":\n" + module.description;
     }
-  }
+}
   
-  function para_click(para, desc) {
+function para_click(para, desc) {
     return function() {
-      var div = document.getElementById('desc_para');
-      if (!div.firstChild) {
-        div.style.display = "block";
-      }
-      div.innerText = para + ':\n' + desc;
+        var div = document.getElementById('desc_para');
+        if (!div.firstChild) {
+            div.style.display = "block";
+        }
+        div.innerText = para + ':\n' + desc;
     }
-  }
+}
   
-  function para_dbclick(parameter) {
+function para_dbclick(parameter) {
     return function() {
-      var para = document.getElementById(parameter);
-      var objdiv = document.getElementById('selected_opt');
-      if (para.parentNode.id == 'module_para') {
-        if (!objdiv.firstChild) {
-          objdiv.style.display = "block";
+        var para = document.getElementById(parameter);
+        var objdiv = document.getElementById('selected_opt');
+        if (para.parentNode.id == 'module_para') {
+            if (!objdiv.firstChild) {
+                objdiv.style.display = "block";
+            }
+            var subdiv = document.createElement('div');
+            subdiv.id = parameter + '_div';
+            subdiv.className = 'parameter_div';
+            var box = document.createElement('input');
+            var br = document.createElement('br');
+            box.type = 'text';
+            box.id = parameter + '_value';
+            para.className = 'parameter_button';
+            para.title = "Double click to remove.";
+            subdiv.appendChild(para);
+            subdiv.appendChild(br);
+            subdiv.appendChild(box);
+            objdiv.appendChild(subdiv);
         }
-        var subdiv = document.createElement('div');
-        subdiv.id = parameter + '_div';
-        subdiv.className = 'parameter_div';
-        var box = document.createElement('input');
-        var br = document.createElement('br');
-        box.type = 'text';
-        box.id = parameter + '_value';
-        para.className = 'parameter_button';
-        para.title = "Double click to remove.";
-        subdiv.appendChild(para);
-        subdiv.appendChild(br);
-        subdiv.appendChild(box);
-        objdiv.appendChild(subdiv);
-      }
-      else {
-        para.className = 'button_hint';
-        para.removeAttribute('title');
-        document.getElementById('module_para').appendChild(para);
-        var subdiv = document.getElementById(parameter + '_div');
-        while (subdiv.firstChild) {
-          subdiv.removeChild(subdiv.firstChild)
-        }
-        objdiv.removeChild(subdiv);
-        if (!objdiv.firstChild) {
-          objdiv.style.display = "none";
-        }
-      }
-      
+        else {
+            para.className = 'button_hint';
+            para.removeAttribute('title');
+            document.getElementById('module_para').appendChild(para);
+            var subdiv = document.getElementById(parameter + '_div');
+            while (subdiv.firstChild) {
+                subdiv.removeChild(subdiv.firstChild)
+            }
+            objdiv.removeChild(subdiv);
+            if (!objdiv.firstChild) {
+            objdiv.style.display = "none";
+            }
+        }      
     }
-  }
+}
   
 function getData(url, fn, ...rest) {
     var xhttp = new XMLHttpRequest();
@@ -375,9 +373,9 @@ function inv_change_1(inv, id, keep_count) {
     getData(url_2, update_table)
 }
 
-function grp_change(inv, grp) {
-    var url = '/data/hosts_of_inv_grp/' + inv + '/' + grp;
-    getData(url, update_table)
+function inv_change_2(inv, id, keep_count) {
+    var url = '/data/grps_of_inv/name/' + inv;
+    getData(url, update_grp, id, keep_count);
 }
 
 function inv_change_3(inv) {
@@ -385,6 +383,31 @@ function inv_change_3(inv) {
     getData(url, update_table)
 
 }
+
+function inv_change_4(inv, grp_id, table_id, keep_count) {
+    var url = '/data/grps_of_inv/name/' + inv;
+    getData(url, update_grp, grp_id, keep_count);
+    var url_2 = '/data/hosts_of_inv_grp/' + inv + '/all';
+    document.getElementById(grp_id).childNodes[1].selected = true;
+    getData(url_2, update_table_2, table_id);
+}
+
+function inv_change_5(inv, table_id) {
+    var url = '/data/grps_of_inv/' + inv;
+    getData(url, update_table_2, table_id);
+
+}
+
+function grp_change(inv, grp) {
+    var url = '/data/hosts_of_inv_grp/' + inv + '/' + grp;
+    getData(url, update_table);
+}
+
+function grp_change_2(inv, grp, table_id) {
+    var url = '/data/hosts_of_inv_grp/' + inv + '/' + grp;
+    getData(url, update_table_2, table_id);
+}
+
 
 function update_table(data) {
     hostlist = JSON.parse(data);
@@ -435,7 +458,47 @@ function update_table(data) {
         content.appendChild(row);
     }
 }
+
+function update_table_2(data, arglist) {
+    hostlist = JSON.parse(data);
+    var table = document.getElementById(arglist[0]);
+    var content= table.getElementsByTagName('tbody')[0];
+    if(!content) {
+        content = table;
+    }
+    var trlist = content.getElementsByClassName('table_content')
+    while(trlist[0]) {
+        deleChild(trlist[0]);
+        trlist[0].parentNode.removeChild(trlist[0]);
+    }
+    for (var i=0; i< hostlist.length; i++) {
+        var row = document.createElement('tr');
+        row.className = 'table_content';
   
+        var row_name = document.createElement('td');
+  
+        var checkbox = document.createElement('input');
+        checkbox.id =  arglist[0].charAt(6) + '___' + hostlist[i][0];
+        checkbox.type = 'checkbox';
+        checkbox.onchange = function(id) {
+            return function () { row_check(id) };
+        }(arglist[0].charAt(6) + '___' + hostlist[i][0]);
+        var text = document.createTextNode(hostlist[i][0]);
+
+        row_name.appendChild(checkbox);
+        row_name.appendChild(text);
+
+        row.appendChild(row_name);
+  
+        for (var j=1; j< hostlist[i].length; j++) {
+            var box = document.createElement('td');
+            box.innerText = hostlist[i][j];
+            row.appendChild(box);
+        }
+        content.appendChild(row);
+    }
+}
+
 function update_grp(data, arglist) {
     var namelist = JSON.parse(data);
     var sel = document.getElementById(arglist[0]);
@@ -449,11 +512,6 @@ function update_grp(data, arglist) {
         opt.innerText = namelist[i];
         sel.appendChild(opt);
     }    
-}
-  
-function inv_change_2(inv, id, keep_count) {
-    var url = '/data/grps_of_inv/name/' + inv;
-    getData(url, update_grp, id, keep_count);
 }
 
 function add_hosts() {
