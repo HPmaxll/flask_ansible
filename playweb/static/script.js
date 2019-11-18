@@ -59,10 +59,10 @@ function insertButton(text) {
 }
   
 function updateText(text) {
-    document.getElementById('module_list').style.display = "none";
-    document.getElementById('select_input').style.display = "none";
-    document.getElementById('select_submit').style.display = "none";
-    document.getElementById('select_finish').style.display = "block";
+    hidder('module_list');
+    hidder('select_input');
+    hidder('select_submit');
+    popup('select_finish');
     var objdiv = document.getElementById('select_before');
     var mod = document.getElementById(text);
     mod.className = 'selected_module';
@@ -147,28 +147,6 @@ function mod_submit(name) {
         updateText(name);
         loadModule(name, insertPara);
     }
-}
-  
-function mod_add() {
-    var objdiv = document.getElementById("selected_opt");
-    var divlist = objdiv.childNodes;
-    var opt, value;
-    var selected_module = document.getElementsByClassName("selected_module")[0].value;
-    var tasklist = {};
-    var args = {};
-    var i;
-    for (i=0;i<divlist.length;i++) {   
-        opt = divlist[i].childNodes[0].id;
-        value = divlist[i].childNodes[2].value;
-        args[opt] = value;
-    }
-    tasklist['module'] = selected_module;
-    tasklist['args'] = args;
-    postData(tasklist,'/data/task', display)
-}
-  
-function display(data) {
-    document.getElementById("desc_para").innerText = data;
 }
   
 function loadModuleDesc(data) {
@@ -425,7 +403,6 @@ function update_table(data) {
         row.className = 'table_content';
   
         var row_name = document.createElement('td');
-  
         var row_check = document.createElement('input');
         row_check.name = hostlist[i][0];
         row_check.type = 'checkbox';

@@ -2,35 +2,34 @@
 {% block content %}
     <div class="run">
         <div class="run_container">
-            <p>Select Target Host</p>
+            <p>Selected Hosts</p>
             <div class="run_info">
                 <p id="target_host"></p>
                 <p id="target_grp"></p>
                 <p id="target_inv"></p>
             </div>
             <div class="run_input">
-                <button onclick="add_hosts()">Add Hosts</button>
+                <button onclick="add_hosts()">Add Host</button>
             </div>
         </div>
+        <img id="ansible_button" onclick="ansible_run()" src={{ url_for('static', filename='Ansible_button.png') }} alt="RUN" />
         <div class="run_container">
-            <p>Select Tasks</p>
+            <p>Selected Tasks</p>
             <div class="run_info"></div>
             <div class="run_input">
-                <button>Add Module</button>
-                <button>Add Playbook</button>
-                <button onclick="popup('popup_task')">New Module</button>
-                <button>New Playbook</button>
+                <button onclick="popup('popup_task')">Add Task</button>
             </div>
         </div>
-        <div class="run_container">
+       <!--  <div class="run_container">
             <p>Extra Variables</p>
             <div class="run_info"></div>
             <div class="run_input">
                 <input type="text" id="extra_vars" >
                 <button>Add Extra Variables</button>
             </div>
-        </div>
+        </div> -->
     </div>
+    
     <div id="popup_host" class="coverup">
         <div id="scroller">
             <div class="table_container">
@@ -170,7 +169,12 @@
             getData('/data/all_inv', add_inv);
             getData('/data/grps_of_inv/name/default', add_grp);
         }
+
         let pos = 2;
+        let collection = [];
+        let tasklist = [];
+        let serverlist = {};
+
         function scroll_right() {
             var scroller = document.getElementById('scroller')
             pos -= 1;
@@ -194,17 +198,21 @@
         function row_check(id) {
             var checkbox = document.getElementById(id);
             var row = checkbox.parentNode.parentNode;
-
+            
             var cellist = row.getElementsByTagName('td');
             var i;
             if (checkbox.checked) {
+                collection.push(id);
+                console.log(collection);
                 for (i=0; i<cellist.length; i++) {
                     cellist[i].style.backgroundColor = 'rgb(220, 220, 220)';
                     cellist[i].style.boxShadow = '3px 3px 3px rgb(210, 210, 210)';
                 }
             }
             else {
-                for (i=0; i<cellist.length; i++) {
+                collection.splice([collection.indexOf(id)],1);
+                console.log(collection);
+                for (i=0; i<cellist.length; i++) {    
                     cellist[i].style.backgroundColor = 'rgb(180, 180, 180)';
                     cellist[i].style.boxShadow = '3px 3px 3px rgb(180, 180, 180)';
                 }
@@ -213,12 +221,17 @@
 
         function select_all(id) {
             var table = document.getElementById(id);
-            var table_check = table.getElementsByTagName('input')[0];
+            var checkboxs = table.getElementsByTagName('input')
+            var table_check = checkboxs[0];
             var rows = table.getElementsByClassName('table_content');
             var table_headers = table.getElementsByTagName('th')
             var table_cell = table.getElementsByTagName('td')
             var i;
             if (table_check.checked) {
+                for (i=1; i < checkboxs.length; i++) {
+                    collection.push(checkboxs[i].id);
+                }
+                console.log(collection);
                 for (i=0; i < rows.length; i++) {
                     rows[i].getElementsByTagName('input')[0].checked = true;
                 }
@@ -232,6 +245,10 @@
                 }
             }
             else {
+                for (i=1; i < checkboxs.length; i++) {
+                    collection.splice(collection.indexOf(checkboxs[i].id), 1);
+                }
+                console.log(collection);
                 for (i=0; i < rows.length; i++) {
                     rows[i].getElementsByTagName('input')[0].checked = false;
                 }
@@ -249,6 +266,7 @@
         function reset_sel() {
             var table = document.getElementsByClassName('table_inner');
             var i,j;
+            collection = [];
             for (i=0; i < table.length; i++) {
                 var table_checks = table[i].getElementsByTagName('input');
                 var table_headers = table[i].getElementsByTagName('th');
@@ -268,45 +286,50 @@
         }
 
         function gen_list() {
-            
-            var inv_host = document.getElementById('inv_04').value;
-            var grp_host = document.getElementById('grp_04').value;
-            var inv_grp = document.getElementById('inv_05').value;
-            var collection = {};
-            collection[inv_host] = {};
-            collection[inv_host][grp_host] = [];
-            collection[inv_grp] = {};
+            serverlist['inv'] = [];
+            serverlist['grp'] = [];
+            serverlist['host'] = [];
+            for (var i=0; i < collection.length; i++) {
+                switch(collection[i][0]) {
+                    case 'i':
+                        serverlist['inv'].push(collection[i].slice(4));
+                        break;
+                    case 'g':
+                        serverlist['grp'].push(collection[i].slice(4));
+                        break;
+                    case 'h':
+                        serverlist['host'].push(collection[i].slice(4));
+                        break;
+                }
+            }
+            console.log(serverlist);
+        }
+
+        function mod_add() {
+            var objdiv = document.getElementById("selected_opt");
+            var divlist = objdiv.childNodes;
+            var opt, value;
+            var selected_module = document.getElementsByClassName("selected_module")[0].value;
+            var task = {}
+            var args = {};
             var i;
-            var table_host = document.getElementById('table_host');
-            var table_grp = document.getElementById('table_grp');
-            var table_inv = document.getElementById('table_inv');
-            var host_content = table_host.getElementsByClassName('table_content');
-            var grp_content = table_grp.getElementsByClassName('table_content');
-            var inv_content = table_inv.getElementsByClassName('table_content');
-            for (i=0; i < host_content.length; i++) {
-                var checkbox = host_content[i].getElementsByTagName('input')[0];
-                if (checkbox.checked) {
-                    collection['hosts'].push(checkbox.id.slice(4));
-                }
+            for (i=0;i<divlist.length;i++) {   
+                opt = divlist[i].childNodes[0].id;
+                value = divlist[i].childNodes[2].value;
+                args[opt] = value;
             }
-            for (i=0; i < grp_content.length; i++) {
-                
-                var checkbox = grp_content[i].getElementsByTagName('input')[0];
-                if (checkbox.checked) {
-                    if (!collection[inv]) {
-                        collection[inv] = {};
-                    }
-                    collection[inv][checkbox.id.slice(4)] = 'all';
-                }
-            }
-            for (i=0; i < inv_content.length; i++) {
-                var checkbox = inv_content[i].getElementsByTagName('input')[0];
-                if (checkbox.checked) {
-                    collection[checkbox.id.slice(4)] = 'all';
-                }
-            }
-            
-            console.log(collection);
+            task['module'] = selected_module;
+            task['args'] = args;
+            tasklist.push(task);
+            console.log(tasklist);
+            // postData(tasklist,'/data/task', display)
+        }
+
+        function ansible_run() {
+            var data = {};
+            data['serverlist'] = serverlist;
+            data['tasklist'] = tasklist;
+            console.log(data);
         }
     </script>
 {% endblock %}

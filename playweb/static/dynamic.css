@@ -27,7 +27,6 @@
 .close_button:hover {
     background-color: rgb(240, 240, 240);
     box-shadow: 2px 2px 2px rgb(240, 240, 240);
-    transform: rotate(5deg);
 }
 
 #select_before {
@@ -55,10 +54,6 @@
 
 #select_before div:nth-child(1):hover {
     background-color: rgba(0, 0, 0, 0.9);
-}
-
-#select_before div:nth-child(1):hover img {
-    transform: rotate(-5deg);
 }
 
 #select_before img {
@@ -161,10 +156,6 @@
 
 #select_after div:nth-child(1):hover {
     background-color: rgba(0, 0, 0, 0.9);
-}
-
-#select_after div:nth-child(1):hover img {
-    transform: rotate(-5deg);
 }
 
 #select_after img {

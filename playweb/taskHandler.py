@@ -33,6 +33,7 @@ class ansibleTaskHandler:
                 'Options',
                 [
                     'connection', 
+                    'remote_user',
                     'module_path', 
                     'forks', 
                     'become', 
@@ -49,7 +50,9 @@ class ansibleTaskHandler:
                 )
         self.options = Options(
                 connection='ssh', 
-                module_path=None, forks=10,
+                remote_user='root',
+                module_path=None, 
+                forks=10,
                 become=None, 
                 become_method=None, 
                 become_user=None, 

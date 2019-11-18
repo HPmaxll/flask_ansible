@@ -387,17 +387,15 @@ header > a > button:hover {
 
 .run {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    /* flex-direction: column; */
-    height: 80vh;
-    padding: 5px;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    padding: 20px;
     margin: 0 auto;
-    /* background-color: burlywood; */
 }
 
 .run_input {
+    display: flex;
+    justify-content: center;
     background-color: rgba(240,240,240,0.9);
 }
 
@@ -419,18 +417,69 @@ header > a > button:hover {
     margin: 5px;
     border: 1px solid black;
     box-sizing: border-box;
-    /* background-color: green; */
 }
 
 .run_info {
-    width: 415px;
-    height: 240px;
+    width: 420px;
+    min-height: 300px;
     background-color: rgba(240,240,240,0.9);
+    overflow: auto;
 }
-.run p {
+#target_host {
+    width: 100%;
+    min-height: 100px;
+}
+#target_grp {
+    width: 100%;
+    min-height: 100px;
+}
+#target_inv {
+    width: 100%;
+    min-height: 100px;
+}
+
+#target_host::before {
+    content: 'Hosts: ';
+    color: violet;
+    font-size: large;
+    text-align: left;
+}
+#target_grp::before {
+    content: 'Groups: ';
+    color: violet;
+    font-size: large;
+}
+#target_inv::before {
+    content: 'Inventory: ';
+    color: violet;
+    font-size: large;
+}
+
+.run_container > p {
     background-color: rgba(51, 56, 51, 0.9);
     color: rgb(240,240,240);
     font-size: 20px;
+    text-align: center;
+}
+
+#ansible_button {
+    width: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: none;
+    background-color: rgb(240, 240, 240);
+    box-shadow: 0px 0px 10px 2px rgb(200, 200, 200);
+    transition: all 0.3s ease;
+}
+
+#ansible_button:hover {
+    transform: rotate(90deg);
+    box-shadow: 0px 0px 20px 2px rgb(240, 240, 240);
+}
+
+#ansible_button:active {
+    background-color: rgb(120, 120, 250);
+    box-shadow: 0px 0px 25px 3px rgb(120, 120, 250);
 }
 
 /* --------popup----area-------- */
