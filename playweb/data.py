@@ -1,7 +1,6 @@
 from flask import Blueprint, request,abort, jsonify
 from playweb.db import db
 from playweb.db_models import ansible_module,ansible_module_parameter, ansible_host, ansible_group, ansible_inventory
-import json
 
 bp = Blueprint('data',__name__,url_prefix='/data')
 
@@ -29,25 +28,6 @@ def get_hint(module_name):
     for m in mlist:
         data.append(m.module)
     return jsonify(data)
-
-@bp.route('/task', methods=('GET', 'POST'))
-def get_task():
-    if request.method == 'POST':
-        data = request.json
-        task = {}
-        args = ''
-        count = 0
-        task['action'] = {}
-        task['register'] = 'shell_out'
-        task['action']['module'] = data['module']
-        arglist = data['args'].keys()
-        for i in arglist:
-            args += f"{i}={data['args'][i]}"
-            count += 1
-            if count < len(arglist):
-                args += ' '
-        task['action']['args'] = args
-        return jsonify(task)
 
 @bp.route('/all_inv', methods=("GET",))
 def get_inv():
@@ -87,3 +67,22 @@ def get_host_by_grp(inventory, group):
         for host in grp.hosts:
             namelist.append([host.host_name, host.host_ip, host.host_os, host.host_desc])
     return jsonify(namelist)
+
+@bp.route('/task', methods=('GET', 'POST'))
+def get_task():
+    if request.method == 'POST':
+        data = request.json
+        task = {}
+        args = ''
+        count = 0
+        task['action'] = {}
+        task['register'] = 'shell_out'
+        task['action']['module'] = data['module']
+        arglist = data['args'].keys()
+        for i in arglist:
+            args += f"{i}={data['args'][i]}"
+            count += 1
+            if count < len(arglist):
+                args += ' '
+        task['action']['args'] = args
+        return jsonify(task)

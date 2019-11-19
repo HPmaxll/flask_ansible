@@ -458,7 +458,7 @@ function update_table_2(data, arglist) {
         checkbox.id =  arglist[0].charAt(6) + '___' + hostlist[i][0];
         checkbox.type = 'checkbox';
         checkbox.onchange = function(id) {
-            return function () { row_check(id) };
+            return function () { row_status(id) };
         }(arglist[0].charAt(6) + '___' + hostlist[i][0]);
         var text = document.createTextNode(hostlist[i][0]);
 
@@ -473,6 +473,10 @@ function update_table_2(data, arglist) {
             row.appendChild(box);
         }
         content.appendChild(row);
+        if (collection.indexOf(checkbox.id) != -1) {
+            checkbox.checked = true;
+            row_check(checkbox.id);
+        }
     }
 }
 

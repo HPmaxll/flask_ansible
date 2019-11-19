@@ -15,6 +15,10 @@ select {
     text-overflow: ellipsis;
     background-color: rgba(110, 110, 240, 0.6);
 }
+
+.hidden {
+    display: none;
+}
 /* --------header----area-------- */
 
 header {
@@ -113,9 +117,6 @@ header > a > button:hover {
 
 .content {
     margin-top: 10px;
-/*     display: flex;
-    justify-content: space-evenly;
-    align-items: flex-start; */
     padding: 0 2%;
     min-height: 650px;
 }
@@ -153,7 +154,6 @@ header > a > button:hover {
     padding: 0 5px 0 0;
     border: 1px solid gray;
 }
-
 
 .itable {
     width: 78em;
@@ -288,6 +288,7 @@ header > a > button:hover {
     width: 99%;
     display: none;
 }
+
 .scroll_down img {
     width: 40px;
     padding-top: 1px;
@@ -421,38 +422,38 @@ header > a > button:hover {
 
 .run_info {
     width: 420px;
-    min-height: 300px;
+    height: 320px;
+    padding-top: 5px;
     background-color: rgba(240,240,240,0.9);
     overflow: auto;
 }
-#target_host {
-    width: 100%;
-    min-height: 100px;
-}
-#target_grp {
-    width: 100%;
-    min-height: 100px;
-}
-#target_inv {
+#target_host, #target_grp, #target_inv {
     width: 100%;
     min-height: 100px;
 }
 
 #target_host::before {
     content: 'Hosts: ';
-    color: violet;
+    color: black;
     font-size: large;
-    text-align: left;
 }
 #target_grp::before {
     content: 'Groups: ';
-    color: violet;
+    color: black;
     font-size: large;
 }
 #target_inv::before {
     content: 'Inventory: ';
-    color: violet;
+    color: black;
     font-size: large;
+}
+
+.display_span {
+    background-color: burlywood;
+    margin: 3px;
+    padding: 3px;
+    cursor: pointer;
+    border-radius: 3px;
 }
 
 .run_container > p {
