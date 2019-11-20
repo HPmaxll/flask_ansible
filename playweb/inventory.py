@@ -63,7 +63,7 @@ def hosts():
         inv = ansible_inventory.query.filter_by(inv_name=inventory).first()
         inv.hosts.append(h)
 
-        if group == 'NONE':
+        if group == 'no_group':
             group = inventory + '___nogroup'
         grp = ansible_group.query.with_parent(inv).filter_by(group_name=group).first()
         grp.hosts.append(h)

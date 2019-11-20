@@ -62,7 +62,7 @@ def get_host_by_grp(inventory, group):
             for host in grp.hosts:
                 namelist.append([ str(inv.inv_id), str(grp.group_id), host.host_name, host.host_ip, host.host_os, host.host_desc])
     else:
-        if group == "none":
+        if group == "no_group":
             group =inv.inv_name + '___nogroup'
         grp = ansible_group.query.filter_by(group_name=group).first()
         for host in grp.hosts:
@@ -73,7 +73,41 @@ def get_host_by_grp(inventory, group):
 def get_task():
     if request.method == 'POST':
         data = request.json
+        data_server = data['serverlist']
+        inventory = {}
+        for host in data_server:
+            tmp = host.split('____')
+            tmp_info = tmp[0]
+            tmp_name = tmp[1]
+            if host[0] == 'i':
+                inventory[tmp_name] = '*'
+            elif host[0] == 'g':
+                inv_name = ansible_inventory.query.filter_by(inv_id=int(tmp_info.split('_')[1])).first().inv_name
+                if inv_name not in inventory:
+                    inventory[inv_name] = {}
+                if inventory[inv_name] == '*':
+                    continue
+                if tmp_name == inv_name + '___nogroup':
+                    tmp_name = 'nogroup'
+                inventory[inv_name][tmp_name] = '*'
+            else:
+                inv_name = ansible_inventory.query.filter_by(inv_id=int(tmp_info.split('_')[1])).first().inv_name
+                grp_name = ansible_group.query.filter_by(group_id=int(tmp_info.split('_')[2])).first().group_name
+                if grp_name== inv_name + '___nogroup':
+                    grp_name = 'nogroup'
+                host_ip = ansible_host.query.filter_by(host_name=tmp_name).first().host_ip
+                if inv_name not in inventory:
+                    inventory[inv_name] = {}
+                if inventory[inv_name] == '*':
+                    continue
+                if grp_name not in inventory[inv_name]:
+                    inventory[inv_name][grp_name] = []
+                if inventory[inv_name][grp_name] == '*':
+                    continue
+                inventory[inv_name][grp_name].append(host_ip)
+                        
         data_task = data['tasklist']
+        
         tasklist = []
         for i in data_task:
             task = {}
@@ -88,4 +122,6 @@ def get_task():
             args = args.strip()
             task['action']['args'] = args
             tasklist.append(task)
-        return jsonify(tasklist)
+
+        ansible_data = {'inventory':inventory,'tasklist':tasklist}
+        return jsonify(ansible_data)

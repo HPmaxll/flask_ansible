@@ -11,7 +11,7 @@
             <p>Group:</p>
             <select class="grp_sel" id="grp_01" onchange="grp_change(inv_01.value, grp_01.value, 'table_host')">
                 <option value="all" >ALL</option>
-                <option value="none" >NONE</option>
+                <option value="no_group" >no_group</option>
             </select>
             <a onclick="popup('add_host')"><button>Add Host</button></a><br>
         </div>
@@ -52,7 +52,7 @@
                 </select>
                 <p>Group</p>
                 <select class="grp_sel" id="grp_02" name="group">
-                    <option value="none">NONE</option>
+                    <option value="no_group">no_group</option>
                 </select>
                 <label for="host_name">Hostname:</label><br>
                 <input type="text" name="host_name" id="host_name"><br>

@@ -386,7 +386,6 @@ function grp_change_2(inv, grp, table_id) {
     getData(url, update_table_2, table_id);
 }
 
-
 function update_table(data, arglist) {
     hostlist = JSON.parse(data);
     var table = document.getElementById(arglist[0]);
@@ -402,9 +401,7 @@ function update_table(data, arglist) {
     for (var i=0; i< hostlist.length; i++) {
         var row = document.createElement('tr');
         row.className = 'table_content';
-  
         var row_name = document.createElement('td');
-  
         var checkbox = document.createElement('input');
         var node_id, start_point;
         switch(arglist[0][6]) {
@@ -423,22 +420,17 @@ function update_table(data, arglist) {
         }
         checkbox.id =  node_id
         checkbox.type = 'checkbox';
-
         var row_act = document.createElement('a');
         row_act.innerText = hostlist[i][start_point];
         row_act.href = 'javascript:void(0)';
-
         row_name.appendChild(checkbox);
         row_name.appendChild(row_act);
-
         row.appendChild(row_name);
-  
         for (var j=start_point + 1; j< hostlist[i].length; j++) {
             var box = document.createElement('td');
             box.innerText = hostlist[i][j];
             row.appendChild(box);
         }
-
         var row_opt = document.createElement('td');
         var row_opt_1 = document.createElement('a');
         row_opt_1.href = 'javascript:void(0)';
@@ -449,7 +441,6 @@ function update_table(data, arglist) {
         row_opt.appendChild(row_opt_1);
         row_opt.appendChild(row_opt_2);
         row.appendChild(row_opt);
-    
         content.appendChild(row);
     }
 }
@@ -469,9 +460,7 @@ function update_table_2(data, arglist) {
     for (var i=0; i< hostlist.length; i++) {
         var row = document.createElement('tr');
         row.className = 'table_content';
-  
         var row_name = document.createElement('td');
-  
         var checkbox = document.createElement('input');
         var node_id, start_point;
         switch(arglist[0][6]) {
@@ -494,12 +483,9 @@ function update_table_2(data, arglist) {
             return function () { row_status(id) };
         }(node_id);
         var text = document.createTextNode(hostlist[i][start_point]);
-
         row_name.appendChild(checkbox);
         row_name.appendChild(text);
-
         row.appendChild(row_name);
-  
         for (var j=start_point + 1; j< hostlist[i].length; j++) {
             var box = document.createElement('td');
             box.innerText = hostlist[i][j];
