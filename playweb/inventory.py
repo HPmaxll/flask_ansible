@@ -78,8 +78,9 @@ def hosts():
 def get_hlist(name):
     hlist = []
     inv = ansible_inventory.query.filter_by(inv_name=name).first()
-    for i in inv.hosts:
-        hlist.append([i.host_name, i.host_ip, i.host_os, i.host_desc])
+    for grp in inv.groups:
+        for host in grp.hosts:
+            hlist.append([str(inv.inv_id), str(grp.group_id), host.host_name, host.host_ip, host.host_os, host.host_desc])
     return hlist
 
 def get_ilist():
@@ -93,5 +94,5 @@ def get_glist(name):
     glist = []
     inv = ansible_inventory.query.filter_by(inv_name=name).first()
     for i in inv.groups[1:]:
-        glist.append([i.group_name, i.group_creator, i.group_desc])
+        glist.append([str(inv.inv_id), i.group_name, i.group_creator, i.group_desc])
     return glist

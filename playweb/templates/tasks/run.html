@@ -61,10 +61,10 @@
                                 </tr>
                                 {% for host in hostList %}
                                 <tr class="table_content">
-                                    <td><input type="checkbox" id={{ 'h___' + host[0] }} onchange="row_status( '{{ 'h___' + host[0] }}' )">{{host[0]}}</td>
-                                    <td>{{host[1]}}</td>
-                                    <td>{{host[2]}}</td>
+                                    <td><input type="checkbox" id={{ 'h_' + host[0] + '_' + host[1] + '____' + host[2] }} onchange="row_status( '{{ 'h_' + host[0] + '_' + host[1] + '____' + host[2] }}' )">{{host[2]}}</td>
                                     <td>{{host[3]}}</td>
+                                    <td>{{host[4]}}</td>
+                                    <td>{{host[5]}}</td>
                                 </tr>
                                 {% endfor %}
                             </table>
@@ -96,9 +96,9 @@
                                 </tr>
                                 {% for group in groupList %}
                                 <tr class="table_content" >
-                                    <td><input type="checkbox" id={{ 'g___' + group[0] }} onchange="row_status('{{ 'g___' + group[0] }}' )">{{group[0]}}</td>
-                                    <td>{{group[1]}}</td>
-                                    <td>{{group[2]}}</td>
+                                    <td><input type="checkbox" id={{ 'g_' + group[0] + '____' + group[1] }} onchange="row_status('{{ 'g_' + group[0] + '____' + group[1] }}')">{{group[2]}}</td>
+                                    <td>{{group[3]}}</td>
+                                    <td>{{group[4]}}</td>
                                 </tr>
                                 {% endfor %}
                             </table>
@@ -125,7 +125,7 @@
                                 </tr>
                                 {% for inv in invList %}
                                 <tr class="table_content">            
-                                    <td><input type="checkbox" id={{ 'i___' + inv[0] }} onchange="row_status('{{ 'i___' + inv[0] }}' )">{{inv[0]}}</td>
+                                    <td><input type="checkbox" id={{ 'i____' + inv[0] }} onchange="row_status('{{ 'i____' + inv[0] }}' )">{{inv[0]}}</td>
                                     <td>{{inv[1]}}</td>
                                     <td>{{inv[2]}}</td>
                                 </tr>
@@ -202,10 +202,12 @@
             var i;
             if (checkbox.checked) {
                 collection.push(id);
+                console.log(collection);
                 row_check(id);
             }
             else {
-                collection.splice([collection.indexOf(id)],1);
+                collection.splice(collection.indexOf(id),1);
+                console.log(collection);
                 row_uncheck(id);
             }
         }
@@ -219,6 +221,7 @@
                 cellist[i].style.boxShadow = '3px 3px 3px rgb(210, 210, 210)';
             }
         }
+
         function row_uncheck(id) {
             var row = document.getElementById(id).parentNode.parentNode;
             var cellist = row.getElementsByTagName('td');
@@ -250,6 +253,7 @@
                 }
             }
         }
+
         function gen_list() {
             serverlist['inv'] = [];
             serverlist['grp'] = [];
@@ -257,13 +261,13 @@
             for (var i=0; i < collection.length; i++) {
                 switch(collection[i][0]) {
                     case 'i':
-                        serverlist['inv'].push(collection[i].slice(4));
+                        serverlist['inv'].push(collection[i].split('____')[1]);
                         break;
                     case 'g':
-                        serverlist['grp'].push(collection[i].slice(4));
+                        serverlist['grp'].push(collection[i].split('____')[1]);
                         break;
                     case 'h':
-                        serverlist['host'].push(collection[i].slice(4));
+                        serverlist['host'].push(collection[i].split('____')[1]);
                         break;
                 }
             }
@@ -280,33 +284,6 @@
                         var text = document.createElement('span');
                         text.className = 'display_span';
                         text.innerText = tmplist[j];
-                        text.onclick = function (event) {
-                                var node = event.target;
-                                var parent = node.parentNode;
-                                switch(parent.id[7]) {
-                                    case 'i':
-                                        serverlist['inv'].splice(serverlist['inv'].indexOf(node.innerText), 1);
-                                        break;
-                                    case 'g':
-                                        serverlist['grp'].splice(serverlist['grp'].indexOf(node.innerText), 1);
-                                        break;
-                                    case 'h':
-                                        serverlist['host'].splice(serverlist['host'].indexOf(node.innerText), 1);
-                                        break;
-                                }
-                                console.log(serverlist);
-                                var sel_id = parent.id[7] + '___' + node.innerText;
-                                if (document.getElementById(sel_id)) {
-                                    document.getElementById(sel_id).checked = false;
-                                    row_uncheck(sel_id);
-                                }
-                                collection.splice([collection.indexOf(sel_id)],1);
-                                console.log(collection);
-                                parent.removeChild(node);
-                                if (!parent.firstChild) {
-                                    parent.style.display ='none';
-                                }
-                            }
                         display.appendChild(text);
                     }
                 }
@@ -335,15 +312,40 @@
             task['module'] = selected_module;
             task['args'] = args;
             tasklist.push(task);
-            document.getElementById('task_info').innerText = JSON.stringify(tasklist);
+            var task_info = document.getElementById('task_info');
+            var div = document.createElement('div');
+            div.className = 'task_block';
+
+            var task_mod = document.createElement('p');
+            task_mod.className = 'task_mod';
+            task_mod.innerHTML = '&nbsp&nbsp' + selected_module;
+            div.appendChild(task_mod);
+
+            var task_args = document.createElement('div');
+            task_args.className = 'task_args';
+            for (var key in args) {
+                var task_arg = document.createElement('div')
+                task_arg.className = 'taskarg';
+                var p_key = document.createElement('p');
+                p_key.innerText = key;
+                p_key.className = 'pkey';
+                var p_val = document.createElement('p');
+                p_val.innerText = args[key];
+                p_val.className = 'pval';
+                task_arg.appendChild(p_key);
+                task_arg.appendChild(p_val);
+                task_args.appendChild(task_arg);
+            }
+            div.appendChild(task_args);
+            task_info.appendChild(div);
             console.log(tasklist);
         }
 
         function ansible_run() {
             var data = {};
-            data['serverlist'] = serverlist;
+            data['serverlist'] = collection;
             data['tasklist'] = tasklist;
-            console.log(data);
+            postData(data, '/data/task', console.log)
         }
     </script>
 {% endblock %}

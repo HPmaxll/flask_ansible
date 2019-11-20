@@ -4,7 +4,7 @@
     <div class="table_area">
         <a onclick="popup('add_inventory')"><button>Add Inventory</button></a><br>
         <div class="itable">
-            <table frame="box">
+            <table frame="box" id="table_inv">
                 <tr class="table_fields">
                     <th>Inventory Name</th>
                     <th>Creator</th>
@@ -12,7 +12,7 @@
                     <th>Operation</th>
                 </tr>
                 {% for inv in invList %}
-                <tr class="table_content" id={{ 'inv_' + inv[0] }}>            
+                <tr class="table_content" id={{ 'i____' + inv[0] }}>            
                     <td><input name="inv" type="checkbox" > <a href="#">{{inv[0]}}</a></td>
                     <td>{{inv[1]}}</td>
                     <td>{{inv[2]}}</td>

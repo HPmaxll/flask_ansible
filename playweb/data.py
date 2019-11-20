@@ -42,7 +42,7 @@ def get_grp(inventory):
     inv = ansible_inventory.query.filter_by(inv_name=inventory).first()
     namelist = []
     for grp in inv.groups[1:]:
-        namelist.append([grp.group_name, grp.group_creator, grp.group_desc])
+        namelist.append([str(inv.inv_id), grp.group_name, grp.group_creator, grp.group_desc])
     return jsonify(namelist)
 
 @bp.route('/grps_of_inv/name/<string:inventory>', methods=("GET",))
@@ -58,31 +58,34 @@ def get_host_by_grp(inventory, group):
     namelist = []
     inv = ansible_inventory.query.filter_by(inv_name=inventory).first()
     if group == 'all':
-        for host in inv.hosts:
-            namelist.append([host.host_name, host.host_ip, host.host_os, host.host_desc])
+        for grp in inv.groups:
+            for host in grp.hosts:
+                namelist.append([ str(inv.inv_id), str(grp.group_id), host.host_name, host.host_ip, host.host_os, host.host_desc])
     else:
         if group == "none":
             group =inv.inv_name + '___nogroup'
         grp = ansible_group.query.filter_by(group_name=group).first()
         for host in grp.hosts:
-            namelist.append([host.host_name, host.host_ip, host.host_os, host.host_desc])
+            namelist.append([str(inv.inv_id), str(grp.group_id), host.host_name, host.host_ip, host.host_os, host.host_desc])
     return jsonify(namelist)
 
 @bp.route('/task', methods=('GET', 'POST'))
 def get_task():
     if request.method == 'POST':
         data = request.json
-        task = {}
-        args = ''
-        count = 0
-        task['action'] = {}
-        task['register'] = 'shell_out'
-        task['action']['module'] = data['module']
-        arglist = data['args'].keys()
-        for i in arglist:
-            args += f"{i}={data['args'][i]}"
-            count += 1
-            if count < len(arglist):
+        data_task = data['tasklist']
+        tasklist = []
+        for i in data_task:
+            task = {}
+            args = ''
+            task['action'] = {}
+            task['register'] = 'shell_out'
+            task['action']['module'] = i['module']
+            arglist = i['args'].keys()
+            for j in arglist:
+                args += f"{j}={i['args'][j]}"
                 args += ' '
-        task['action']['args'] = args
-        return jsonify(task)
+            args = args.strip()
+            task['action']['args'] = args
+            tasklist.append(task)
+        return jsonify(tasklist)

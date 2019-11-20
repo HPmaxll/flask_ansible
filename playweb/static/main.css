@@ -421,8 +421,8 @@ header > a > button:hover {
 }
 
 .run_info {
-    width: 420px;
-    height: 320px;
+    width: 500px;
+    height: 350px;
     padding-top: 5px;
     background-color: rgba(240,240,240,0.9);
     overflow: auto;
@@ -454,6 +454,52 @@ header > a > button:hover {
     padding: 3px;
     cursor: pointer;
     border-radius: 3px;
+}
+
+.task_block {
+    margin: 0 1% 1% 1%;
+    background-color: gray;
+}
+
+.task_mod::before {
+    content: 'Module:';
+    font-size: large;
+    color: blueviolet;
+}
+
+.task_args::before {
+    content: 'Args:';
+    font-size: large;
+    color: blueviolet;
+}
+
+.taskarg {
+    display: flex;
+    align-items: flex-start;
+    
+}
+
+.pkey {
+    background-color: cadetblue;
+    padding: 3px;
+    white-space: nowrap;
+}
+
+.pkey::before {
+    content: '- ';
+    font-size: large;
+}
+
+.pkey::after {
+    content: ':';
+}
+.pval {
+    color: brown;
+    margin: 0 4px;
+    padding: 4px 3px 3px 3px;
+    background-color: chartreuse;
+    word-break: break-all;
+    word-wrap: break-word;
 }
 
 .run_container > p {

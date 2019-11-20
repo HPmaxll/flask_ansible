@@ -343,12 +343,12 @@ function add_grp(data) {
     }
 }
   
-function inv_change_1(inv, id, keep_count) {
+function inv_change_1(inv, sel_id, keep_count, table_id) {
     var url = '/data/grps_of_inv/name/' + inv;
-    getData(url, update_grp, id, keep_count);
+    getData(url, update_grp, sel_id, keep_count);
     var url_2 = '/data/hosts_of_inv_grp/' + inv + '/all';
-    document.getElementById(id).childNodes[1].selected = true;
-    getData(url_2, update_table)
+    document.getElementById(sel_id).childNodes[1].selected = true;
+    getData(url_2, update_table, table_id)
 }
 
 function inv_change_2(inv, id, keep_count) {
@@ -356,9 +356,9 @@ function inv_change_2(inv, id, keep_count) {
     getData(url, update_grp, id, keep_count);
 }
 
-function inv_change_3(inv) {
+function inv_change_3(inv, table_id) {
     var url = '/data/grps_of_inv/' + inv;
-    getData(url, update_table)
+    getData(url, update_table, table_id)
 
 }
 
@@ -376,9 +376,9 @@ function inv_change_5(inv, table_id) {
 
 }
 
-function grp_change(inv, grp) {
+function grp_change(inv, grp, table_id) {
     var url = '/data/hosts_of_inv_grp/' + inv + '/' + grp;
-    getData(url, update_table);
+    getData(url, update_table, table_id);
 }
 
 function grp_change_2(inv, grp, table_id) {
@@ -387,13 +387,14 @@ function grp_change_2(inv, grp, table_id) {
 }
 
 
-function update_table(data) {
+function update_table(data, arglist) {
     hostlist = JSON.parse(data);
-    var content= document.getElementsByTagName('tbody')[0];
+    var table = document.getElementById(arglist[0]);
+    var content= table.getElementsByTagName('tbody')[0];
     if(!content) {
-        content = document.getElementsByTagName('table')[0];
+        content = table;
     }
-    var trlist = document.getElementsByClassName('table_content')
+    var trlist = content.getElementsByClassName('table_content')
     while(trlist[0]) {
         deleChild(trlist[0]);
         trlist[0].parentNode.removeChild(trlist[0]);
@@ -403,24 +404,41 @@ function update_table(data) {
         row.className = 'table_content';
   
         var row_name = document.createElement('td');
-        var row_check = document.createElement('input');
-        row_check.name = hostlist[i][0];
-        row_check.type = 'checkbox';
-      
+  
+        var checkbox = document.createElement('input');
+        var node_id, start_point;
+        switch(arglist[0][6]) {
+            case 'i':
+                node_id = 'i____' + hostlist[i][0];
+                start_point = 0;
+                break;
+            case 'g':
+                node_id = 'g_' + hostlist[i][0] + '____' + hostlist[i][1];
+                start_point = 1;
+                break;
+            case 'h':
+                node_id = 'h_' + hostlist[i][0] + '_' + hostlist[i][1] + '_' + hostlist[i][2];
+                start_point = 2;
+                break;
+        }
+        checkbox.id =  node_id
+        checkbox.type = 'checkbox';
+
         var row_act = document.createElement('a');
-        row_act.innerText = hostlist[i][0];
+        row_act.innerText = hostlist[i][start_point];
         row_act.href = 'javascript:void(0)';
-    
-        row_name.appendChild(row_check);
+
+        row_name.appendChild(checkbox);
         row_name.appendChild(row_act);
-    
+
         row.appendChild(row_name);
   
-        for (var j=1; j< hostlist[i].length; j++) {
+        for (var j=start_point + 1; j< hostlist[i].length; j++) {
             var box = document.createElement('td');
             box.innerText = hostlist[i][j];
             row.appendChild(box);
         }
+
         var row_opt = document.createElement('td');
         var row_opt_1 = document.createElement('a');
         row_opt_1.href = 'javascript:void(0)';
@@ -455,19 +473,34 @@ function update_table_2(data, arglist) {
         var row_name = document.createElement('td');
   
         var checkbox = document.createElement('input');
-        checkbox.id =  arglist[0].charAt(6) + '___' + hostlist[i][0];
+        var node_id, start_point;
+        switch(arglist[0][6]) {
+            case 'i':
+                node_id = 'i____' + hostlist[i][0];
+                start_point = 0;
+                break;
+            case 'g':
+                node_id = 'g_' + hostlist[i][0] + '____' + hostlist[i][1];
+                start_point = 1;
+                break;
+            case 'h':
+                node_id = 'h_' + hostlist[i][0] + '_' + hostlist[i][1] + '_' + hostlist[i][2];
+                start_point = 2;
+                break;
+        }
+        checkbox.id =  node_id
         checkbox.type = 'checkbox';
         checkbox.onchange = function(id) {
             return function () { row_status(id) };
-        }(arglist[0].charAt(6) + '___' + hostlist[i][0]);
-        var text = document.createTextNode(hostlist[i][0]);
+        }(node_id);
+        var text = document.createTextNode(hostlist[i][start_point]);
 
         row_name.appendChild(checkbox);
         row_name.appendChild(text);
 
         row.appendChild(row_name);
   
-        for (var j=1; j< hostlist[i].length; j++) {
+        for (var j=start_point + 1; j< hostlist[i].length; j++) {
             var box = document.createElement('td');
             box.innerText = hostlist[i][j];
             row.appendChild(box);
