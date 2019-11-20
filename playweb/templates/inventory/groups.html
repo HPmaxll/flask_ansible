@@ -1,38 +1,40 @@
 {% extends 'base.html' %}
-    {% block content %}
-    <div class="inv_area">
-      <div class="table_area">
-        <div class="table_opt">
-          <p>Inventory:</p>
-          <select class="inv_sel" id="inv_03" onchange="inv_change_3(inv_03.value, 'table_grp')">
-            <option value="default">default</option>
-          </select>
-          <a onclick="popup('add_group')"><button>Add Group</button></a><br>
-        </div>
-        
-        <div class="itable">
-          <table frame="box" id="table_grp">
-            <tr class="table_fields">
-              <th>Group Name</th>
-              <th>Creator</th>
-              <th class="table_desc">Description</th>
-              <th>Operation</th>
-            </tr>
-            {% for group in groupList %}
-            <tr class="table_content" id={{ 'g_' + group[0] + '____' + group[1] }}>
-              <td><input name="Group" type="checkbox" > <a href="#">{{group[1]}}</a></td>
-              <td>{{group[2]}}</td>
-              <td>{{group[3]}}</td>
-              <td>
-                <a href="#">Edit</a>
-                <a href="#">Remove</a>
-              </td>
-            </tr>
-            {% endfor %}
-          </table>
-        </div>
-      </div>
-    </div>
+		{% block content %}
+		<div class="inv_back">
+    	<div class="inv_area">
+      	<div class="table_outer">
+        	<div class="table_header">
+          	<p class="table_name">Groups</p>
+	          <div class="filter">
+  	          <span>Inventory:</span>
+    	        <select class="inv_sel" id="inv_03" onchange="inv_change_3(inv_03.value, 'table_grp')">
+      	        <option value="default">default</option>
+        	    </select>
+          	  <a onclick="popup('add_group')"><button>Add Group</button></a><br>
+	          </div>
+  	      </div>
+    	    <div class="table_inner">
+      	    <table frame="box" id="table_grp">
+        	    <tr class="table_fields">
+          	    <th>Group Name</th>
+            	  <th>Creator</th>
+              	<th class="table_desc">Description</th>
+	              <th>Operation</th>
+  	          </tr>
+    	        {% for group in groupList %}
+      	      <tr class="table_content" id={{ 'g_' + group[0] + '____' + group[1] }}>
+        	      <td><input name="Group" type="checkbox" > <a href="javascript:void(0)">{{group[1]}}</a></td>
+          	    <td>{{group[2]}}</td>
+            	  <td>{{group[3]}}</td>
+              	<td><a href="javascript:void(0)">Edit</a><a href="javascript:void(0)">Remove</a></td>
+      	      </tr>
+        	    {% endfor %}
+          	</table>
+	        </div>
+  	    </div>
+			</div>
+		</div>
+
     <div class="coverup" id='add_group'>
       <div class="popup">
         <div class="popup_header">

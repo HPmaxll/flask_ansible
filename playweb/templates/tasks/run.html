@@ -96,9 +96,9 @@
                                 </tr>
                                 {% for group in groupList %}
                                 <tr class="table_content" >
-                                    <td><input type="checkbox" id={{ 'g_' + group[0] + '____' + group[1] }} onchange="row_status('{{ 'g_' + group[0] + '____' + group[1] }}')">{{group[2]}}</td>
+                                    <td><input type="checkbox" id={{ 'g_' + group[0] + '____' + group[1] }} onchange="row_status('{{ 'g_' + group[0] + '____' + group[1] }}')">{{group[1]}}</td>
+                                    <td>{{group[2]}}</td>
                                     <td>{{group[3]}}</td>
-                                    <td>{{group[4]}}</td>
                                 </tr>
                                 {% endfor %}
                             </table>
@@ -345,7 +345,10 @@
             var data = {};
             data['serverlist'] = collection;
             data['tasklist'] = tasklist;
-            postData(data, '/data/task', console.log)
+            postData(data, '/data/task', logJson)
+        }
+        function logJson(data) {
+            console.log(JSON.parse(data))
         }
     </script>
 {% endblock %}

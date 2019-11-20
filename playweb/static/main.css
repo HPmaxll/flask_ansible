@@ -30,6 +30,7 @@ header {
     height: 50px;
     background-color: rgba(51, 56, 51, 0.9);
     box-shadow: 3px 3px 3px black;
+    z-index: 2;
 }
 
 header a,header button {
@@ -132,63 +133,28 @@ header > a > button:hover {
 }
 
 /* --------inventory-------- */
-.inv_area {
+.inv_back {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.table_area {
-    background-color: rgba(255, 255, 255, 0.8);
-    width: 80em;
-}
-
-.table_opt {
-    display: flex;
-}
-
-.table_opt p, .table_opt select {
+.inv_area {
+    top: 10px;
     margin: 5px;
-}
-.table_opt select {
-    padding: 0 5px 0 0;
-    border: 1px solid gray;
-}
-
-.itable {
-    width: 78em;
-    border: 1px solid black;
-    margin: 5px 5px;
+    background-color: rgba(61, 66, 61, 0.9);
+    width: 1000px;
+    height: 600px;
+    box-shadow: 3px 3px 3px black;
+    z-index: 1;
 }
 
-.itable table {
-    margin: auto;
-    border: none
-}
-
-.itable a {
+.inv_area a {
     margin: 5px;
-}
-
-.itable th {
-    background-color: #0088a9;
-    padding: 5px;
-    text-align: center;
 }
 
 .table_desc {
     min-width: 350px;
-}
-
-.itable tr {
-    background-color: antiquewhite;
-}
-.itable td {
-    min-width: 160px;
-    padding: 5px;
-}
-.itable th, .itable td {
-    border-collapse: collapse;
 }
 
 /* -------- Scroller -------- */
@@ -539,6 +505,7 @@ header > a > button:hover {
     min-height: 100%;
     overflow: hidden;
     display: none;
+    z-index: 3;
 }
 
 .popup {

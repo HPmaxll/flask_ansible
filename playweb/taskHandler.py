@@ -70,9 +70,11 @@ class ansibleTaskHandler:
         self.inventory = InventoryManager(loader=self.loader)
         self.variable_manager = VariableManager(loader=self.loader, inventory=self.inventory)
     
-    def load_inv(self, host_list):
-        for host in host_list:
-            self.inventory.add_host(host=host, port=22, group='all')
+    def load_inv(self, inv):
+        for grp in inv.keys():
+            self.inventory.add_group(grp)
+            for host in inv[grp]:
+                self.inventory.add_host(host=host, port=22, group=grp)
 
     def add_extra_vars(self, extra_vars):
         self.variable_manager.extra_vars = extra_vars

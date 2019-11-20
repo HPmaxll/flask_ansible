@@ -1,28 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="inv_area">
-    <div class="table_area">
-        <a onclick="popup('add_inventory')"><button>Add Inventory</button></a><br>
-        <div class="itable">
-            <table frame="box" id="table_inv">
-                <tr class="table_fields">
-                    <th>Inventory Name</th>
-                    <th>Creator</th>
-                    <th class="table_desc">Description</th>
-                    <th>Operation</th>
-                </tr>
-                {% for inv in invList %}
-                <tr class="table_content" id={{ 'i____' + inv[0] }}>            
-                    <td><input name="inv" type="checkbox" > <a href="#">{{inv[0]}}</a></td>
-                    <td>{{inv[1]}}</td>
-                    <td>{{inv[2]}}</td>
-                    <td>
-                        <a href="#">Edit</a>
-                        <a href="#">Remove</a>
-                    </td>        
-                </tr>
-                {% endfor %}
-            </table>
+<div class="inv_back">
+    <div class="inv_area">
+        <div class="table_outer">
+            <div class="table_header">
+                <p class="table_name">Inventorys</p>
+                <div class="filter">
+                    <a onclick="popup('add_inventory')"><button>Add Inventory</button></a><br>
+                </div>
+            </div>
+            <div class="table_inner">
+                <table frame="box" id="table_inv">
+                    <tr class="table_fields">
+                        <th>Inventory Name</th>
+                        <th>Creator</th>
+                        <th class="table_desc">Description</th>
+                        <th>Operation</th>
+                    </tr>
+                    {% for inv in invList %}
+                    <tr class="table_content" id={{ 'i____' + inv[0] }}>            
+                        <td><input name="inv" type="checkbox" > <a href="javascript:void(0)">{{inv[0]}}</a></td>
+                        <td>{{inv[1]}}</td>
+                        <td>{{inv[2]}}</td>
+                        <td><a href="javascript:void(0)">Edit</a><a href="javascript:void(0)">Remove</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </div>
 </div>

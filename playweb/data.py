@@ -1,6 +1,8 @@
 from flask import Blueprint, request,abort, jsonify
 from playweb.db import db
+from playweb.taskHandler import ansibleTaskHandler
 from playweb.db_models import ansible_module,ansible_module_parameter, ansible_host, ansible_group, ansible_inventory
+import json
 
 bp = Blueprint('data',__name__,url_prefix='/data')
 
@@ -74,37 +76,37 @@ def get_task():
     if request.method == 'POST':
         data = request.json
         data_server = data['serverlist']
-        inventory = {}
+        inv_list = {}
         for host in data_server:
             tmp = host.split('____')
             tmp_info = tmp[0]
             tmp_name = tmp[1]
             if host[0] == 'i':
-                inventory[tmp_name] = '*'
+                inv_list[tmp_name] = '*'
             elif host[0] == 'g':
                 inv_name = ansible_inventory.query.filter_by(inv_id=int(tmp_info.split('_')[1])).first().inv_name
-                if inv_name not in inventory:
-                    inventory[inv_name] = {}
-                if inventory[inv_name] == '*':
+                if inv_name not in inv_list:
+                    inv_list[inv_name] = {}
+                if inv_list[inv_name] == '*':
                     continue
                 if tmp_name == inv_name + '___nogroup':
-                    tmp_name = 'nogroup'
-                inventory[inv_name][tmp_name] = '*'
+                    tmp_name = 'ungrouped'
+                inv_list[inv_name][tmp_name] = '*'
             else:
                 inv_name = ansible_inventory.query.filter_by(inv_id=int(tmp_info.split('_')[1])).first().inv_name
                 grp_name = ansible_group.query.filter_by(group_id=int(tmp_info.split('_')[2])).first().group_name
                 if grp_name== inv_name + '___nogroup':
-                    grp_name = 'nogroup'
+                    grp_name = 'ungrouped'
                 host_ip = ansible_host.query.filter_by(host_name=tmp_name).first().host_ip
-                if inv_name not in inventory:
-                    inventory[inv_name] = {}
-                if inventory[inv_name] == '*':
+                if inv_name not in inv_list:
+                    inv_list[inv_name] = {}
+                if inv_list[inv_name] == '*':
                     continue
-                if grp_name not in inventory[inv_name]:
-                    inventory[inv_name][grp_name] = []
-                if inventory[inv_name][grp_name] == '*':
+                if grp_name not in inv_list[inv_name]:
+                    inv_list[inv_name][grp_name] = []
+                if inv_list[inv_name][grp_name] == '*':
                     continue
-                inventory[inv_name][grp_name].append(host_ip)
+                inv_list[inv_name][grp_name].append(host_ip)
                         
         data_task = data['tasklist']
         
@@ -122,6 +124,11 @@ def get_task():
             args = args.strip()
             task['action']['args'] = args
             tasklist.append(task)
-
-        ansible_data = {'inventory':inventory,'tasklist':tasklist}
-        return jsonify(ansible_data)
+        taskHandler = ansibleTaskHandler()
+        result = []
+        for inv in inv_list.keys():
+            print(inv_list[inv])
+            taskHandler.load_inv(inv_list[inv])
+            result.append(taskHandler.run_task('all', tasklist))
+        print(result)
+        return jsonify(result)
