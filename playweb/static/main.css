@@ -157,6 +157,65 @@ header > a > button:hover {
     min-width: 350px;
 }
 
+.table_lable {
+    display: flex;
+    align-items: center;
+}
+
+.table_lable p {
+    color: white;
+    padding: 5px;
+    font-size: 50px;
+}
+
+.cross {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: relative;
+    /* transition: all 0.3s ease; */
+}
+.cross::after{
+    content: "";
+    height: 10%;
+    width: 100%;
+    background: rgb(120, 120, 250);
+    position: absolute;
+    left: 0;
+    top: 45%;
+}
+.cross::before{
+    content: "";
+    height: 100%;
+    width: 10%;
+    background: rgb(120, 120, 250);
+    position: absolute;
+    top: 0;
+    left: 45%;
+}
+
+.cross:hover {
+    background-color: rgb(240, 240, 240);
+}
+
+.cross:active {
+    background-color: rgb(120, 120, 250);
+}
+
+.cross:hover::before {
+    transform: scale(0.8);
+}
+
+.cross:active::before {
+    background-color: rgb(240, 240, 240);
+}
+.cross:hover::after {
+    transform: scale(0.8);
+}
+.cross:active::after {
+    background-color: rgb(240, 240, 240);
+}
+
 /* -------- Scroller -------- */
 
 #scroller {
@@ -491,6 +550,7 @@ header > a > button:hover {
 }
 
 #ansible_button:active {
+    transform: scale(0.9) rotate(90deg);
     background-color: rgb(120, 120, 250);
     box-shadow: 0px 0px 25px 3px rgb(120, 120, 250);
 }

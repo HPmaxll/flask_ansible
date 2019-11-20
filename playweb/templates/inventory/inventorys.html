@@ -4,10 +4,11 @@
     <div class="inv_area">
         <div class="table_outer">
             <div class="table_header">
-                <p class="table_name">Inventorys</p>
-                <div class="filter">
-                    <a onclick="popup('add_inventory')"><button>Add Inventory</button></a><br>
+                <div class="table_lable">
+                    <div class="cross" onclick=popup('add_inventory') title="Click to add inventory"></div>
+                    <p>Inventorys</p>
                 </div>
+                <div class="filter"></div>
             </div>
             <div class="table_inner">
                 <table frame="box" id="table_inv">
@@ -51,7 +52,4 @@
         </div>
     </div> 
 </div>
-{% endblock %}
-{% block right_block %}
-
 {% endblock %}
