@@ -434,9 +434,15 @@ function update_table(data, arglist) {
         var row_opt_1 = document.createElement('a');
         row_opt_1.href = 'javascript:void(0)';
         row_opt_1.innerText = 'Edit';
+        row_opt_1.onclick = function () {
+            return edit_row(event);
+        }
         var row_opt_2 = document.createElement('a');
         row_opt_2.href = 'javascript:void(0)';
         row_opt_2.innerText = 'Remove';
+        row_opt_2.onclick = function () {
+            return remove_row(event);
+        }
         row_opt.appendChild(row_opt_1);
         row_opt.appendChild(row_opt_2);
         row.appendChild(row_opt);
@@ -527,4 +533,29 @@ function show_res(data) {
     if (data == 'success') {
         window.setTimeout(window.location.reload(), 1000)
     }
+}
+
+function show_res_2(data) {
+    document.getElementById('remove_res').innerText = data;
+}
+
+function edit_row(event) {
+    var row = event.target.parentNode.parentNode;
+    var checkbox = row.getElementsByTagName('input')[0]
+    console.log(checkbox.id);
+}
+
+let id_remove = '';
+
+function remove_row(event) {
+    popup('popup_remove');
+    var row = event.target.parentNode.parentNode;
+    var text = row.getElementsByTagName('a')[0].innerText;
+    document.getElementById('remove_text').innerText = text;
+    var checkbox = row.getElementsByTagName('input')[0]
+    id_remove = checkbox.id
+    console.log(id_remove);
+    /* var data = {'id': checkbox.id};
+    postData(data, '/inventory/del', show_res_2);
+    popup('popup_res') */
 }

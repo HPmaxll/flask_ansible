@@ -26,6 +26,25 @@ select {
     justify-content: center;
     align-items: center;
 }
+
+.vertical_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.seperator {
+    width: 100%;
+    height: 1px;
+    background-color: black;
+}
+
+.even_container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
 /* --------header----area-------- */
 
 header {
@@ -575,6 +594,7 @@ header > a > button:hover {
     background: rgba(250, 250, 250, 0.9);
     width: 400px;
     padding: 10px;
+    border-radius: 5px;
 }
 .form_name {
     margin: 5px;
@@ -589,9 +609,10 @@ header > a > button:hover {
 .popup_inv button {
     float: right;
     border: none;
-    background-color: lightslategray;
+    background-color: rgba(0, 0, 0, 0);
     padding: 5px 20px;
     border-radius: 5px;
+    border: 1px solid black;
 }
 
 .filter_inv {
@@ -662,4 +683,54 @@ header > a > button:hover {
 
 .input_container input:focus {
     outline: none;
+}
+
+.res_cover {
+    width: 100%;
+    margin-top: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog {
+    position: relative;
+    width: 340px;
+    background-color: rgba(200, 200, 200, 0.9);
+    border-radius: 10px;
+}
+
+#remove_text {
+    color: rgb(10, 10, 10);
+    font-size: 20px;
+    margin: 20px 0;
+}
+
+#remove_text::before {
+    content: 'Remove: ';
+    padding-right: 6px;
+    color: rgb(61, 66, 61);
+}
+
+#remove_info::after {
+    content: 'Is this okay?';
+    font-size: 20px;
+    margin: 20px 0;
+}
+
+#remove_res {
+    font-size: large;
+}
+
+#popup_remove button {
+    margin: 20px;
+    padding: 3px 10px;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid black;
+    border-radius: 8px;
+    font-size: 20px;
+}
+
+#popup_remove hr {
+    width: 100%;
 }

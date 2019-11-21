@@ -30,12 +30,12 @@
                         <th>Operation</th>
                     </tr>
                     {% for host in hostList %}
-                    <tr class="table_content" id={{ 'h_' + host[0] + '_' + host[1] + '____' + host[2]}}>
-                        <td><input type="checkbox" ><a href="javascript:void(0)">{{host[2]}}</a></td>
+                    <tr class="table_content" >
+                        <td><input type="checkbox" id={{ 'h_' + host[0] + '_' + host[1] + '____' + host[2] }}><a href="javascript:void(0)">{{host[2]}}</a></td>
                         <td>{{host[3]}}</td>
                         <td>{{host[4]}}</td>
                         <td>{{host[5]}}</td>
-                        <td><a href="javascript:void(0)">Edit</a><a href="javascript:void(0)">Remove</a></td>
+                        <td><a href="javascript:void(0)" onclick="edit_row(event)">Edit</a><a href="javascript:void(0)" onclick="remove_row(event)">Remove</a></td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -62,11 +62,11 @@
                 </div>
                 <hr>
                 <div class="input_container">
-                    <p>Hostname:</p>
+                    <p>*Hostname:</p>
                     <input type="text" id="host_name" autocomplete="off">
                 </div>
                 <div class="input_container">
-                    <p>IP Address:</p>
+                    <p>*IP Address:</p>
                     <input type="text" id="host_ip" autocomplete="off">
                 </div>
                 <div class="input_container"> 
@@ -83,6 +83,22 @@
                 </div>
             </div>
         </div> 
+    </div>
+</div>
+<div class="coverup" id="popup_remove">
+    <div class="res_cover">
+        <div class="dialog">
+            <div class="cross" onclick="hidder('popup_remove')"></div>
+            <div class="vertical_container" id="remove_info">
+                <p id="remove_text"></p>
+            </div>
+            <p id="remove_res"></p>
+            <div class="seperator"></div>
+            <div class="even_container">
+                <button>confirm</button>
+                <button onclick="hidder('popup_remove')">cancel</button>
+            </div>
+        </div>
     </div>
 </div>
 <script type="text/javascript">

@@ -19,11 +19,11 @@
                         <th>Operation</th>
                     </tr>
                     {% for inv in invList %}
-                    <tr class="table_content" id={{ 'i____' + inv[0] }}>            
-                        <td><input name="inv" type="checkbox" > <a href="javascript:void(0)">{{inv[0]}}</a></td>
+                    <tr class="table_content" >            
+                        <td><input type="checkbox" id={{ 'i____' + inv[0] }}> <a href="javascript:void(0)">{{inv[0]}}</a></td>
                         <td>{{inv[1]}}</td>
                         <td>{{inv[2]}}</td>
-                        <td><a href="javascript:void(0)">Edit</a><a href="javascript:void(0)">Remove</a></td>
+                        <td><a href="javascript:void(0)" onclick="edit_row(event)">Edit</a><a href="javascript:void(0)" onclick="remove_row(event)">Remove</a></td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -39,7 +39,7 @@
             <hr>
             <div id="form_inventory">
                 <div class="input_container">
-                    <p>Inventory Name:</p>
+                    <p>*Inventory Name:</p>
                     <input type="text" id="inv_name" autocomplete="off">
                 </div>
                 <div class="input_container">
@@ -58,7 +58,22 @@
         </div> 
     </div>
 </div>
-
+<div class="coverup" id="popup_remove">
+    <div class="res_cover">
+        <div class="dialog">
+            <div class="cross" onclick="hidder('popup_remove')"></div>
+            <div class="vertical_container" id="remove_info">
+                <p id="remove_text"></p>
+            </div>
+            <p id="remove_res"></p>
+            <div class="seperator"></div>
+            <div class="even_container">
+                <button>confirm</button>
+                <button onclick="hidder('popup_remove')">cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
 	function submit_inv() {
 		data = {}

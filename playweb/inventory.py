@@ -27,6 +27,26 @@ def inventorys():
     invList = get_ilist()
     return render_template('inventory/inventorys.html',invList = invList)
 
+@bp.route('/del', methods=('POST',))
+def inv_del():
+    data = request.json['id']
+    name = data.split('____')[1]
+    if data[0] == 'i':
+        record = ansible_inventory.query.filter_by(inv_name=name).first()
+
+    elif data[0] == 'g':
+        record = ansible_group.query.filter_by(group_name=name).first()
+
+    else:
+        tmp = data.split('____')[0]
+        grpid = tmp.split('_')[2]
+        grp = ansible_group.query.filter_by(group_id=grpid).first()
+        record = ansible_host.query.with_parent(grp).filter_by(host_name=name).first()
+    
+    db.session.delete(record)
+    db.session.commit()
+    return 'success'
+
 @bp.route('/groups', methods=('GET', 'POST'))
 def groups():
     if request.method == 'POST':
