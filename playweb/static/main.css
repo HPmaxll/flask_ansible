@@ -14,10 +14,17 @@ select {
     width: 100px;
     text-overflow: ellipsis;
     background-color: rgba(110, 110, 240, 0.6);
+    margin: 0 5px;
 }
 
 .hidden {
     display: none;
+}
+
+.flex_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 /* --------header----area-------- */
 
@@ -168,14 +175,16 @@ header > a > button:hover {
     font-size: 50px;
 }
 
-.cross {
+/* -------- plus --------*/
+
+.plus {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     position: relative;
     /* transition: all 0.3s ease; */
 }
-.cross::after{
+.plus::after{
     content: "";
     height: 10%;
     width: 100%;
@@ -184,7 +193,7 @@ header > a > button:hover {
     left: 0;
     top: 45%;
 }
-.cross::before{
+.plus::before{
     content: "";
     height: 100%;
     width: 10%;
@@ -193,28 +202,26 @@ header > a > button:hover {
     top: 0;
     left: 45%;
 }
-
-.cross:hover {
+.plus:hover {
     background-color: rgb(240, 240, 240);
 }
-
-.cross:active {
+.plus:active {
     background-color: rgb(120, 120, 250);
 }
-
-.cross:hover::before {
+.plus:hover::before {
     transform: scale(0.8);
 }
-
-.cross:active::before {
+.plus:active::before {
     background-color: rgb(240, 240, 240);
 }
-.cross:hover::after {
+.plus:hover::after {
     transform: scale(0.8);
 }
-.cross:active::after {
+.plus:active::after {
     background-color: rgb(240, 240, 240);
 }
+
+
 
 /* -------- Scroller -------- */
 
@@ -360,20 +367,19 @@ header > a > button:hover {
 .table_name {
     color: white;
     padding: 5px;
+    margin: 0 5px;
     width: 300px;
     /* border: 1px solid black; */
     font-size: 45px;
-    text-align: center;
+    /* text-align: center; */
 }
 
 .filter {
-    padding: 5px;
+    padding: 5px 0;
     color: white;
     /* background-color: brown; */
 }
-.filter select {
-    margin: 0 5px;
-}
+
 .table_inner {
     width: 100%;
     height: 435px;
@@ -480,41 +486,34 @@ header > a > button:hover {
     cursor: pointer;
     border-radius: 3px;
 }
-
 .task_block {
     margin: 0 1% 1% 1%;
     background-color: gray;
 }
-
 .task_mod::before {
     content: 'Module:';
     font-size: large;
     color: blueviolet;
 }
-
 .task_args::before {
     content: 'Args:';
     font-size: large;
     color: blueviolet;
 }
-
 .taskarg {
     display: flex;
     align-items: flex-start;
     
 }
-
 .pkey {
     background-color: cadetblue;
     padding: 3px;
     white-space: nowrap;
 }
-
 .pkey::before {
     content: '- ';
     font-size: large;
 }
-
 .pkey::after {
     content: ':';
 }
@@ -526,14 +525,12 @@ header > a > button:hover {
     word-break: break-all;
     word-wrap: break-word;
 }
-
 .run_container > p {
     background-color: rgba(51, 56, 51, 0.9);
     color: rgb(240,240,240);
     font-size: 20px;
     text-align: center;
 }
-
 #ansible_button {
     width: 80px;
     border-radius: 50%;
@@ -543,12 +540,10 @@ header > a > button:hover {
     box-shadow: 0px 0px 10px 2px rgb(200, 200, 200);
     transition: all 0.3s ease;
 }
-
 #ansible_button:hover {
     transform: rotate(90deg);
     box-shadow: 0px 0px 20px 2px rgb(240, 240, 240);
 }
-
 #ansible_button:active {
     transform: scale(0.9) rotate(90deg);
     background-color: rgb(120, 120, 250);
@@ -556,6 +551,7 @@ header > a > button:hover {
 }
 
 /* --------popup----area-------- */
+
 .coverup {
     position: absolute;
     left: 0px; 
@@ -567,55 +563,103 @@ header > a > button:hover {
     display: none;
     z-index: 3;
 }
-
-.popup {
+.inv_cover {
+    margin-top: 8%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup_inv {
     position: relative;
-    color: white;
-    background: rgba(25, 25, 100, 1);
-    width: 300px;
-    height: 400px;
-    border-radius: 10px;
-    margin: 110px auto;
+    background: rgba(250, 250, 250, 0.9);
+    width: 400px;
+    padding: 10px;
+}
+.form_name {
+    margin: 5px;
+    width: 100%;
+    /* text-align: center; */
+    font-size: 40px;
 }
 
-.popup input[type="text"] {
-    position: relative;
-    font-size: 20px;
-    width: 80%;
-    margin: 5px 10%;
+.popup_inv hr {
+    margin: 10px 0;
 }
-
-.popup label {
-    position: relative;
-    margin-left: 10%;
-}
-
-.popup input[type="submit"] {
-    position: absolute;
-    color: white;
-    background-color: rgba(25, 25, 100, 1);
-    border: 1px solid white;
-    right: 10%;
-}
-
-.popup .popup_header { 
-    position: relative;
-    margin: 3%;
-    text-align: center;
-    padding: 5%;
-}
-
-.popup .popup_cross {
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    color: white; 
+.popup_inv button {
+    float: right;
     border: none;
-    right: 2px; 
-    top: 2px; 
-    background-color: rgba(25, 25, 100, 1);
-    cursor: pointer;
+    background-color: lightslategray;
+    padding: 5px 20px;
+    border-radius: 5px;
 }
-.popup .popup_cross:hover {
-    background-color: gray;
+
+.filter_inv {
+    color: black;
+    padding: 5px 0;
+}
+
+/* --------cross--------*/
+
+.cross {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    border-radius: 50%;
+}
+
+.cross:hover {
+    border: 1px dashed black;
+}
+.cross::before {
+    position: absolute;
+    content: "";
+    height: 100%;
+    width: 10%;
+    left: 45%;
+    background-color: black;
+    transform: rotate(45deg) scale(0.7);
+}
+.cross::after {
+    position: absolute;
+    content: "";
+    height: 10%;
+    width: 100%;
+    top: 45%;
+    background-color: black;
+    transform: rotate(45deg) scale(0.7);
+}
+
+.input_container {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    padding: 3px;
+    margin: 15px 0;
+    /* background-color: maroon; */
+}
+
+.input_container p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: black;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    border-bottom: 1px solid black;
+}
+.input_container input {
+    width: 100%;
+    height: 100%;
+    padding-top: 25px;
+    font-size: 15px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.input_container input:focus {
+    outline: none;
 }

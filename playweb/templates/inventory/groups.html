@@ -5,7 +5,7 @@
 		<div class="table_outer">
 			<div class="table_header">
                 <div class="table_lable">
-                    <div class="cross" onclick=popup('add_group') title="Click to add group"></div>
+                    <div class="plus" onclick=popup('add_group') title="Click to add group"></div>
                     <p>Groups</p>
                 </div>
 				<div class="filter">
@@ -38,33 +38,55 @@
 </div>
 
 <div class="coverup" id='add_group'>
-	<div class="popup">
-		<div class="popup_header">
-			<span>Add new group</span> 
-			<input type="button" class="popup_cross" value="X" onclick="hidder('add_group')"> 
+	<div class="inv_cover">
+		<div class="popup_inv">
+			<div class="cross" onclick="hidder('add_group')"></div>
+			<p class="form_name">Add Group</p>
+			<hr>
+			<div id="form_group" class="form_content">
+				<div class="filter_inv">
+					<span>Inventory:</span>
+					<select class="inv_sel" id="inv_07">
+						<option value="default">default</option>
+					</select>
+				</div>
+				<hr>
+				<div class="input_container">
+					<p>Group Name:</p>
+					<input type="text" id="group_name" autocomplete="off" >
+				</div>
+				<div class="input_container">
+					<p>Creator:</p>
+					<input type="text" id="group_creator" autocomplete="off" >
+				</div>
+				<div class="input_container">
+					<p>Description:</p>
+					<input type="text" id="group_desc" autocomplete="off" >
+				</div>
+				<p class="add_result"></p>
+				<div class="flex_container">
+					<button onclick="submit_group()">Confirm</button>
+				</div>
+			</div>
 		</div> 
-		<div id="form_group">
-			<form method="POST">
-				<p>Inventory:</p>
-				<select class="inv_sel" name="inv">
-				    <option value="default">default</option>
-				</select>
-				<label for="group_name">Group Name:</label><br>
-				<input type="text" name="group_name" id="group_name"  ><br>
-				<label for="group_creator">Creator:</label><br>
-				<input type="text" name="group_creator" id="group_creator"  ><br>
-				<label for="group_desc">Description:</label><br>
-				<input type="text" name="group_desc" id="group_desc"  ><br>
-				<label for="group_attr">Attributes:</label><br>
-				<input type="text" name="group_attr" id="group_attr"  ><br>
-				<input type="submit" value="confirm" ><br>
-			</form>
-		</div>
-	</div> 
+	</div>
 </div>
 <script type="text/javascript">
 	window.onload = function(){
 		getData('/data/all_inv', add_inv);
 	}
+
+	function submit_group() {
+		document.getElementsByClassName('add_result')[0].innerText = '';
+		data = {}
+		data['inv'] = document.getElementById('inv_07').value;
+		id_list = ['group_name', 'group_creator', 'group_desc']
+		for (var i in id_list) {
+			var val = document.getElementById(id_list[i]).value;
+			data[id_list[i]] = val;
+		}
+		postData(data, '/inventory/groups', show_res)
+	}
+
 </script>  
 {% endblock %}

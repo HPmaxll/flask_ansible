@@ -287,11 +287,10 @@ function deleChild(parent){
 }
   
 function init_task() {
-    clearChild("selected_opt");
-    clearChild("module_list");
-    clearChild("module_para")
-    clearChild("desc_module");
-    clearChild("desc_para");
+    list_1 = ["selected_opt", "module_list", "module_para", "desc_module", "desc_para"];
+    for (var i in list_1) {
+        clearChild(list_1[i]);
+    }
     var mod = document.getElementsByClassName("selected_module")[0];
     if (mod) {
         mod.parentNode.removeChild(mod);
@@ -521,4 +520,11 @@ function add_hosts() {
 
 function host_close() {
     hidder('popup_host');
+}
+
+function show_res(data) {
+    document.getElementsByClassName('add_result')[0].innerText = data;
+    if (data == 'success') {
+        window.setTimeout(window.location.reload(), 1000)
+    }
 }

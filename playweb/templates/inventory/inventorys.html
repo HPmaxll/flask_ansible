@@ -5,7 +5,7 @@
         <div class="table_outer">
             <div class="table_header">
                 <div class="table_lable">
-                    <div class="cross" onclick=popup('add_inventory') title="Click to add inventory"></div>
+                    <div class="plus" onclick=popup('add_inventory') title="Click to add inventory"></div>
                     <p>Inventorys</p>
                 </div>
                 <div class="filter"></div>
@@ -32,24 +32,43 @@
     </div>
 </div>
 <div class="coverup" id='add_inventory'>
-    <div class="popup">
-        <div class="popup_header">
-            <span>Add new inventory</span> 
-            <input type="button" class="popup_cross" value="X" onclick="hidder('add_inventory')"> 
+    <div class="inv_cover">
+        <div class="popup_inv">
+            <div class="cross" onclick="hidder('add_inventory')"></div>
+            <p class="form_name">Add Inventory</p>
+            <hr>
+            <div id="form_inventory">
+                <div class="input_container">
+                    <p>Inventory Name:</p>
+                    <input type="text" id="inv_name" autocomplete="off">
+                </div>
+                <div class="input_container">
+                    <p>Creator:</p>
+                    <input type="text" id="inv_creator" autocomplete="off">
+                </div>
+                <div class="input_container">
+                    <p>Description:</p>
+                    <input type="text" id="inv_desc" autocomplete="off">
+                </div>
+                <p class="add_result"></p>
+                <div class="flex_container">
+                    <button onclick="submit_inv()">Confirm</button>
+                </div>
+            </div>
         </div> 
-        <div id="form_inventory">
-            <form method="POST">
-                <label for="inv_name">Inventory Name:</label><br>
-                <input type="text" name="inv_name" id="inv_name"><br>
-                <label for="inv_creator">Creator:</label><br>
-                <input type="text" name="inv_creator" id="inv_creator"  ><br>
-                <label for="inv_desc">Description:</label><br>
-                <input type="text" name="inv_desc" id="inv_desc"><br>
-                <label for="inv_attr">Attributes:</label><br>
-                <input type="text" name="inv_attr" id="inv_attr"><br>
-                <input type="submit"  id="submit_inventory" value="confirm" ><br>
-            </form>
-        </div>
-    </div> 
+    </div>
 </div>
+
+<script type="text/javascript">
+	function submit_inv() {
+		data = {}
+		id_list = ['inv_name', 'inv_creator', 'inv_desc']
+		for (var i in id_list) {
+			var val = document.getElementById(id_list[i]).value;
+			data[id_list[i]] = val;
+		}
+		postData(data, '/inventory/inventorys', show_res)
+	}
+
+</script>  
 {% endblock %}

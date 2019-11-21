@@ -7,22 +7,22 @@ bp = Blueprint('inventory',__name__,url_prefix='/inventory')
 @bp.route('/inventorys', methods=('GET', 'POST'))
 def inventorys():
     if request.method == 'POST':
+        data = request.json
         inv = ansible_inventory(
-            inv_name = request.form['inv_name'],
-            inv_creator = request.form['inv_creator'],
-            inv_desc = request.form['inv_desc'],
-            inv_attr = request.form['inv_attr']
+            inv_name = data['inv_name'],
+            inv_creator = data['inv_creator'],
+            inv_desc = data['inv_desc'],
         )
         grp = ansible_group(
-            group_name = request.form['inv_name'] + '___nogroup',
-            group_creator = request.form['inv_creator'],
+            group_name = data['inv_name'] + '___nogroup',
+            group_creator = data['inv_creator'],
             group_desc = 'No Group',
             ansible_inventory = inv
         )
         db.session.add(inv)
         db.session.add(grp)
         db.session.commit()
-        return redirect(url_for('inventory.inventorys'))
+        return 'success'
 
     invList = get_ilist()
     return render_template('inventory/inventorys.html',invList = invList)
@@ -30,18 +30,17 @@ def inventorys():
 @bp.route('/groups', methods=('GET', 'POST'))
 def groups():
     if request.method == 'POST':
-        inventory = request.form['inv']
-        inv = ansible_inventory.query.filter_by(inv_name=inventory).first()
+        data = request.json
+        inv = ansible_inventory.query.filter_by(inv_name=data['inv']).first()
         g = ansible_group(
-            group_name = request.form['group_name'],
-            group_creator = request.form['group_creator'],
-            group_desc = request.form['group_desc'],
-            group_attr = request.form['group_attr'],
+            group_name = data['group_name'],
+            group_creator = data['group_creator'],
+            group_desc = data['group_desc'],
             ansible_inventory = inv
         )
         db.session.add(g)
         db.session.commit()
-        return redirect(url_for('inventory.groups'))
+        return 'success'
 
     groupList = get_glist('default')
     return render_template('inventory/groups.html', groupList = groupList)
@@ -49,16 +48,16 @@ def groups():
 @bp.route('/hosts', methods=('GET', 'POST'))
 def hosts():
     if request.method == 'POST':
+        data = request.json
         h = ansible_host(
-            host_name = request.form['host_name'],
-            host_ip = request.form['host_ip'],
-            host_os = request.form['host_os'],
-            host_desc = request.form['host_desc'],
-            host_attr = request.form['host_attr']
+            host_name = data['host_name'],
+            host_ip = data['host_ip'],
+            host_os = data['host_os'],
+            host_desc = data['host_desc']
         )
 
-        inventory = request.form['inv']
-        group = request.form['group']
+        inventory = data['inv']
+        group = data['group']
 
         inv = ansible_inventory.query.filter_by(inv_name=inventory).first()
         inv.hosts.append(h)
@@ -70,7 +69,7 @@ def hosts():
 
         db.session.add(h)
         db.session.commit()
-        return redirect(url_for('inventory.hosts'))
+        return 'success'
 
     hostList = get_hlist('default')
     return render_template('inventory/hosts.html', hostList = hostList)

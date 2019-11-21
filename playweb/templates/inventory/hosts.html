@@ -5,7 +5,7 @@
         <div class="table_outer">
             <div class="table_header">
                 <div class="table_lable">
-                    <div class="cross" onclick=popup('add_host') title="Click to add host"></div>
+                    <div class="plus" onclick=popup('add_host') title="Click to add host"></div>
                     <p>Hosts</p>
                 </div>
                 <div class="filter">
@@ -44,41 +44,63 @@
     </div>
 </div>
 <div class="coverup" id='add_host'>
-    <div class="popup">
-        <div class="popup_header">
-            <span>Add new host</span>
-            <input type="button" class="popup_cross" value="X" onclick="hidder('add_host')">
-        </div>
-        <div id="form_host">
-            <form method="POST">
-                <p>Inventory:</p>
-                <select class="inv_sel" id="inv_02" name="inv" onchange="inv_change_2(inv_02.value, 'grp_02', 2)">
-                    <option value="default">default</option>
-                </select>
-                <p>Group</p>
-                <select class="grp_sel" id="grp_02" name="group">
-                    <option value="no_group">no_group</option>
-                </select>
-                <label for="host_name">Hostname:</label><br>
-                <input type="text" name="host_name" id="host_name"><br>
-                <label for="host_ip">IP Address:</label><br>
-                <input type="text" name="host_ip" id="host_ip"><br>
-                
-                <label for="host_os">Operating System:</label><br>
-                <input type="text" name="host_os" id="host_os"><br>
-                <label for="host_desc">Description:</label><br>
-                <input type="text" name="host_desc" id="host_desc"><br>
-                <label for="host_attr">Attributes:</label><br>
-                <input type="text" name="host_attr" id="host_attr"><br>
-                <input type="submit"  id="submit_host" value="confirm" ><br>
-            </form>
-        </div>
-    </div> 
+    <div class="inv_cover">
+        <div class="popup_inv">
+            <div class="cross" onclick="hidder('add_host')"></div>
+            <p class="form_name">Add Host</p>
+            <hr>
+            <div id="form_host" class="form_content">
+                <div class="filter_inv">
+                    <span>Inventory:</span>
+                    <select class="inv_sel" id="inv_02" onchange="inv_change_2(inv_02.value, 'grp_02', 2)">
+                        <option value="default">default</option>
+                    </select>
+                    <span>Group:</span>
+                    <select class="grp_sel" id="grp_02">
+                        <option value="no_group">no_group</option>
+                    </select>
+                </div>
+                <hr>
+                <div class="input_container">
+                    <p>Hostname:</p>
+                    <input type="text" id="host_name" autocomplete="off">
+                </div>
+                <div class="input_container">
+                    <p>IP Address:</p>
+                    <input type="text" id="host_ip" autocomplete="off">
+                </div>
+                <div class="input_container"> 
+                    <p>Operating System:</p>
+                    <input type="text" id="host_os" autocomplete="off">
+                </div>
+                <div class="input_container">
+                    <p>Description:</p>
+                    <input type="text" id="host_desc" autocomplete="off">
+                </div>
+                <p class="add_result"></p>
+                <div class="flex_container">
+                    <button onclick="submit_host()">Confirm</button>
+                </div>
+            </div>
+        </div> 
+    </div>
 </div>
 <script type="text/javascript">
     window.onload = function(){
         getData('/data/all_inv', add_inv);
         getData('/data/grps_of_inv/name/default', add_grp);
+    }
+
+    function submit_host() {
+        id_list = ['host_name', 'host_ip', 'host_os', 'host_desc']
+        data = {}
+        data['inv'] = document.getElementById('inv_02').value;
+        data['group'] = document.getElementById('grp_02').value;
+        for (var i in id_list) {
+            var val = document.getElementById(id_list[i]).value
+            data[id_list[i]] = val;
+        }
+        postData(data,'/inventory/hosts', show_res)
     }
 </script>           
 {% endblock %}
