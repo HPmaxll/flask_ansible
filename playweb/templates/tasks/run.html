@@ -1,354 +1,354 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="run">
-        <div class="run_container">
-            <p>Selected Hosts</p>
-            <div class="run_info">
-                <div id="target_host" class="hidden"></div>
-                <div id="target_grp" class="hidden"></div>
-                <div id="target_inv" class="hidden"></div>
-            </div>
-            <div class="run_input">
-                <button onclick="add_hosts()">Add Host</button>
-            </div>
+<div class="run">
+    <div class="run_container">
+        <p>Selected Hosts</p>
+        <div class="run_info">
+            <div id="target_host" class="hidden"></div>
+            <div id="target_grp" class="hidden"></div>
+            <div id="target_inv" class="hidden"></div>
         </div>
-        <img id="ansible_button" onclick="ansible_run()" src={{ url_for('static', filename='Ansible_button.png') }} alt="RUN" />
-        <div class="run_container">
-            <p>Selected Tasks</p>
-            <div class="run_info" id="task_info"></div>
-            <div class="run_input">
-                <button onclick="popup('popup_task')">Add Task</button>
-            </div>
+        <div class="run_input">
+            <button onclick="add_hosts()">Add Host</button>
         </div>
-       <!--  <div class="run_container">
-            <p>Extra Variables</p>
-            <div class="run_info"></div>
-            <div class="run_input">
-                <input type="text" id="extra_vars" >
-                <button>Add Extra Variables</button>
-            </div>
-        </div> -->
     </div>
-    
-    <div id="popup_host" class="coverup">
-        <div id="scroller">
-            <div class="table_container">
-                <div class="float_table">
-                    <img class="close_button" onclick="host_close()" src= {{ url_for('static', filename='close-window.png') }} alt="CLOSE" />
-                    <div class="table_outer">
-                        <div class="table_header">
-                            <p class="table_name">Hosts</p>
-                            <div class="filter">
-                                <span>Inventory: </span>
-                                <select id="inv_04" class="inv_sel" onchange="inv_change_4(inv_04.value, 'grp_04', 'table_host', 4)">
-                                    <option value="default">default</option>
-                                </select>
-                                <span>Group: </span>
-                                <select id="grp_04" class="grp_sel" onchange="grp_change_2(inv_04.value, grp_04.value, 'table_host')">
-                                    <option value="all">ALL</option>
-                                    <option value="no_group">no_group</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button class="scroll_up">up</button>
-                        <div class="table_inner">
-                            <table frame="box" id="table_host">
-                                <tr class="table_fields">
-                                    <th>Hostname</th>
-                                    <th>IP Address</th>
-                                    <th>Operating System</th>
-                                    <th class="table_desc">Description</th>
-                                </tr>
-                                {% for host in hostList %}
-                                <tr class="table_content">
-                                    <td><input type="checkbox" id={{ 'h_' + host[0] + '_' + host[1] + '____' + host[2] }} onchange="row_status( '{{ 'h_' + host[0] + '_' + host[1] + '____' + host[2] }}' )">{{host[2]}}</td>
-                                    <td>{{host[3]}}</td>
-                                    <td>{{host[4]}}</td>
-                                    <td>{{host[5]}}</td>
-                                </tr>
-                                {% endfor %}
-                            </table>
-                        </div>
-                        <button class="scroll_down"><img src={{ url_for('static', filename='down.png') }} alt="down" /></button>
-                    </div>
-                </div>
-            </div>
-            <div class="table_container">
-                <div class="float_table">
-                    <img class="close_button" onclick="host_close()" src= {{ url_for('static', filename='close-window.png') }} alt="CLOSE" />
-                    <div class="table_outer">
-                        <div class="table_header">
-                            <p class="table_name">Groups</p>
-                            <div class="filter">
-                                <span>Inventory: </span>
-                                <select id="inv_05" class="inv_sel" onchange="inv_change_5(inv_05.value, 'table_grp')">
-                                    <option value="default">default</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button class="scroll_up">up</button>
-                        <div class="table_inner">
-                            <table frame="box" id="table_grp">
-                                <tr class="table_fields">
-                                    <th>Group Name</th>
-                                    <th>Creator</th>
-                                    <th class="table_desc">Description</th>
-                                </tr>
-                                {% for group in groupList %}
-                                <tr class="table_content" >
-                                    <td><input type="checkbox" id={{ 'g_' + group[0] + '____' + group[1] }} onchange="row_status('{{ 'g_' + group[0] + '____' + group[1] }}')">{{group[1]}}</td>
-                                    <td>{{group[2]}}</td>
-                                    <td>{{group[3]}}</td>
-                                </tr>
-                                {% endfor %}
-                            </table>
-                        </div>
-                        <button class="scroll_down">down</button>
-                    </div>
-                </div>
-            </div>
-            <div class="table_container">
-                <div class="float_table">
-                    <img class="close_button" onclick="host_close()" src= {{ url_for('static', filename='close-window.png') }} alt="CLOSE" />
-                    <div class="table_outer">
-                        <div class="table_header">
-                            <p class="table_name">Inventorys</p>
-                            <div class="filter"></div>
-                        </div>
-                        <button class="scroll_up">up</button>
-                        <div class="table_inner">
-                            <table frame="box" id="table_inv" >
-                                <tr class="table_fields">
-                                    <th>Inventory Name</th>
-                                    <th>Creator</th>
-                                    <th class="table_desc">Description</th>
-                                </tr>
-                                {% for inv in invList %}
-                                <tr class="table_content">            
-                                    <td><input type="checkbox" id={{ 'i____' + inv[0] }} onchange="row_status('{{ 'i____' + inv[0] }}' )">{{inv[0]}}</td>
-                                    <td>{{inv[1]}}</td>
-                                    <td>{{inv[2]}}</td>
-                                </tr>
-                                {% endfor %}
-                            </table>
-                        </div>
-                        <button class="scroll_down">down</button>
-                    </div>
-                </div>
-            </div>
+    <img id="ansible_button" onclick="ansible_run()" src={{ url_for('static', filename='Ansible_button.png') }} alt="RUN" />
+    <div class="run_container">
+        <p>Selected Tasks</p>
+        <div class="run_info" id="task_info"></div>
+        <div class="run_input">
+            <button onclick="popup('popup_task')">Add Task</button>
         </div>
-        <div id="scroll_controller">
-            <button onclick="reset_sel()">RESET</button>
-            <button onclick="gen_list()">CONFIRM</button>
-        </div>
-        <img class="nav_button" id="nav_left" onclick="scroll_left()" src={{ url_for('static', filename='left.png') }} alt="left"/> 
-        <img class="nav_button" id="nav_right" onclick="scroll_right()" src={{ url_for('static', filename='right.png') }} alt="right"/>
     </div>
-    <div id="popup_task" class="coverup">
-        <div class='selection'>
-            <img class="close_button" onclick="task_close()" src= {{ url_for('static', filename='close-window.png') }} alt="CLOSE" />
-            <div id="select_before">
-                <div><img src= {{ url_for('static', filename='Ans.png') }} alt="ansible"/></div>
-                <div id="select_input">
-                    <input type="text" name="module_name" id="module_name" placeholder="Enter module name here." oninput="loadHint(event)">
+   <!--  <div class="run_container">
+        <p>Extra Variables</p>
+        <div class="run_info"></div>
+        <div class="run_input">
+            <input type="text" id="extra_vars" >
+            <button>Add Extra Variables</button>
+        </div>
+    </div> -->
+</div>    
+<div id="popup_host" class="coverup">
+    <div id="scroller">
+        <div class="table_container">
+            <div class="float_table">
+                <img class="close_button" onclick="host_close()" src= {{ url_for('static', filename='close-window.png') }} alt="CLOSE" />
+                <div class="table_outer">
+                    <div class="table_header">
+                        <p class="table_name">Hosts</p>
+                        <div class="filter">
+                            <span>Inventory: </span>
+                            <select id="inv_04" class="inv_sel" onchange="inv_change_4(inv_04.value, 'grp_04', 'table_host', 4)">
+                                <option value="default">default</option>
+                            </select>
+                            <span>Group: </span>
+                            <select id="grp_04" class="grp_sel" onchange="grp_change_2(inv_04.value, grp_04.value, 'table_host')">
+                                <option value="all">ALL</option>
+                                <option value="no_group">no_group</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="scroll_up">up</button>
+                    <div class="table_inner">
+                        <table frame="box" id="table_host">
+                            <tr class="table_fields">
+                                <th>Hostname</th>
+                                <th>IP Address</th>
+                                <th>Operating System</th>
+                                <th class="table_desc">Description</th>
+                            </tr>
+                            {% for host in hostList %}
+                            <tr class="table_content">
+                                <td><input type="checkbox" id={{ 'h_' + host[0] + '_' + host[1] + '____' + host[2] }} onchange="row_status( '{{ 'h_' + host[0] + '_' + host[1] + '____' + host[2] }}' )">{{host[2]}}</td>
+                                <td>{{host[3]}}</td>
+                                <td>{{host[4]}}</td>
+                                <td>{{host[5]}}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <button class="scroll_down"><img src={{ url_for('static', filename='down.png') }} alt="down" /></button>
                 </div>
-                <input id="select_submit" type="button" value="SUBMIT" onclick="mod_submit(module_name.value)">
-                <input id="select_finish" type="button" title="Finish adding the task." value="FINISH" onclick="mod_add()">
             </div>
-            <div id="selected_opt"></div> 
         </div>
-        <div id="module_detail">
-            <div id="module_list"></div>
-            <div id="module_para"></div>
+        <div class="table_container">
+            <div class="float_table">
+                <img class="close_button" onclick="host_close()" src= {{ url_for('static', filename='close-window.png') }} alt="CLOSE" />
+                <div class="table_outer">
+                    <div class="table_header">
+                        <p class="table_name">Groups</p>
+                        <div class="filter">
+                            <span>Inventory: </span>
+                            <select id="inv_05" class="inv_sel" onchange="inv_change_5(inv_05.value, 'table_grp')">
+                                <option value="default">default</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="scroll_up">up</button>
+                    <div class="table_inner">
+                        <table frame="box" id="table_grp">
+                            <tr class="table_fields">
+                                <th>Group Name</th>
+                                <th>Creator</th>
+                                <th class="table_desc">Description</th>
+                            </tr>
+                            {% for group in groupList %}
+                            <tr class="table_content" >
+                                <td><input type="checkbox" id={{ 'g_' + group[0] + '____' + group[1] }} onchange="row_status('{{ 'g_' + group[0] + '____' + group[1] }}')">{{group[1]}}</td>
+                                <td>{{group[2]}}</td>
+                                <td>{{group[3]}}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <button class="scroll_down">down</button>
+                </div>
+            </div>
         </div>
-        <p id="desc_module"></p>
-        <p id="desc_para"></p>
+        <div class="table_container">
+            <div class="float_table">
+                <img class="close_button" onclick="host_close()" src= {{ url_for('static', filename='close-window.png') }} alt="CLOSE" />
+                <div class="table_outer">
+                    <div class="table_header">
+                        <p class="table_name">Inventorys</p>
+                        <div class="filter"></div>
+                    </div>
+                    <button class="scroll_up">up</button>
+                    <div class="table_inner">
+                        <table frame="box" id="table_inv" >
+                            <tr class="table_fields">
+                                <th>Inventory Name</th>
+                                <th>Creator</th>
+                                <th class="table_desc">Description</th>
+                            </tr>
+                            {% for inv in invList %}
+                            <tr class="table_content">            
+                                <td><input type="checkbox" id={{ 'i____' + inv[0] }} onchange="row_status('{{ 'i____' + inv[0] }}' )">{{inv[0]}}</td>
+                                <td>{{inv[1]}}</td>
+                                <td>{{inv[2]}}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <button class="scroll_down">down</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <script type="text/javascript">
-        window.onload = function() {
-            getData('/data/all_inv', add_inv);
-            getData('/data/grps_of_inv/name/default', add_grp);
+    <div id="scroll_controller">
+        <button onclick="reset_sel()">RESET</button>
+        <button onclick="gen_list()">CONFIRM</button>
+    </div>
+    <img class="nav_button" id="nav_left" onclick="scroll_left()" src={{ url_for('static', filename='left.png') }} alt="left"/> 
+    <img class="nav_button" id="nav_right" onclick="scroll_right()" src={{ url_for('static', filename='right.png') }} alt="right"/>
+</div>
+<div id="popup_task" class="coverup">
+    <div class='selection'>
+        <img class="close_button" onclick="task_close()" src= {{ url_for('static', filename='close-window.png') }} alt="CLOSE" />
+        <div id="select_before">
+            <div><img src= {{ url_for('static', filename='Ans.png') }} alt="ansible"/></div>
+            <div id="select_input">
+                <input type="text" name="module_name" id="module_name" placeholder="Enter module name here." oninput="loadHint(event)">
+            </div>
+            <input id="select_submit" type="button" value="SUBMIT" onclick="mod_submit(module_name.value)">
+            <input id="select_finish" type="button" title="Finish adding the task." value="FINISH" onclick="mod_add()">
+        </div>
+        <div id="selected_opt"></div> 
+    </div>
+    <div id="module_detail">
+        <div id="module_list"></div>
+        <div id="module_para"></div>
+    </div>
+    <p id="desc_module"></p>
+    <p id="desc_para"></p>
+</div>
+<script type="text/javascript">
+    window.onload = function() {
+        getData('/data/all_inv', add_inv);
+        getData('/data/grps_of_inv/name/default', add_grp);
+    }
+
+    let pos = 2;
+    let collection = [];
+    let tasklist = [];
+    let serverlist = {};
+
+    function scroll_right() {
+        var scroller = document.getElementById('scroller')
+        pos -= 1;
+        if (pos < 0) {
+            pos = 0;
+            return;
         }
+        scroller.style.transform = 'translateX(-' + pos*100/3 + '%)'
+    }
 
-        let pos = 2;
-        let collection = [];
-        let tasklist = [];
-        let serverlist = {};
+    function scroll_left() {
+        var scroller = document.getElementById('scroller')
+        pos += 1;
+        if (pos > 2) {
+            pos = 2;
+            return;
+        }
+        scroller.style.transform = 'translateX(-' + pos*100/3 + '%)'
+    }
 
-        function scroll_right() {
-            var scroller = document.getElementById('scroller')
-            pos -= 1;
-            if (pos < 0) {
-                pos = 0;
-                return;
+    function row_status(id) {
+        var checkbox = document.getElementById(id);
+        var row = checkbox.parentNode.parentNode;
+        var cellist = row.getElementsByTagName('td');
+        var i;
+        if (checkbox.checked) {
+            collection.push(id);
+            console.log(collection);
+            row_check(id);
+        }
+        else {
+            collection.splice(collection.indexOf(id),1);
+            console.log(collection);
+            row_uncheck(id);
+        }
+    }
+
+    function row_check(id) {
+        var row = document.getElementById(id).parentNode.parentNode;
+        var cellist = row.getElementsByTagName('td');
+        var i;
+        for (i=0; i<cellist.length; i++) {
+            cellist[i].style.backgroundColor = 'rgb(220, 220, 220)';
+            cellist[i].style.boxShadow = '3px 3px 3px rgb(210, 210, 210)';
+        }
+    }
+
+    function row_uncheck(id) {
+        var row = document.getElementById(id).parentNode.parentNode;
+        var cellist = row.getElementsByTagName('td');
+        var i;
+        for (i=0; i<cellist.length; i++) {    
+            cellist[i].style.backgroundColor = 'rgb(180, 180, 180)';
+            cellist[i].style.boxShadow = '3px 3px 3px rgb(180, 180, 180)';
+        }
+    }
+        
+    function reset_sel() {
+        var table = document.getElementsByClassName('table_inner');
+        var i,j;
+        collection = [];
+        for (i=0; i < table.length; i++) {
+            var table_checks = table[i].getElementsByTagName('input');
+            var table_headers = table[i].getElementsByTagName('th');
+            var table_cell = table[i].getElementsByTagName('td');
+            for (j=0; j < table_checks.length; j++) {
+                table_checks[j].checked = false;
             }
-            scroller.style.transform = 'translateX(-' + pos*100/3 + '%)'
-        }
-
-        function scroll_left() {
-            var scroller = document.getElementById('scroller')
-            pos += 1;
-            if (pos > 2) {
-                pos = 2;
-                return;
+            for (j=0; j < table_headers.length; j++) {
+                table_headers[j].style.color = 'rgb(180, 180, 180)';
+                table_headers[j].style.boxShadow = '3px 3px 3px rgb(180, 180, 180)';
             }
-            scroller.style.transform = 'translateX(-' + pos*100/3 + '%)'
+            for (j=0; j < table_cell.length; j++) {
+                table_cell[j].style.backgroundColor = 'rgb(180, 180, 180)';
+                table_cell[j].style.boxShadow = '3px 3px 3px rgb(180, 180, 180)';
+            }
         }
+    }
 
-        function row_status(id) {
-            var checkbox = document.getElementById(id);
-            var row = checkbox.parentNode.parentNode;
-            var cellist = row.getElementsByTagName('td');
-            var i;
-            if (checkbox.checked) {
-                collection.push(id);
-                console.log(collection);
-                row_check(id);
+    function gen_list() {
+        serverlist['inv'] = [];
+        serverlist['grp'] = [];
+        serverlist['host'] = [];
+        for (var i=0; i < collection.length; i++) {
+            switch(collection[i][0]) {
+                case 'i':
+                    serverlist['inv'].push(collection[i].split('____')[1]);
+                    break;
+                case 'g':
+                    serverlist['grp'].push(collection[i].split('____')[1]);
+                    break;
+                case 'h':
+                    serverlist['host'].push(collection[i].split('____')[1]);
+                    break;
+            }
+        }
+        var namelist = ['inv', 'grp', 'host'];
+        for (var i in namelist) {
+            var display = document.getElementById('target_' + namelist[i]);
+            while (display.childNodes[0]) {
+                display.removeChild(display.childNodes[0]);
+            }
+            if (serverlist[namelist[i]][0]) {
+                popup('target_' + namelist[i]);
+                var tmplist = serverlist[namelist[i]];
+                for (var j in tmplist) {
+                    var text = document.createElement('span');
+                    text.className = 'display_span';
+                    text.innerText = tmplist[j];
+                    display.appendChild(text);
+                }
             }
             else {
-                collection.splice(collection.indexOf(id),1);
-                console.log(collection);
-                row_uncheck(id);
+                document.getElementById('target_' + namelist[i]).innerText = '';
+                hidder('target_' + namelist[i]);
             }
         }
+        console.log(serverlist);
+        hidder('popup_host');
+    }
 
-        function row_check(id) {
-            var row = document.getElementById(id).parentNode.parentNode;
-            var cellist = row.getElementsByTagName('td');
-            var i;
-            for (i=0; i<cellist.length; i++) {
-                cellist[i].style.backgroundColor = 'rgb(220, 220, 220)';
-                cellist[i].style.boxShadow = '3px 3px 3px rgb(210, 210, 210)';
-            }
+    function mod_add() {
+        var objdiv = document.getElementById("selected_opt");
+        var divlist = objdiv.childNodes;
+        var opt, value;
+        var selected_module = document.getElementsByClassName("selected_module")[0].value;
+        var task = {}
+        var args = {};
+        var i;
+        for (i=0;i<divlist.length;i++) {   
+            opt = divlist[i].childNodes[0].id;
+            value = divlist[i].childNodes[2].value;
+            args[opt] = value;
         }
+        task['module'] = selected_module;
+        task['args'] = args;
+        tasklist.push(task);
+        var task_info = document.getElementById('task_info');
+        var div = document.createElement('div');
+        div.className = 'task_block';
 
-        function row_uncheck(id) {
-            var row = document.getElementById(id).parentNode.parentNode;
-            var cellist = row.getElementsByTagName('td');
-            var i;
-            for (i=0; i<cellist.length; i++) {    
-                cellist[i].style.backgroundColor = 'rgb(180, 180, 180)';
-                cellist[i].style.boxShadow = '3px 3px 3px rgb(180, 180, 180)';
-            }
-        }
-        
-        function reset_sel() {
-            var table = document.getElementsByClassName('table_inner');
-            var i,j;
-            collection = [];
-            for (i=0; i < table.length; i++) {
-                var table_checks = table[i].getElementsByTagName('input');
-                var table_headers = table[i].getElementsByTagName('th');
-                var table_cell = table[i].getElementsByTagName('td');
-                for (j=0; j < table_checks.length; j++) {
-                    table_checks[j].checked = false;
-                }
-                for (j=0; j < table_headers.length; j++) {
-                    table_headers[j].style.color = 'rgb(180, 180, 180)';
-                    table_headers[j].style.boxShadow = '3px 3px 3px rgb(180, 180, 180)';
-                }
-                for (j=0; j < table_cell.length; j++) {
-                    table_cell[j].style.backgroundColor = 'rgb(180, 180, 180)';
-                    table_cell[j].style.boxShadow = '3px 3px 3px rgb(180, 180, 180)';
-                }
-            }
-        }
+        var task_mod = document.createElement('p');
+        task_mod.className = 'task_mod';
+        task_mod.innerHTML = '&nbsp&nbsp' + selected_module;
+        div.appendChild(task_mod);
 
-        function gen_list() {
-            serverlist['inv'] = [];
-            serverlist['grp'] = [];
-            serverlist['host'] = [];
-            for (var i=0; i < collection.length; i++) {
-                switch(collection[i][0]) {
-                    case 'i':
-                        serverlist['inv'].push(collection[i].split('____')[1]);
-                        break;
-                    case 'g':
-                        serverlist['grp'].push(collection[i].split('____')[1]);
-                        break;
-                    case 'h':
-                        serverlist['host'].push(collection[i].split('____')[1]);
-                        break;
-                }
-            }
-            var namelist = ['inv', 'grp', 'host'];
-            for (var i in namelist) {
-                var display = document.getElementById('target_' + namelist[i]);
-                while (display.childNodes[0]) {
-                    display.removeChild(display.childNodes[0]);
-                }
-                if (serverlist[namelist[i]][0]) {
-                    popup('target_' + namelist[i]);
-                    var tmplist = serverlist[namelist[i]];
-                    for (var j in tmplist) {
-                        var text = document.createElement('span');
-                        text.className = 'display_span';
-                        text.innerText = tmplist[j];
-                        display.appendChild(text);
-                    }
-                }
-                else {
-                    document.getElementById('target_' + namelist[i]).innerText = '';
-                    hidder('target_' + namelist[i]);
-                }
-            }
-            console.log(serverlist);
-            hidder('popup_host');
+        var task_args = document.createElement('div');
+        task_args.className = 'task_args';
+        for (var key in args) {
+            var task_arg = document.createElement('div')
+            task_arg.className = 'taskarg';
+            var p_key = document.createElement('p');
+            p_key.innerText = key;
+            p_key.className = 'pkey';
+            var p_val = document.createElement('p');
+            p_val.innerText = args[key];
+            p_val.className = 'pval';
+            task_arg.appendChild(p_key);
+            task_arg.appendChild(p_val);
+            task_args.appendChild(task_arg);
         }
+        div.appendChild(task_args);
+        task_info.appendChild(div);
+        console.log(tasklist);
+    }
 
-        function mod_add() {
-            var objdiv = document.getElementById("selected_opt");
-            var divlist = objdiv.childNodes;
-            var opt, value;
-            var selected_module = document.getElementsByClassName("selected_module")[0].value;
-            var task = {}
-            var args = {};
-            var i;
-            for (i=0;i<divlist.length;i++) {   
-                opt = divlist[i].childNodes[0].id;
-                value = divlist[i].childNodes[2].value;
-                args[opt] = value;
-            }
-            task['module'] = selected_module;
-            task['args'] = args;
-            tasklist.push(task);
-            var task_info = document.getElementById('task_info');
-            var div = document.createElement('div');
-            div.className = 'task_block';
+    function ansible_run() {
+        var data = {};
+        data['serverlist'] = collection;
+        data['tasklist'] = tasklist;
+        postData(data, '/data/task', logJson)
+    }
 
-            var task_mod = document.createElement('p');
-            task_mod.className = 'task_mod';
-            task_mod.innerHTML = '&nbsp&nbsp' + selected_module;
-            div.appendChild(task_mod);
-
-            var task_args = document.createElement('div');
-            task_args.className = 'task_args';
-            for (var key in args) {
-                var task_arg = document.createElement('div')
-                task_arg.className = 'taskarg';
-                var p_key = document.createElement('p');
-                p_key.innerText = key;
-                p_key.className = 'pkey';
-                var p_val = document.createElement('p');
-                p_val.innerText = args[key];
-                p_val.className = 'pval';
-                task_arg.appendChild(p_key);
-                task_arg.appendChild(p_val);
-                task_args.appendChild(task_arg);
-            }
-            div.appendChild(task_args);
-            task_info.appendChild(div);
-            console.log(tasklist);
-        }
-
-        function ansible_run() {
-            var data = {};
-            data['serverlist'] = collection;
-            data['tasklist'] = tasklist;
-            postData(data, '/data/task', logJson)
-        }
-        function logJson(data) {
-            console.log(JSON.parse(data))
-        }
-    </script>
+    function logJson(data) {
+        console.log(JSON.parse(data))
+    }
+</script>
 {% endblock %}

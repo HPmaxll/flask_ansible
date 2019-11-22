@@ -25,7 +25,7 @@
                     </tr>
                     {% for group in groupList %}
                     <tr class="table_content" >
-                        <td><input type="checkbox" id={{ 'g_' + group[0] + '____' + group[1] }}> <a href="javascript:void(0)">{{group[1]}}</a></td>
+                        <td><input type="checkbox" id={{ 'g_' + group[0] + '____' + group[1] }}><a href="javascript:void(0)">{{group[1]}}</a></td>
                         <td>{{group[2]}}</td>
                         <td>{{group[3]}}</td>
                         <td><a href="javascript:void(0)" onclick="edit_row(event)">Edit</a><a href="javascript:void(0)" onclick="remove_row(event)">Remove</a></td>
@@ -36,11 +36,10 @@
         </div>
     </div>
 </div>
-
 <div class="coverup" id='add_group'>
     <div class="inv_cover">
         <div class="popup_inv">
-            <div class="cross" onclick="hidder('add_group')"></div>
+            <div class="cross" onclick="clearAndHide('add_group')"></div>
             <p class="form_name">Add Group</p>
             <hr>
             <div id="form_group" class="form_content">
@@ -81,8 +80,22 @@
             <p id="remove_res"></p>
             <div class="seperator"></div>
             <div class="even_container">
-                <button>confirm</button>
+                <button onclick="remove_confirm()">confirm</button>
                 <button onclick="hidder('popup_remove')">cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="coverup" id="popup_edit">
+    <div class="edit_cover">
+        <div id="edit_window">
+            <p class="form_name">Edit Group</p>
+            <div class="seperator"></div>
+            <div class="cross" onclick="hidder('popup_edit')"></div>
+            <div id="edit_prev"></div>
+            <p id="update_info"></p>
+            <div class="flex_container">
+                <button onclick="edit_update()">Update</button>
             </div>
         </div>
     </div>
@@ -93,7 +106,6 @@
     }
 
     function submit_group() {
-        document.getElementsByClassName('add_result')[0].innerText = '';
         data = {}
         data['inv'] = document.getElementById('inv_07').value;
         id_list = ['group_name', 'group_creator', 'group_desc']
@@ -101,7 +113,12 @@
             var val = document.getElementById(id_list[i]).value;
             data[id_list[i]] = val;
         }
-        postData(data, '/inventory/groups', show_res)
+        if (data['group_name'] == '') {
+            document.getElementsByClassName('add_result')[0].innerText = "Fields with * are required"
+        }
+        else {
+            postData(data, '/inventory/groups', show_res)
+        }
     }
 
 </script>  

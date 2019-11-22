@@ -40,10 +40,35 @@ def inv_del():
     else:
         tmp = data.split('____')[0]
         grpid = tmp.split('_')[2]
-        grp = ansible_group.query.filter_by(group_id=grpid).first()
+        grp = ansible_group.query.get(int(grpid))
         record = ansible_host.query.with_parent(grp).filter_by(host_name=name).first()
     
     db.session.delete(record)
+    db.session.commit()
+    return 'success'
+
+@bp.route('/update', methods=('POST',))
+def inv_update():
+    data = request.json
+    name = data[0].split('____')[1]
+    if data[0][0] == 'i':
+        inv = ansible_inventory.query.filter_by(inv_name=name).first()
+        inv.inv_name = data[1]
+        inv.inv_creator = data[2]
+        inv.inv_desc = data[3]
+    elif data[0][0] == 'g':
+        grp = ansible_group.query.filter_by(group_name=name).first()
+        grp.group_name = data[1]
+        grp.group_creator = data[2]
+        grp.group_desc = data[3]
+    else:
+        grpid = data[0].split('____')[0].split('_')[2]
+        grp = ansible_group.query.filter_by(group_id=int(grpid)).first()
+        host = ansible_host.query.with_parent(grp).filter_by(host_name=name).first()
+        host.host_name = data[1]
+        host.host_ip = data[2]
+        host.host_os = data[3]
+        host.host_desc = data[4]
     db.session.commit()
     return 'success'
 

@@ -65,7 +65,9 @@ header a,header button {
     color: #edf0f1;
     text-decoration: none;
 }
-
+header button:focus {
+    outline: none;
+}
 .logo {
     font-weight: 700px;
     font-size: 20px;
@@ -591,7 +593,8 @@ header > a > button:hover {
 }
 .popup_inv {
     position: relative;
-    background: rgba(250, 250, 250, 0.9);
+    color: rgb(20, 20, 100);
+    background-color: rgba(250, 250, 250, 0.9);
     width: 400px;
     padding: 10px;
     border-radius: 5px;
@@ -607,7 +610,7 @@ header > a > button:hover {
     margin: 10px 0;
 }
 .popup_inv button {
-    float: right;
+    /* float: right; */
     border: none;
     background-color: rgba(0, 0, 0, 0);
     padding: 5px 20px;
@@ -666,7 +669,6 @@ header > a > button:hover {
     position: absolute;
     top: 0;
     left: 0;
-    color: black;
     height: 100%;
     width: 100%;
     pointer-events: none;
@@ -685,6 +687,11 @@ header > a > button:hover {
     outline: none;
 }
 
+.add_result {
+    margin-bottom: 10px;
+    font-size: smaller;
+}
+
 .res_cover {
     width: 100%;
     margin-top: 15%;
@@ -696,7 +703,7 @@ header > a > button:hover {
 .dialog {
     position: relative;
     width: 340px;
-    background-color: rgba(200, 200, 200, 0.9);
+    background-color: rgba(250, 250, 250, 0.9);
     border-radius: 10px;
 }
 
@@ -719,7 +726,9 @@ header > a > button:hover {
 }
 
 #remove_res {
-    font-size: large;
+    font-size: small;
+    margin: 3px;
+    padding: 3px;
 }
 
 #popup_remove button {
@@ -733,4 +742,53 @@ header > a > button:hover {
 
 #popup_remove hr {
     width: 100%;
+}
+
+.edit_cover {
+    width: 100%;
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#edit_window {
+    position: relative;
+    padding: 3px;
+    border-radius: 5px;
+    width: 400px;
+    min-height: 100px;
+    background-color: rgba(250,250,250,0.9);
+}
+
+#edit_window p {
+    color: rgb(20, 20, 100);
+}
+
+#edit_window button {
+    margin: 20px;
+    padding: 3px 10px;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid black;
+    border-radius: 8px;
+    font-size: 20px;
+}
+
+#edit_prev {
+    margin: 0 5px;
+    position: relative;
+    max-height: 600px;
+    overflow: auto;
+}
+
+#edit_prev input {
+    color: rgb(80,80,80);
+}
+
+#edit_prev p::before {
+    content: '- ';
+}
+
+#edit_prev p::after {
+    content: ':';
 }

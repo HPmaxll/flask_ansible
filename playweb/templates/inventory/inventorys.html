@@ -18,9 +18,15 @@
                         <th class="table_desc">Description</th>
                         <th>Operation</th>
                     </tr>
-                    {% for inv in invList %}
+                    <tr class="table_content">
+                        <td><input type="checkbox" id='i____default'><a href="javascript:void(0)">default</a></td>
+                        <td>Admin</td>
+                        <td>Default Inventory</td>
+                        <td><a href="javascript:void(0)" onclick="edit_row(event)">Edit</a></td>
+                    </tr>
+                    {% for inv in invList[1:] %}
                     <tr class="table_content" >            
-                        <td><input type="checkbox" id={{ 'i____' + inv[0] }}> <a href="javascript:void(0)">{{inv[0]}}</a></td>
+                        <td><input type="checkbox" id={{ 'i____' + inv[0] }}><a href="javascript:void(0)">{{inv[0]}}</a></td>
                         <td>{{inv[1]}}</td>
                         <td>{{inv[2]}}</td>
                         <td><a href="javascript:void(0)" onclick="edit_row(event)">Edit</a><a href="javascript:void(0)" onclick="remove_row(event)">Remove</a></td>
@@ -34,7 +40,7 @@
 <div class="coverup" id='add_inventory'>
     <div class="inv_cover">
         <div class="popup_inv">
-            <div class="cross" onclick="hidder('add_inventory')"></div>
+            <div class="cross" onclick="clearAndHide('add_inventory')"></div>
             <p class="form_name">Add Inventory</p>
             <hr>
             <div id="form_inventory">
@@ -68,21 +74,40 @@
             <p id="remove_res"></p>
             <div class="seperator"></div>
             <div class="even_container">
-                <button>confirm</button>
+                <button onclick="remove_confirm()">confirm</button>
                 <button onclick="hidder('popup_remove')">cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="coverup" id="popup_edit">
+    <div class="edit_cover">
+        <div id="edit_window">
+            <p class="form_name">Edit Inventory</p>
+            <div class="seperator"></div>
+            <div class="cross" onclick="hidder('popup_edit')"></div>
+            <div id="edit_prev"></div>
+            <p id="update_info"></p>
+            <div class="flex_container">
+                <button onclick="edit_update()">Update</button>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
 	function submit_inv() {
-		data = {}
-		id_list = ['inv_name', 'inv_creator', 'inv_desc']
+		data = {};
+		id_list = ['inv_name', 'inv_creator', 'inv_desc'];
 		for (var i in id_list) {
 			var val = document.getElementById(id_list[i]).value;
 			data[id_list[i]] = val;
-		}
-		postData(data, '/inventory/inventorys', show_res)
+        }
+        if (data['inv_name'] == '') {
+            document.getElementsByClassName('add_result')[0].innerText = "Fields with * are required";
+        }
+        else {
+            postData(data, '/inventory/inventorys', show_res);
+        }
 	}
 
 </script>  

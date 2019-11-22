@@ -46,7 +46,7 @@
 <div class="coverup" id='add_host'>
     <div class="inv_cover">
         <div class="popup_inv">
-            <div class="cross" onclick="hidder('add_host')"></div>
+            <div class="cross" onclick="clearAndHide('add_host')"></div>
             <p class="form_name">Add Host</p>
             <hr>
             <div id="form_host" class="form_content">
@@ -95,8 +95,22 @@
             <p id="remove_res"></p>
             <div class="seperator"></div>
             <div class="even_container">
-                <button>confirm</button>
+                <button onclick="remove_confirm()">confirm</button>
                 <button onclick="hidder('popup_remove')">cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="coverup" id="popup_edit">
+    <div class="edit_cover">
+        <div id="edit_window">
+            <p class="form_name">Edit Host</p>
+            <div class="seperator"></div>
+            <div class="cross" onclick="hidder('popup_edit')"></div>
+            <div id="edit_prev"></div>
+            <p id="update_info"></p>
+            <div class="flex_container">
+                <button onclick="edit_update()">Update</button>
             </div>
         </div>
     </div>
@@ -116,7 +130,12 @@
             var val = document.getElementById(id_list[i]).value
             data[id_list[i]] = val;
         }
-        postData(data,'/inventory/hosts', show_res)
+        if (data['host_name'] == '' || data['host_ip'] == '') {
+            document.getElementsByClassName('add_result')[0].innerText = "Fields with * are required";
+        }
+        else {
+            postData(data,'/inventory/hosts', show_res)
+        }
     }
 </script>           
 {% endblock %}

@@ -275,13 +275,12 @@ function clearChild(div) {
 }
   
 function deleChild(parent){
-    var child =parent.childNodes;
-    for (var i=0; i < child.length; i++) {
-        if (child[i].hasChildNodes()) {
-            deleChild(child[i]);
+    while (parent.hasChildNodes()) {
+        if (parent.firstChild.hasChildNodes()) {
+            deleChild(parent.firstChild);
         }
         else {
-            parent.removeChild(child[i])
+            parent.removeChild(parent.firstChild)
         }
     }
 }
@@ -528,6 +527,11 @@ function host_close() {
     hidder('popup_host');
 }
 
+function clearAndHide(id) {
+    hidder(id);
+    document.getElementsByClassName('add_result')[0].innerText = '';
+}
+
 function show_res(data) {
     document.getElementsByClassName('add_result')[0].innerText = data;
     if (data == 'success') {
@@ -537,12 +541,43 @@ function show_res(data) {
 
 function show_res_2(data) {
     document.getElementById('remove_res').innerText = data;
+    if (data == 'success') {
+        window.setTimeout(window.location.reload(), 1000)
+    }
 }
 
+let id_edit = '';
+
 function edit_row(event) {
+    var heads = document.getElementsByTagName('th');
+    var fields = [];
+    for (var i=0; i < heads.length-1; i++) {
+        fields.push(heads[i].innerText);
+    }
     var row = event.target.parentNode.parentNode;
-    var checkbox = row.getElementsByTagName('input')[0]
+    var cells = row.getElementsByTagName('td');
+    var vals = [];
+    for (var i=0; i < cells.length-1; i++) {
+        vals.push(cells[i].innerText);
+    }
+    var edit_prev = document.getElementById('edit_prev');
+    deleChild(edit_prev);
+    for (var i=0; i < fields.length; i++) {
+        var div = document.createElement('div');
+        div.className = 'input_container';
+        var label = document.createElement('p');
+        label.innerText = fields[i];
+        var input = document.createElement('input')
+        input.type = 'text';
+        input.value = vals[i];
+        div.appendChild(label);
+        div.appendChild(input);
+        edit_prev.appendChild(div);
+    }
+    var checkbox = row.getElementsByTagName('input')[0];
+    id_edit = checkbox.id
     console.log(checkbox.id);
+    popup('popup_edit');
 }
 
 let id_remove = '';
@@ -552,10 +587,28 @@ function remove_row(event) {
     var row = event.target.parentNode.parentNode;
     var text = row.getElementsByTagName('a')[0].innerText;
     document.getElementById('remove_text').innerText = text;
-    var checkbox = row.getElementsByTagName('input')[0]
-    id_remove = checkbox.id
+    var checkbox = row.getElementsByTagName('input')[0];
+    id_remove = checkbox.id;
     console.log(id_remove);
-    /* var data = {'id': checkbox.id};
+}
+
+function remove_confirm() {
+    var data = {'id': id_remove};
     postData(data, '/inventory/del', show_res_2);
-    popup('popup_res') */
+}
+
+function edit_update() {
+    var prev = document.getElementById('edit_prev');
+    var inputs = prev.getElementsByTagName('input');
+    var vals = [id_edit];
+    for (var i=0; i < inputs.length; i++) {
+        vals.push(inputs[i].value);
+    }
+    // console.log(vals);
+    postData(vals, '/inventory/update', function (data) { 
+        document.getElementById('update_info').innerText = data;
+        if (data == 'success') {
+            window.location.reload();
+        }
+     })
 }
