@@ -214,18 +214,27 @@
     margin: 3px 10%;
     color: rgb(10, 10, 10);
     background-color: rgba(0, 0, 0, 0);
+    box-sizing: content-box;
+    transition: all 0.1s ease;
 }
 
 #selected_opt input[type="button"]:hover {
     color: black;
-    text-shadow: 1px 1px 1px gray;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px gray;
 }
 #selected_opt input[type="text"] {
     margin: 3px 10%;
     width: 80%;
     padding: 3px;
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    font-size: 16px;
+    border-bottom: 1px solid black;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#selected_opt input[type="text"]:focus {
+    outline: none;
 }
 
 /* #query_info {

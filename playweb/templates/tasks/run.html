@@ -3,20 +3,24 @@
 <div class="run">
     <div class="run_container">
         <p>Selected Hosts</p>
+        <div class="seperator"></div>
         <div class="run_info">
             <div id="target_host" class="hidden"></div>
             <div id="target_grp" class="hidden"></div>
             <div id="target_inv" class="hidden"></div>
         </div>
         <div class="run_input">
+            <button onclick="clear_host()">Clear Host</button>
             <button onclick="add_hosts()">Add Host</button>
         </div>
     </div>
     <img id="ansible_button" onclick="ansible_run()" src={{ url_for('static', filename='Ansible_button.png') }} alt="RUN" />
     <div class="run_container">
         <p>Selected Tasks</p>
+        <div class="seperator"></div>
         <div class="run_info" id="task_info"></div>
         <div class="run_input">
+            <button onclick="clear_task()">Clear Task</button>
             <button onclick="popup('popup_task')">Add Task</button>
         </div>
     </div>
@@ -29,7 +33,7 @@
         </div>
     </div> -->
 </div>    
-<div id="popup_host" class="coverup">
+<div id="popup_host" class="back_cover">
     <div id="scroller">
         <div class="table_container">
             <div class="float_table">
@@ -143,7 +147,7 @@
     <img class="nav_button" id="nav_left" onclick="scroll_left()" src={{ url_for('static', filename='left.png') }} alt="left"/> 
     <img class="nav_button" id="nav_right" onclick="scroll_right()" src={{ url_for('static', filename='right.png') }} alt="right"/>
 </div>
-<div id="popup_task" class="coverup">
+<div id="popup_task" class="back_cover">
     <div class='selection'>
         <img class="close_button" onclick="task_close()" src= {{ url_for('static', filename='close-window.png') }} alt="CLOSE" />
         <div id="select_before">
@@ -154,7 +158,7 @@
             <input id="select_submit" type="button" value="SUBMIT" onclick="mod_submit(module_name.value)">
             <input id="select_finish" type="button" title="Finish adding the task." value="FINISH" onclick="mod_add()">
         </div>
-        <div id="selected_opt"></div> 
+        <div id="selected_opt"></div>
     </div>
     <div id="module_detail">
         <div id="module_list"></div>
@@ -162,6 +166,14 @@
     </div>
     <p id="desc_module"></p>
     <p id="desc_para"></p>
+</div>
+<div id="popup_result" class="back_cover">
+    <div class="front_cover">
+        <div id="result_win">
+            <div class="cross" onclick="close_result()"></div>
+            <div id="ansible_result"></div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
     window.onload = function() {
@@ -172,6 +184,7 @@
     let pos = 2;
     let collection = [];
     let tasklist = [];
+    let dict = {}
     let serverlist = {};
 
     function scroll_right() {
@@ -258,15 +271,18 @@
         serverlist['grp'] = [];
         serverlist['host'] = [];
         for (var i=0; i < collection.length; i++) {
+            var key = collection[i].split('____')[1];
+            var val = collection[i].split('____')[0];
+            dict[key] = val;
             switch(collection[i][0]) {
                 case 'i':
-                    serverlist['inv'].push(collection[i].split('____')[1]);
+                    serverlist['inv'].push(key);
                     break;
                 case 'g':
-                    serverlist['grp'].push(collection[i].split('____')[1]);
+                    serverlist['grp'].push(key);
                     break;
                 case 'h':
-                    serverlist['host'].push(collection[i].split('____')[1]);
+                    serverlist['host'].push(key);
                     break;
             }
         }
@@ -283,6 +299,9 @@
                     var text = document.createElement('span');
                     text.className = 'display_span';
                     text.innerText = tmplist[j];
+                    text.onclick = function () {
+                        return remove_server(event);
+                    }
                     display.appendChild(text);
                 }
             }
@@ -293,6 +312,22 @@
         }
         console.log(serverlist);
         hidder('popup_host');
+    }
+
+    function remove_server(event) {
+        var server = event.target;
+        var zone = server.parentNode;
+        var key = server.innerText;
+        var val = dict[key];
+        var server_id = val + '____' + key;
+        collection.splice(collection.indexOf(server_id), 1);
+        document.getElementById(server_id).checked = false;
+        row_uncheck(server_id);
+        server.parentNode.removeChild(server);
+        if (!zone.hasChildNodes()) {
+            zone.style.display = 'none';
+        }
+        console.log(collection);
     }
 
     function mod_add() {
@@ -358,12 +393,40 @@
             }
         }
     }
+    function clear_host() {
+        var names = ['target_inv', 'target_grp', 'target_host']
+        for (var i=0; i < names.length; i++) {
+            var div = document.getElementById(names[i]);
+            deleChild(div);
+            div.style.display = 'none';
+        }
+        reset_sel();
+    }
+
+    function clear_task() {
+        var div = document.getElementById('task_info');
+        deleChild(div);
+        tasklist = [];
+    }
 
     function ansible_run() {
         var data = {};
-        data['serverlist'] = collection;
-        data['tasklist'] = tasklist;
-        postData(data, '/data/task', logJson)
+        if (collection[0] && tasklist[0]) {
+            data['serverlist'] = collection;
+            data['tasklist'] = tasklist;
+            popup('popup_result');
+            postData(data, '/data/task', ansible_result)
+        }
+    }
+
+    function ansible_result(data) {
+        // var result = JSON.parse(data);
+        var div = document.getElementById('ansible_result');
+        div.innerText = data;
+    }
+
+    function close_result() {
+        hidder('popup_result');
     }
 </script>
 {% endblock %}

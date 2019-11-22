@@ -124,6 +124,7 @@ def get_task():
             args = args.strip()
             task['action']['args'] = args
             tasklist.append(task)
+        print(tasklist)
         taskHandler = ansibleTaskHandler()
         result = []
         for inv in inv_list.keys():

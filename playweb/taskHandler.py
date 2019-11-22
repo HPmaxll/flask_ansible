@@ -15,16 +15,25 @@ class ResultCallback(CallbackBase):
         self.results_raw = {}
 
     def v2_runner_on_unreachable(self, result):
-        self.results_raw['unreachable'] = {}
-        self.results_raw['unreachable'][result._host.get_name()] = json.dumps(result._result)
+        if result.task_name not in self.results_raw:
+            self.results_raw[result.task_name] = {}
+        self.results_raw[result.task_name][result._host.get_name()] = {}
+        self.results_raw[result.task_name][result._host.get_name()]['status'] = 'unreachable'
+        self.results_raw[result.task_name][result._host.get_name()]['feedback'] = result._result
 
     def v2_runner_on_ok(self, result, *args, **kwargs):
-        self.results_raw['success'] = {}
-        self.results_raw['success'][result._host.get_name()] = json.dumps(result._result)
+        if result.task_name not in self.results_raw:
+            self.results_raw[result.task_name] = {}
+        self.results_raw[result.task_name][result._host.get_name()] = {}
+        self.results_raw[result.task_name][result._host.get_name()]['status'] = 'success'
+        self.results_raw[result.task_name][result._host.get_name()]['feedback'] = result._result
 
     def v2_runner_on_failed(self, result, *args, **kwargs):
-        self.results_raw['failed'] = {}
-        self.results_raw['failed'][result._host.get_name()] = json.dumps(result._result)
+        if result.task_name not in self.results_raw:
+            self.results_raw[result.task_name] = {}
+        self.results_raw[result.task_name][result._host.get_name()] = {}
+        self.results_raw[result.task_name][result._host.get_name()]['status'] = 'failed'
+        self.results_raw[result.task_name][result._host.get_name()]['feedback'] = result._result
 
 class ansibleTaskHandler:
     def __init__(self):
@@ -40,7 +49,8 @@ class ansibleTaskHandler:
                     'become_method', 
                     'become_user', 
                     'check',
-                    'diff', 
+                    'diff',
+                    'ssh_common_args',
                     'host_key_checking', 
                     'listhosts', 
                     'listtasks', 
@@ -58,6 +68,7 @@ class ansibleTaskHandler:
                 become_user=None, 
                 check=False, 
                 diff=False,
+                ssh_common_args='-o StrictHostKeyChecking=no',
                 host_key_checking=False, 
                 listhosts=None, 
                 listtasks=None, 
@@ -82,7 +93,6 @@ class ansibleTaskHandler:
     def run_task(self, target_host, task_list):
         play_source = dict(
                 hosts=target_host,
-                remote_user='root',
                 gather_facts='no',
                 tasks=task_list
                 )

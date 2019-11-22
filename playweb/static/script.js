@@ -477,7 +477,7 @@ function update_table_2(data, arglist) {
                 start_point = 1;
                 break;
             case 'h':
-                node_id = 'h_' + hostlist[i][0] + '_' + hostlist[i][1] + '_' + hostlist[i][2];
+                node_id = 'h_' + hostlist[i][0] + '_' + hostlist[i][1] + '____' + hostlist[i][2];
                 start_point = 2;
                 break;
         }
@@ -604,7 +604,6 @@ function edit_update() {
     for (var i=0; i < inputs.length; i++) {
         vals.push(inputs[i].value);
     }
-    // console.log(vals);
     postData(vals, '/inventory/update', function (data) { 
         document.getElementById('update_info').innerText = data;
         if (data == 'success') {

@@ -203,7 +203,6 @@ header > a > button:hover {
     height: 40px;
     border-radius: 50%;
     position: relative;
-    /* transition: all 0.3s ease; */
 }
 .plus::after{
     content: "";
@@ -247,7 +246,6 @@ header > a > button:hover {
 /* -------- Scroller -------- */
 
 #scroller {
-    /* position: absolute; */
     margin-top: 20px;
     width: 300%;
     padding: 0;
@@ -257,7 +255,6 @@ header > a > button:hover {
     flex-direction: row-reverse;
     transform: translateX(-66.66666666666667%);
     transition: all 0.3s ease;
-    /* background-color: azure; */
 }
 
 #scroll_controller {
@@ -352,7 +349,6 @@ header > a > button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* border: 5px solid black; */
 }
 
 .float_table {
@@ -366,7 +362,6 @@ header > a > button:hover {
 }
 
 .table_outer {
-    /* text-align: center; */
     position: relative;
     margin-top: 45px;
     display: flex;
@@ -382,7 +377,6 @@ header > a > button:hover {
     align-items: flex-end;
     width: 100%;
     padding: 0 5px;
-    /* background-color: aquamarine; */
 }
 
 .table_name {
@@ -390,21 +384,17 @@ header > a > button:hover {
     padding: 5px;
     margin: 0 5px;
     width: 300px;
-    /* border: 1px solid black; */
     font-size: 45px;
-    /* text-align: center; */
 }
 
 .filter {
     padding: 5px 0;
     color: white;
-    /* background-color: brown; */
 }
 
 .table_inner {
     width: 100%;
     height: 435px;
-    /* background-color: rgba(255, 235, 205, 0.8); */
 }
 
 .table_inner table {
@@ -412,7 +402,6 @@ header > a > button:hover {
     margin: 0;
     width: 100%;
     border-spacing: 5px;
-    /* border-collapse: collapse; */
     border: none;
 }
 
@@ -422,11 +411,12 @@ header > a > button:hover {
     color: rgb(180, 180, 180);
     padding: 10px 8px;
     box-shadow: 3px 3px 3px rgb(180, 180, 180);
-    /* margin: 3px; */
 }
 
 .table_inner td {
     padding: 8px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     background-color: rgb(180, 180, 180);
     box-shadow: 3px 3px 3px rgb(180, 180, 180);
 }
@@ -445,38 +435,49 @@ header > a > button:hover {
     padding: 20px;
     margin: 0 auto;
 }
-
-.run_input {
-    display: flex;
-    justify-content: center;
-    background-color: rgba(240,240,240,0.9);
-}
-
-.run_input button {
-    border: none;
-    margin: 5px;
-    padding: 5px;
-    border-radius: 5px;
-    color: rgb(25, 25, 25);
-    /* width: 150px; */
-    background-color: rgb(200, 200, 200);
-}
-.run_input input {
-    font-size: 15px;
-    /* width: 320px; */
-}
-
 .run_container {
     margin: 5px;
     border: 1px solid black;
     box-sizing: border-box;
+    border-radius: 10px;
+    background-color: rgba(250, 250, 250, 0.9);
+}
+.run_container > p {
+    padding: 5px;
+    font-size: 20px;
+    text-align: center;
+    color: rgb(20, 20, 150);
+}
+.run_input {
+    display: flex;
+    justify-content: center;
+}
+
+.run_input button {
+    margin: 5px 10px;
+    padding: 5px;
+    border-radius: 5px;
+    color: rgb(25, 25, 25);
+    border: 1px solid black;
+    transition: all 0.3s ease;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.run_input button:hover {
+    box-shadow: 1px 1px 3px 1px gray;
+}
+
+.run_input button:active {
+    transform: scale(0.9);
+}
+.run_input button:focus {
+    outline: none;
 }
 
 .run_info {
     width: 500px;
     height: 350px;
-    padding-top: 5px;
-    background-color: rgba(240,240,240,0.9);
+    padding: 5px;
     overflow: auto;
 }
 #target_host, #target_grp, #target_inv {
@@ -505,7 +506,18 @@ header > a > button:hover {
     margin: 3px;
     padding: 3px;
     cursor: pointer;
-    border-radius: 3px;
+    white-space: nowrap;
+}
+
+.display_span::before {
+    content: '[ ';
+    font-size: 20px;
+    color: saddlebrown;
+}
+.display_span::after {
+    content: ' ]';
+    font-size: 20px;
+    color: saddlebrown;
 }
 .task_block {
     position: relative;
@@ -553,12 +565,7 @@ header > a > button:hover {
     word-break: break-all;
     word-wrap: break-word;
 }
-.run_container > p {
-    background-color: rgba(51, 56, 51, 0.9);
-    color: rgb(240,240,240);
-    font-size: 20px;
-    text-align: center;
-}
+
 #ansible_button {
     width: 80px;
     border-radius: 50%;
@@ -580,7 +587,7 @@ header > a > button:hover {
 
 /* --------popup----area-------- */
 
-.coverup {
+.back_cover {
     position: absolute;
     left: 0px; 
     top: 0px;
@@ -591,14 +598,14 @@ header > a > button:hover {
     display: none;
     z-index: 3;
 }
-.inv_cover {
-    margin-top: 8%;
+.front_cover {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .popup_inv {
+    margin-top: 8%;
     position: relative;
     color: rgb(20, 20, 100);
     background-color: rgba(250, 250, 250, 0.9);
@@ -609,7 +616,6 @@ header > a > button:hover {
 .form_name {
     margin: 5px;
     width: 100%;
-    /* text-align: center; */
     font-size: 40px;
 }
 
@@ -617,7 +623,6 @@ header > a > button:hover {
     margin: 10px 0;
 }
 .popup_inv button {
-    /* float: right; */
     border: none;
     background-color: rgba(0, 0, 0, 0);
     padding: 5px 20px;
@@ -663,13 +668,15 @@ header > a > button:hover {
     transform: rotate(45deg) scale(0.7);
 }
 
+
+
+
 .input_container {
     position: relative;
     width: 100%;
     height: 50px;
     padding: 3px;
     margin: 15px 0;
-    /* background-color: maroon; */
 }
 
 .input_container p {
@@ -689,55 +696,40 @@ header > a > button:hover {
     border: none;
     background-color: rgba(0, 0, 0, 0);
 }
-
 .input_container input:focus {
     outline: none;
 }
-
 .add_result {
     margin-bottom: 10px;
     font-size: smaller;
 }
-
-.res_cover {
-    width: 100%;
-    margin-top: 15%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .dialog {
+    margin-top: 10%;
     position: relative;
     width: 340px;
     background-color: rgba(250, 250, 250, 0.9);
     border-radius: 10px;
 }
-
 #remove_text {
     color: rgb(10, 10, 10);
     font-size: 20px;
     margin: 20px 0;
 }
-
 #remove_text::before {
     content: 'Remove: ';
     padding-right: 6px;
     color: rgb(61, 66, 61);
 }
-
 #remove_info::after {
     content: 'Is this okay?';
     font-size: 20px;
     margin: 20px 0;
 }
-
 #remove_res {
     font-size: small;
     margin: 3px;
     padding: 3px;
 }
-
 #popup_remove button {
     margin: 20px;
     padding: 3px 10px;
@@ -746,20 +738,11 @@ header > a > button:hover {
     border-radius: 8px;
     font-size: 20px;
 }
-
 #popup_remove hr {
     width: 100%;
 }
-
-.edit_cover {
-    width: 100%;
-    margin-top: 5%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 #edit_window {
+    margin-top: 10%;
     position: relative;
     padding: 3px;
     border-radius: 5px;
@@ -767,11 +750,9 @@ header > a > button:hover {
     min-height: 100px;
     background-color: rgba(250,250,250,0.9);
 }
-
 #edit_window p {
     color: rgb(20, 20, 100);
 }
-
 #edit_window button {
     margin: 20px;
     padding: 3px 10px;
@@ -780,22 +761,33 @@ header > a > button:hover {
     border-radius: 8px;
     font-size: 20px;
 }
-
 #edit_prev {
     margin: 0 5px;
     position: relative;
     max-height: 600px;
     overflow: auto;
 }
-
 #edit_prev input {
     color: rgb(80,80,80);
 }
-
 #edit_prev p::before {
     content: '- ';
 }
-
 #edit_prev p::after {
     content: ':';
+}
+
+#result_win {
+    position: relative;
+    margin-top: 8%;
+    width: 400px;
+    height: 500px;
+    background-color: rgba(250, 250, 250, 0.9);
+}
+
+#ansible_result {
+    margin: 30px 5px 5px 5px;
+    height: 450px;
+    overflow: auto;
+    white-space: pre;
 }

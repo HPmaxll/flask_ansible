@@ -5,16 +5,10 @@
         <script src={{ url_for('static', filename='test.js') }}></script>
     </head>
     <body>
-        <input type="text" id="test_input">
-        <input type="button" value='submit' onclick="get_inv()">
-        <select id="inv_sel" onchange="showvalue()">
-            <option value="default">default</option>
-        </select>
-        <p id='display'></p>
-        <script type="text/javascript">
-            window.onload = function(){
-                get_inv() 
-            }
-        </script>
+        <h1>Test Page</h1>
+        <p id="display"></p>
     </body>
+    <script type="text/javascript">
+        window.onload = display()
+    </script>
 </html>
