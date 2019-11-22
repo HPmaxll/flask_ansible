@@ -508,18 +508,26 @@ header > a > button:hover {
     border-radius: 3px;
 }
 .task_block {
+    position: relative;
     margin: 0 1% 1% 1%;
-    background-color: gray;
+    padding: 3px;
+    border: 1px solid black;
+    border-radius: 10px;
+    /* background-color: gray; */
 }
 .task_mod::before {
     content: 'Module:';
-    font-size: large;
     color: blueviolet;
+    padding: 5px 10px 5px 5px;
+}
+.task_mod {
+    font-size: large;
 }
 .task_args::before {
     content: 'Args:';
     font-size: large;
     color: blueviolet;
+    padding: 5px;
 }
 .taskarg {
     display: flex;
@@ -527,22 +535,21 @@ header > a > button:hover {
     
 }
 .pkey {
-    background-color: cadetblue;
     padding: 3px;
     white-space: nowrap;
 }
 .pkey::before {
     content: '- ';
-    font-size: large;
+    padding: 0 5px;
 }
 .pkey::after {
     content: ':';
+    margin-right: 3px;
 }
 .pval {
     color: brown;
     margin: 0 4px;
     padding: 4px 3px 3px 3px;
-    background-color: chartreuse;
     word-break: break-all;
     word-wrap: break-word;
 }

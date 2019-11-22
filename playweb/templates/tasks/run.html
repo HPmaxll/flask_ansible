@@ -315,9 +315,16 @@
         var div = document.createElement('div');
         div.className = 'task_block';
 
+        var cross = document.createElement('div');
+        cross.className = 'cross';
+        cross.onclick = function () {
+            return remove_task(event);
+        }
+        div.appendChild(cross);
+
         var task_mod = document.createElement('p');
         task_mod.className = 'task_mod';
-        task_mod.innerHTML = '&nbsp&nbsp' + selected_module;
+        task_mod.innerText = selected_module;
         div.appendChild(task_mod);
 
         var task_args = document.createElement('div');
@@ -337,7 +344,19 @@
         }
         div.appendChild(task_args);
         task_info.appendChild(div);
-        console.log(tasklist);
+        task_close();
+    }
+
+    function remove_task(event) {
+        var div = event.target.parentNode;
+        var childlist = div.parentNode.childNodes;
+        for (var i=0; i < childlist.length; i++) {
+            if (div === childlist[i]) {
+                deleChild(div);
+                div.parentNode.removeChild(div)
+                tasklist.splice(i, 1);
+            }
+        }
     }
 
     function ansible_run() {
@@ -345,10 +364,6 @@
         data['serverlist'] = collection;
         data['tasklist'] = tasklist;
         postData(data, '/data/task', logJson)
-    }
-
-    function logJson(data) {
-        console.log(JSON.parse(data))
     }
 </script>
 {% endblock %}
