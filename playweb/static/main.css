@@ -6,7 +6,7 @@
 }
 body {
     background-image: url('textflow.jpg');
-    background-attachment: cover;
+    background-attachment: fixed;
     min-width: 1280px;
 }
 
@@ -40,6 +40,11 @@ select {
     background-color: black;
 }
 
+.seperator-w {
+    width: 100%;
+    height: 1px;
+    background-color: gray;
+}
 .even_container {
     display: flex;
     justify-content: space-evenly;
@@ -436,17 +441,34 @@ header > a > button:hover {
     margin: 0 auto;
 }
 .run_container {
+    position: relative;
     margin: 5px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     box-sizing: border-box;
-    border-radius: 10px;
-    background-color: rgba(250, 250, 250, 0.9);
+    /* border-radius: 10px; */
+    overflow: hidden;
+    box-shadow: 0 3px 15px 2px rgb(0, 0, 0);
+    background-color: rgba(0, 0, 150, 0.2);
+}
+
+.run_container::before {
+    content: '';
+    background-image: url('textflow.jpg');
+    background-attachment: fixed;
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    bottom: -20px;
+    right: -20px;
+    /* background-color: rgba(255, 255, 255, 0.6); */
+    filter: blur(5px);
+    z-index: -1;
 }
 .run_container > p {
     padding: 5px;
     font-size: 20px;
     text-align: center;
-    color: rgb(20, 20, 150);
+    color: rgb(245, 245, 245);
 }
 .run_input {
     display: flex;
@@ -457,8 +479,8 @@ header > a > button:hover {
     margin: 5px 10px;
     padding: 5px;
     border-radius: 5px;
-    color: rgb(25, 25, 25);
-    border: 1px solid black;
+    color: rgb(250, 250, 250);
+    border: 1px solid rgb(200, 200, 200);
     transition: all 0.3s ease;
     background-color: rgba(0, 0, 0, 0);
 }
@@ -483,49 +505,58 @@ header > a > button:hover {
 #target_host, #target_grp, #target_inv {
     width: 100%;
     min-height: 100px;
+    line-height: 32px;
+    color: rgb(230, 230, 230);
 }
 
 #target_host::before {
     content: 'Hosts: ';
-    color: black;
     font-size: large;
 }
 #target_grp::before {
     content: 'Groups: ';
-    color: black;
     font-size: large;
 }
 #target_inv::before {
     content: 'Inventory: ';
-    color: black;
     font-size: large;
 }
 
 .display_span {
-    background-color: burlywood;
+    /* background-color: burlywood; */
     margin: 3px;
     padding: 3px;
     cursor: pointer;
+    border: 1px dashed rgb(220, 220, 220);
     white-space: nowrap;
 }
 
 .display_span::before {
     content: '[ ';
     font-size: 20px;
-    color: saddlebrown;
+    color: cornflowerblue;
 }
 .display_span::after {
     content: ' ]';
     font-size: 20px;
-    color: saddlebrown;
+    color: cornflowerblue;
 }
 .task_block {
     position: relative;
     margin: 0 1% 1% 1%;
     padding: 3px;
-    border: 1px solid black;
+    border: 1px dashed rgb(220, 220, 220);
     border-radius: 10px;
-    /* background-color: gray; */
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.task_block .cross:hover {
+    border: 1px dashed rgb(245, 245, 245);
+}
+.task_block .cross::before {
+    background-color: rgb(245, 245, 245);
+}
+.task_block .cross::after {
+    background-color: rgb(245, 245, 245);
 }
 .task_mod::before {
     content: 'Module:';
@@ -534,6 +565,7 @@ header > a > button:hover {
 }
 .task_mod {
     font-size: large;
+    color: rgb(250, 250, 250);
 }
 .task_args::before {
     content: 'Args:';
@@ -544,9 +576,9 @@ header > a > button:hover {
 .taskarg {
     display: flex;
     align-items: flex-start;
-    
 }
 .pkey {
+    color: rgb(179, 179, 255);
     padding: 3px;
     white-space: nowrap;
 }
@@ -559,7 +591,7 @@ header > a > button:hover {
     margin-right: 3px;
 }
 .pval {
-    color: brown;
+    color: rgb(250, 250, 250);
     margin: 0 4px;
     padding: 3px;
     word-break: break-all;
@@ -602,6 +634,15 @@ header > a > button:hover {
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.front_cover_alt {
+    top: 0;
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 .popup_inv {
@@ -782,7 +823,7 @@ header > a > button:hover {
     margin-top: 3%;
     width: 500px;
     height: 600px;
-    background-color: rgba(250, 250, 250, 0.9);
+    background-color: rgba(200, 200, 200, 0.9);
     /* background-color: blue; */
 }
 #ansible_wait {
@@ -823,4 +864,48 @@ header > a > button:hover {
 .p_status::after {
     content: '=>';
     margin: 2px 10px;
+}
+
+.about {
+    position: relative;
+    margin-top: 8%;
+    padding: 10px;
+    overflow: hidden;
+    background-color: rgba(20,20, 150,0.3);
+    width: 30%;
+    height: 350px;
+    color: rgb(255, 255, 255);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.about::before {
+    content: '';
+    background-image: url('textflow.jpg');
+    background-attachment: fixed;
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    bottom: -20px;
+    right: -20px;
+    filter: blur(5px);
+    z-index: -1;
+}
+
+.about p {
+    margin: 12px;
+    width: 140px;
+    font-size: 18px;
+}
+
+.about ul {
+    list-style-type: square;
+    list-style-position: inside;
+}
+
+.about ul li {
+    margin: 0 0 14px 0;
 }

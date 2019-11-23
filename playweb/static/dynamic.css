@@ -1,8 +1,7 @@
 .selection {
-    position: absolute;
     top: 10px;
     left: 34%;
-    margin: 5px;
+    margin: 15px;
     background-color: rgba(61, 66, 61, 0.9);
     width: 480px;
     height: 690px;
@@ -136,10 +135,6 @@
     box-shadow: 4px 4px 4px rgb(160, 160, 160);
 }
 
-.selected_module:hover {
-    text-shadow: 1px 1px 1px gray;
-}
-
 #select_after div:nth-child(1) {
     padding: 10px 10px 2px 15px;
     background-color: rgba(0, 0, 0, 0.7);
@@ -198,13 +193,6 @@
     box-shadow: 3px 3px 3px rgb(150, 150, 150);
 }
 
-/* #selected_opt p {
-    padding: 10px;
-    text-align: center;
-    border-radius: 5px;
-    margin: 5px 20px;
-    background-color: cornflowerblue;
-} */
 #selected_opt button {
     border: none;
     font-size: 15px;
@@ -237,18 +225,10 @@
     outline: none;
 }
 
-/* #query_info {
-    position: absolute;
-    left: 40%;
-    padding: 10px;
-    display: flex;
-} */
+
 
 #module_detail {
-    position: absolute;
-    top: 10px;
-    left: 4%;
-    margin: 5px 0;
+    margin: 15px;
     height: 690px;
     width: 410px;
     overflow: auto;
@@ -273,27 +253,20 @@
     display: none;
 }
 
-/* #desc {
-    position: absolute;
-    top: 2%;
-    right: 4%;
-    max-width: 400px;
-    height: 95%;
+#desc {
+    height: 690px;
     text-align: left;
-    overflow: auto;
-    margin: 5px;
+    margin: 15px;
     z-index: 1;
 }
 
 #desc:hover {
     z-index: 3;
-} */
+}
 
 #desc_module, #desc_para {
-    position: absolute;
     padding: 10px;
     width: 400px;
-    right: 4%;
     text-align: left;
     overflow-x: auto;
     color: white;
@@ -305,12 +278,11 @@
 }
 
 #desc_module:hover, #desc_para:hover {
-    z-index: 3;
     text-shadow: 1px 1px 1px rgb(160, 160, 160);
 }
 #desc_module {
     top: 10px;
-    margin: 5px;
+    margin: 0 5px 5px 5px;
     height: 190px;
 }
 

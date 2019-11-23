@@ -22,9 +22,13 @@ def create_app(test_config=None):
     @app.route('/test')
     def test():
         return render_template('test.html')
+    
+    @app.route('/about')
+    def show_about():
+        return render_template('about.html')
 
-    from . import auth
-    app.register_blueprint(auth.bp)
+    """ from . import auth
+    app.register_blueprint(auth.bp) """
     
     from . import overview
     app.register_blueprint(overview.bp)

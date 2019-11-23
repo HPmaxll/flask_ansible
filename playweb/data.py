@@ -119,6 +119,9 @@ def get_task():
             task['action']['module'] = i['module']
             arglist = i['args'].keys()
             for j in arglist:
+                if j == 'free_form':
+                    args = i['args'][j]
+                    break
                 args += f"{j}={i['args'][j]}"
                 args += ' '
             args = args.strip()
