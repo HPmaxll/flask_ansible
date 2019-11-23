@@ -171,6 +171,13 @@
     <div class="front_cover">
         <div id="result_win">
             <div class="cross" onclick="close_result()"></div>
+            <div id="ansible_wait">
+                <div class="cube-transition">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
             <div id="ansible_result"></div>
         </div>
     </div>
@@ -334,7 +341,7 @@
         var objdiv = document.getElementById("selected_opt");
         var divlist = objdiv.childNodes;
         var opt, value;
-        var selected_module = document.getElementsByClassName("selected_module")[0].value;
+        var selected_module = document.getElementsByClassName("selected_module")[0].innerText;
         var task = {}
         var args = {};
         var i;
@@ -420,13 +427,51 @@
     }
 
     function ansible_result(data) {
-        // var result = JSON.parse(data);
-        var div = document.getElementById('ansible_result');
-        div.innerText = data;
+        if(data != '0') {
+            hidder('ansible_wait');
+            console.log(data)
+            var dict = JSON.parse(data);
+            var display = document.getElementById('ansible_result');
+            for (var i=0; i< dict.length; i++) {
+                var result = dict[i];
+                for (var j in result['order']) {
+                    var task = result['order'][j];
+                    var p_task = document.createElement('p');
+                    p_task.className = 'p_task';
+                    p_task.innerText = task;
+                    display.appendChild(p_task);
+                    for (var host in result[task]) {
+                        var status = result[task][host]['status'];
+                        var feedback = result[task][host]['feedback'];
+                        delete feedback._ansible_no_log;
+                        delete feedback._ansible_parsed;
+                        delete feedback.invocation;
+                        console.log(status);
+                        console.log(feedback);
+                        var block = document.createElement('div');
+                        
+                        var p_host = document.createElement('span');
+                        p_host.className = 'p_host';
+                        p_host.innerText = host;
+                        var p_status = document.createElement('span');
+                        p_status.className = 'p_status';
+                        p_status.innerText = status.toUpperCase();
+                        var p_feedback = document.createElement('span');
+                        p_feedback.innerText = JSON.stringify(feedback, null, '\t');
+                        block.appendChild(p_host);
+                        block.appendChild(p_status);
+                        block.appendChild(p_feedback);
+                        display.appendChild(block);
+                    }
+                }
+            }
+        }
     }
-
     function close_result() {
+        var div = document.getElementById('ansible_result');
+        deleChild(div);
         hidder('popup_result');
+        document.getElementById('ansible_wait').style.display = 'flex';
     }
 </script>
 {% endblock %}

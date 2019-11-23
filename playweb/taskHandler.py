@@ -13,10 +13,12 @@ from ansible.plugins.callback import CallbackBase
 class ResultCallback(CallbackBase):
     def __init__(self, *args, **kwargs):
         self.results_raw = {}
+        self.results_raw['order'] = []
 
     def v2_runner_on_unreachable(self, result):
         if result.task_name not in self.results_raw:
             self.results_raw[result.task_name] = {}
+            self.results_raw['order'].append(result.task_name)
         self.results_raw[result.task_name][result._host.get_name()] = {}
         self.results_raw[result.task_name][result._host.get_name()]['status'] = 'unreachable'
         self.results_raw[result.task_name][result._host.get_name()]['feedback'] = result._result
@@ -24,6 +26,7 @@ class ResultCallback(CallbackBase):
     def v2_runner_on_ok(self, result, *args, **kwargs):
         if result.task_name not in self.results_raw:
             self.results_raw[result.task_name] = {}
+            self.results_raw['order'].append(result.task_name)
         self.results_raw[result.task_name][result._host.get_name()] = {}
         self.results_raw[result.task_name][result._host.get_name()]['status'] = 'success'
         self.results_raw[result.task_name][result._host.get_name()]['feedback'] = result._result
@@ -31,6 +34,7 @@ class ResultCallback(CallbackBase):
     def v2_runner_on_failed(self, result, *args, **kwargs):
         if result.task_name not in self.results_raw:
             self.results_raw[result.task_name] = {}
+            self.results_raw['order'].append(result.task_name)
         self.results_raw[result.task_name][result._host.get_name()] = {}
         self.results_raw[result.task_name][result._host.get_name()]['status'] = 'failed'
         self.results_raw[result.task_name][result._host.get_name()]['feedback'] = result._result

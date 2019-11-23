@@ -4,6 +4,7 @@
         <title>PlayWebook</title>
         <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='main.css') }} >
         <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='dynamic.css') }} >
+        <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='loaders.css') }} >
         <script src={{ url_for('static',filename='script.js') }} ></script>
     </head>
     <body>
@@ -29,7 +30,7 @@
                         </li>
                     </div>
                     <div>
-                        <li><a href='javascript:void(0)'><button>INVENTORY</button></a>
+                        <li><a href={{ url_for('inventory.hosts') }}><button>INVENTORY</button></a>
                             <ul>
                                 <li><a href={{ url_for('inventory.hosts') }}><button>Hosts</button></a></li>
                                 <li><a href={{ url_for('inventory.inventorys') }}><button>Inventory</button></a></li>

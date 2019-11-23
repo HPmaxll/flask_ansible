@@ -157,6 +157,7 @@ var dict = {
 
 
 function display() {
+    var display = document.getElementById('display');
     for (var task in dict) {
         for (var host in dict[task]) {
             var status = dict[task][host]['status'];
@@ -166,7 +167,19 @@ function display() {
             delete feedback.invocation;
             console.log(status);
             console.log(feedback);
+            var block = document.createElement('div');
+            var p_host = document.createElement('span');
+            p_host.className = 'p_host';
+            p_host.innerText = host;
+            var p_status = document.createElement('span');
+            p_status.className = 'p_status';
+            p_status.innerText = status.toUpperCase();
+            var p_feedback = document.createElement('span');
+            p_feedback.innerText = JSON.stringify(feedback, null, '\t');
+            block.appendChild(p_host);
+            block.appendChild(p_status);
+            block.appendChild(p_feedback);
+            display.appendChild(block);
         }
     }
-    // document.getElementById('display').innerText = JSON.stringify(host);
 }

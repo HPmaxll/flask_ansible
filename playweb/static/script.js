@@ -43,10 +43,9 @@ function insertButton(text) {
         objdiv.parentNode.style.display = "block";
         var i;
         for (i in data) {
-            var tmp_button = document.createElement('input');
-            tmp_button.type = 'button';
+            var tmp_button = document.createElement('button');
             tmp_button.className = 'button_hint';
-            tmp_button.value = data[i];
+            tmp_button.innerText = data[i];
             tmp_button.id = data[i];
             tmp_button.onclick = mod_click(data[i]);
             tmp_button.ondblclick = mod_dbclick(data[i]); 
@@ -81,10 +80,9 @@ function insertPara(text) {
     if (data) {
         var para = data.parameter;
         for (var i in para) {
-            var tmp_button = document.createElement('input');
-            tmp_button.type = 'button';
+            var tmp_button = document.createElement('button');
             tmp_button.className = 'button_hint';
-            tmp_button.value = para[i].parameter;
+            tmp_button.innerText = para[i].parameter;
             tmp_button.id = para[i].parameter
         
             tmp_button.onclick = para_click(para[i].parameter, para[i].description);
