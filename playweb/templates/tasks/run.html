@@ -1,38 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="run">
-    <div class="run_container">
-        <p>Selected Hosts</p>
-        <div class="seperator-w"></div>
-        <div class="run_info">
-            <div id="target_host" class="hidden"></div>
-            <div id="target_grp" class="hidden"></div>
-            <div id="target_inv" class="hidden"></div>
+<div class="trans_back">
+    <div class="run">
+        <div class="run_container">
+            <p>Selected Hosts</p>
+            <div class="seperator-w"></div>
+            <div class="run_info">
+                <div id="target_host" class="hidden"></div>
+                <div id="target_grp" class="hidden"></div>
+                <div id="target_inv" class="hidden"></div>
+            </div>
+            <div class="run_input">
+                <button onclick="clear_host()">Clear Host</button>
+                <button onclick="add_hosts()">Add Host</button>
+            </div>
         </div>
-        <div class="run_input">
-            <button onclick="clear_host()">Clear Host</button>
-            <button onclick="add_hosts()">Add Host</button>
+        <img id="ansible_button" onclick="ansible_run()" src={{ url_for('static', filename='Ansible_button.png') }} alt="RUN" title="Run"/>
+        <div class="run_container">
+            <p>Selected Tasks</p>
+            <div class="seperator-w"></div>
+            <div class="run_info" id="task_info"></div>
+            <div class="run_input">
+                <button onclick="clear_task()">Clear Task</button>
+                <button onclick="popup('popup_task')">Add Task</button>
+            </div>
         </div>
+    <!--  <div class="run_container">
+            <p>Extra Variables</p>
+            <div class="run_info"></div>
+            <div class="run_input">
+                <input type="text" id="extra_vars" >
+                <button>Add Extra Variables</button>
+            </div>
+        </div> -->
     </div>
-    <img id="ansible_button" onclick="ansible_run()" src={{ url_for('static', filename='Ansible_button.png') }} alt="RUN" />
-    <div class="run_container">
-        <p>Selected Tasks</p>
-        <div class="seperator-w"></div>
-        <div class="run_info" id="task_info"></div>
-        <div class="run_input">
-            <button onclick="clear_task()">Clear Task</button>
-            <button onclick="popup('popup_task')">Add Task</button>
-        </div>
-    </div>
-   <!--  <div class="run_container">
-        <p>Extra Variables</p>
-        <div class="run_info"></div>
-        <div class="run_input">
-            <input type="text" id="extra_vars" >
-            <button>Add Extra Variables</button>
-        </div>
-    </div> -->
-</div>    
+</div> 
 <div id="popup_host" class="back_cover">
     <div id="scroller">
         <div class="table_container">
@@ -227,12 +229,10 @@
         var i;
         if (checkbox.checked) {
             collection.push(id);
-            console.log(collection);
             row_check(id);
         }
         else {
             collection.splice(collection.indexOf(id),1);
-            console.log(collection);
             row_uncheck(id);
         }
     }
@@ -323,7 +323,6 @@
                 hidder('target_' + namelist[i]);
             }
         }
-        console.log(serverlist);
         hidder('popup_host');
     }
 
@@ -340,7 +339,6 @@
         if (!zone.hasChildNodes()) {
             zone.style.display = 'none';
         }
-        console.log(collection);
     }
 
     function mod_add() {
@@ -435,7 +433,6 @@
     function ansible_result(data) {
         if(data != '0') {
             hidder('ansible_wait');
-            console.log(data)
             var dict = JSON.parse(data);
             var display = document.getElementById('ansible_result');
             for (var i=0; i< dict.length; i++) {
@@ -452,8 +449,6 @@
                         delete feedback._ansible_no_log;
                         delete feedback._ansible_parsed;
                         delete feedback.invocation;
-                        console.log(status);
-                        console.log(feedback);
                         var block = document.createElement('div');
                         
                         var p_host = document.createElement('span');

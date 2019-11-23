@@ -127,12 +127,12 @@ def get_task():
             args = args.strip()
             task['action']['args'] = args
             tasklist.append(task)
-        print(tasklist)
+        # print(tasklist)
         taskHandler = ansibleTaskHandler()
         result = []
         for inv in inv_list.keys():
-            print(inv_list[inv])
+            # print(inv_list[inv])
             taskHandler.load_inv(inv_list[inv])
             result.append(taskHandler.run_task('all', tasklist))
-        print(result)
+        # print(result)
         return jsonify(result)
