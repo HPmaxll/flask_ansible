@@ -49,7 +49,7 @@ select {
 }
 .even_container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
 }
 /* --------header----area-------- */
@@ -962,5 +962,5 @@ header > a > button:hover {
     position: relative;
     width: 500px;
     height: 500px;
-    background-color: blue;
+    /* background-color: blue; */
 }
