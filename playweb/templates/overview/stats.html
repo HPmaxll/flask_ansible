@@ -2,8 +2,19 @@
 
 {% block content %}
 <div class="trans_back">
-    <div class="view_logo">
-        <img src={{ url_for('static', filename='Ans_large.png') }} alt="logo" />
+    <div class="view_area">
+        <a href={{ url_for('tasks.task_run') }}><button class="view_container">
+            <img src={{ url_for('static', filename='Ans_large.png') }} alt="logo" />
+            <!-- <div class="view_box">
+                <div class="view_ring"></div>
+            </div> -->
+        </button></a>
+        <a href={{ url_for('inventory.hosts') }}><button class="view_container">
+            <img src={{ url_for('static', filename='servers.png') }} alt="logo" />
+            <!-- <div class="view_box">
+                <div class="view_ring"></div>
+            </div> -->
+        </button></a>
     </div>
 </div>
 {% endblock %}

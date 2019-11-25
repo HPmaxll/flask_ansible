@@ -163,8 +163,53 @@ header > a > button:hover {
 
 /* --------overview-------- */
 
-.view_logo img {
+.view_area {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+.view_container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:350px;
+    height: 350px;
+    border: none;
+    border-radius: 15%;
+    transition: all 0.3s ease;
+    background-color: rgba(148, 81, 211, 0.9);
+    cursor: pointer;
+}
+.view_container:hover {
+    transform: scale(1.2);
+}
+
+.view_container:focus {
+    outline: none;
+}
+.view_container img {
     width: 200px;
+}
+.view_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    /* background-color: wheat; */
+}
+
+.view_ring {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    /* background-color: wheat; */
+    box-shadow: 0 0 15px 15px white;
 }
 
 /* --------inventory-------- */
@@ -534,11 +579,11 @@ header > a > button:hover {
 }
 
 .display_span {
-    /* background-color: burlywood; */
     margin: 3px;
     padding: 3px;
     cursor: pointer;
     border: 1px dashed rgb(220, 220, 220);
+    background-color: rgba(0, 0, 0, 0.3);
     white-space: nowrap;
 }
 
@@ -661,7 +706,6 @@ header > a > button:hover {
     align-items: center;
 }
 .popup_inv {
-    /* margin-top: 8%; */
     position: relative;
     color: rgb(20, 20, 100);
     background-color: rgba(250, 250, 250, 0.9);
@@ -760,7 +804,6 @@ header > a > button:hover {
     font-size: smaller;
 }
 .dialog {
-    /* margin-top: 10%; */
     position: relative;
     width: 340px;
     background-color: rgba(250, 250, 250, 0.9);
@@ -798,7 +841,6 @@ header > a > button:hover {
     width: 100%;
 }
 #edit_window {
-    /* margin-top: 10%; */
     position: relative;
     padding: 3px;
     border-radius: 5px;
@@ -835,11 +877,9 @@ header > a > button:hover {
 
 #result_win {
     position: relative;
-    margin-top: 3%;
-    width: 500px;
+    width: 600px;
     height: 600px;
     background-color: rgba(200, 200, 200, 0.9);
-    /* background-color: blue; */
 }
 #ansible_wait {
     width: 100%;
@@ -852,7 +892,7 @@ header > a > button:hover {
     margin: 35px 5px 5px 5px;
     height: 545px;
     overflow: auto;
-    white-space: pre;
+    white-space: pre-wrap;
 }
 
 .p_task {

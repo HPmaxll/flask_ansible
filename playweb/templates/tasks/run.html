@@ -458,6 +458,7 @@
                         p_status.className = 'p_status';
                         p_status.innerText = status.toUpperCase();
                         var p_feedback = document.createElement('span');
+                        
                         p_feedback.innerText = JSON.stringify(feedback, null, '\t');
                         block.appendChild(p_host);
                         block.appendChild(p_status);
