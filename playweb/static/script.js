@@ -410,7 +410,7 @@ function update_table(data, arglist) {
                 start_point = 1;
                 break;
             case 'h':
-                node_id = 'h_' + hostlist[i][0] + '_' + hostlist[i][1] + '_' + hostlist[i][2];
+                node_id = 'h_' + hostlist[i][0] + '_' + hostlist[i][1] + '____' + hostlist[i][2];
                 start_point = 2;
                 break;
         }
@@ -419,6 +419,9 @@ function update_table(data, arglist) {
         var row_act = document.createElement('a');
         row_act.innerText = hostlist[i][start_point];
         row_act.href = 'javascript:void(0)';
+        row_act.onclick = function () {
+            return edit_attr(event);
+        }
         row_name.appendChild(checkbox);
         row_name.appendChild(row_act);
         row.appendChild(row_name);
@@ -603,9 +606,24 @@ function edit_update() {
         vals.push(inputs[i].value);
     }
     postData(vals, '/inventory/update', function (data) { 
-        document.getElementById('update_info').innerText = data;
-        if (data == 'success') {
-            window.location.reload();
+            document.getElementById('update_info').innerText = data;
+            if (data == 'success') {
+                window.location.reload();
+            }
         }
-     })
+    )
+}
+
+let id_attr = '';
+
+function edit_attr(event) {
+    var cell = event.target.parentNode;
+    var checkbox = cell.getElementsByTagName('input')[0];
+    id_attr = checkbox.id;
+    console.log(id_attr);
+    popup('popup_attr');
+}
+
+function close_attr() {
+    hidder('popup_attr');
 }

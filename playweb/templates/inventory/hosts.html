@@ -31,7 +31,7 @@
                     </tr>
                     {% for host in hostList %}
                     <tr class="table_content" >
-                        <td><input type="checkbox" id={{ 'h_' + host[0] + '_' + host[1] + '____' + host[2] }}><a href="javascript:void(0)">{{host[2]}}</a></td>
+                        <td><input type="checkbox" id={{ 'h_' + host[0] + '_' + host[1] + '____' + host[2] }}><a href="javascript:void(0)" onclick="edit_attr(event)">{{host[2]}}</a></td>
                         <td>{{host[3]}}</td>
                         <td>{{host[4]}}</td>
                         <td>{{host[5]}}</td>
@@ -111,6 +111,15 @@
             <p id="update_info"></p>
             <div class="flex_container">
                 <button onclick="edit_update()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="back_cover" id="popup_attr">
+    <div class="front_cover">
+        <div id="attr_win">
+            <div class="cross" onclick="close_attr()"></div>
+            <div>
             </div>
         </div>
     </div>
