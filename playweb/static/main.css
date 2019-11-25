@@ -962,5 +962,5 @@ header > a > button:hover {
     position: relative;
     width: 500px;
     height: 500px;
-    /* background-color: blue; */
+    background-color: rgba(220, 220, 220, 0.9)
 }
