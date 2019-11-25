@@ -25,7 +25,7 @@
                     </tr>
                     {% for group in groupList %}
                     <tr class="table_content" >
-                        <td><input type="checkbox" id={{ 'g_' + group[0] + '____' + group[1] }}><a href="javascript:void(0)">{{group[1]}}</a></td>
+                        <td><input type="checkbox" id={{ 'g_' + group[0] + '____' + group[1] }}><a href="javascript:void(0)" onclick="edit_attr(event)">{{group[1]}}</a></td>
                         <td>{{group[2]}}</td>
                         <td>{{group[3]}}</td>
                         <td><a href="javascript:void(0)" onclick="edit_row(event)">Edit</a><a href="javascript:void(0)" onclick="remove_row(event)">Remove</a></td>
@@ -97,6 +97,13 @@
             <div class="flex_container">
                 <button onclick="edit_update()">Update</button>
             </div>
+        </div>
+    </div>
+</div>
+<div class="back_cover" id="popup_attr">
+    <div class="front_cover">
+        <div id="attr_win">
+            <div class="cross" onclick="close_attr()"></div>
         </div>
     </div>
 </div>

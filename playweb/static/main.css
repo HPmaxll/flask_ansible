@@ -965,3 +965,10 @@ header > a > button:hover {
 .about ul li {
     margin: 0 0 14px 0;
 }
+
+#attr_win {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    background-color: blue;
+}

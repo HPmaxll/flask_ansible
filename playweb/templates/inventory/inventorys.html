@@ -19,14 +19,14 @@
                         <th>Operation</th>
                     </tr>
                     <tr class="table_content">
-                        <td><input type="checkbox" id='i____default'><a href="javascript:void(0)">default</a></td>
+                        <td><input type="checkbox" id='i____default'><a href="javascript:void(0)" onclick="edit_attr(event)">default</a></td>
                         <td>Admin</td>
                         <td>Default Inventory</td>
                         <td><a href="javascript:void(0)" onclick="edit_row(event)">Edit</a></td>
                     </tr>
                     {% for inv in invList[1:] %}
                     <tr class="table_content" >            
-                        <td><input type="checkbox" id={{ 'i____' + inv[0] }}><a href="javascript:void(0)">{{inv[0]}}</a></td>
+                        <td><input type="checkbox" id={{ 'i____' + inv[0] }}><a href="javascript:void(0)" onclick="edit_attr(event)">{{inv[0]}}</a></td>
                         <td>{{inv[1]}}</td>
                         <td>{{inv[2]}}</td>
                         <td><a href="javascript:void(0)" onclick="edit_row(event)">Edit</a><a href="javascript:void(0)" onclick="remove_row(event)">Remove</a></td>
@@ -91,6 +91,13 @@
             <div class="flex_container">
                 <button onclick="edit_update()">Update</button>
             </div>
+        </div>
+    </div>
+</div>
+<div class="back_cover" id="popup_attr">
+    <div class="front_cover">
+        <div id="attr_win">
+            <div class="cross" onclick="close_attr()"></div>
         </div>
     </div>
 </div>
